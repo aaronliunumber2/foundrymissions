@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Star Trek Online - Foundry Mission Database</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+
+        @@media (min-width: 768px) 
+        {
+            .searchbar{
+                display: none;
+            }
+        }
+
+        @@media (min-width: 992px)
+        {
+            .searchbar{
+                display: initial;
+            }
+        }
+        @@media (min-width: 1200px) 
+        {
+            .searchbar{
+                display: initial;
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Random", "Random", "Missions")</li>
+                    <li>@Html.ActionLink("Submit", "Submit", "Missions")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right searchbar">
+                    <li class="navbutton minornavbutton"><a href="search/">Advanced Search</a></li>
+                    <li class="navsearch">
+                        @using (Html.BeginForm("Search", "Account", FormMethod.Get, new { role="search", @class = "navbar-form navbar-left" }))
+                        { 
+                        <form class="navbar-form navbar-left" role="search" action="missions/">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </form>
+                        }
+                    </li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer id="pagefooter">
+            Copyright © @DateTime.Now.Year. Website by Zorbane and RogueEnterprise for Star Trek Online.  Star Trek Online logo and all related images are registered trademarks or trademarks of <a href="http://arcgames.com">Perfect World Entertainment</a>.
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

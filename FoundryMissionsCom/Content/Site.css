@@ -1,0 +1,164 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* My Styles*/
+
+body {
+    background-color: #1e2b37;
+    color: #979797;
+    padding-top: 50px;
+}
+
+@media (max-width: 979px) {
+    body {
+        padding-top: 0px;
+    }
+}
+
+.jumbotron {
+    background-color: black;
+}
+
+
+nav.navbar {
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: #001;
+}
+
+li.list-group-item {
+    border: none;
+    border-top: 1px gray solid;
+    background-color: #001;
+}
+
+.bannerimage img {
+    display: block;
+    margin: 0 auto;
+}
+
+#databasebannertext {
+    margin-bottom: 0;
+}
+
+footer#pagefooter {
+    margin-top: 2em;
+    font-size: 80%;
+}
+
+span.Federation {
+    color: #3333CC;
+}
+
+li.minornavbutton {
+    font-size: 75%;
+}
+
+/* Submit mission */
+
+form.missiondata input,
+form.missiondata select,
+form.missiondata textarea 
+{
+    max-width: 100%;
+}
+
+form.missiondata {
+    background-color: #F0F0F0;
+    padding: 1em;
+    max-width: 100%;
+}
+
+input#lastupdate {
+    width: 173px;
+}
+
+div.gameplay-tags {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+/* Mission Details */
+
+/* extra small devices */
+    aside.missioninfo {
+           margin-bottom: 5px;
+    }
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+        aside.missioninfo {
+        width: 30%;
+        float: right;
+        border: 1px gray solid;
+        border-radius: 5px;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  }
+
+div.missionbanner img {
+    width: 100%;
+    padding-bottom: 1em;
+}
+
+div.missiondescription, aside.missioninfo {
+    color: #E8E8E8;
+}
+
+
+
+aside.missioninfo p {
+    margin: 0px;
+    margin-left: 5px;
+}
+
+div.screenshots {
+    margin-top: 1em;
+}
+
+.thumbnail {
+    width: 150px;
+    height: 150px;
+    display: inline-block;
+}
+
+div#screenshotlinks {
+    display: block;
+}
+
+select#reviewrating {
+    width: 100px;
+}
+
+div.content {
+    background-color: #001;
+}

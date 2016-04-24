@@ -1,0 +1,3 @@
+﻿Enable-Migrations -ContextType ApplicationDbContext -MigrationsDirectory Migrations\FoundryMissionsMigrations
+add-migration -ConfigurationTypeName FoundryMissionsCom.Migrations.FoundryMissionsMigrations.Configuration "Blah"
+update-database -ConfigurationTypeName FoundryMissionsCom.Migrations.FoundryMissionsMigrations.Configuration
