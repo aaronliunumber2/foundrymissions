@@ -17,7 +17,7 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
         public string CrypticId { get; set; }
 
         [Display(Name ="Author")]
-        public string Author { get; set; }
+        public ApplicationUser Author { get; set; }
 
         [Display(Name = "Minimum Level")]
         public int MinimumLevel { get; set; }

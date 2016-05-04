@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.CrypticId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Author)
+            @Html.DisplayNameFor(model => model.Author.CrypticTag)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.MinimumLevel)
@@ -38,7 +38,7 @@
             @Html.DisplayFor(modelItem => item.CrypticId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Author)
+            @Html.DisplayFor(modelItem => item.Author.UserName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.MinimumLevel)
@@ -50,9 +50,9 @@
             @Html.DisplayFor(modelItem => item.DateLastUpdated)
         </td>
         <td>
-            @if (User.IsInRole("admin") || (item.Author.Equals(User.Identity.Name)))
+            @if (User.IsInRole("Admin") || (item.Author.UserName.Equals(User.Identity.Name)))
             {
-                Html.ActionLink("Edit", "Edit", new { id = item.Id });
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id });
             }
         </td>
     </tr>

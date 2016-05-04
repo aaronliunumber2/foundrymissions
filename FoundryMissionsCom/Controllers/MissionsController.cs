@@ -232,7 +232,7 @@ namespace FoundryMissionsCom.Controllers
                     Id = mission.Id,
                     Name = mission.Name,
                     CrypticId = mission.CrypticId,
-                    Author = mission.Author.UserName,
+                    Author = mission.Author,
                     MinimumLevel = mission.MinimumLevel,
                     Faction = mission.Faction,
                     DateLastUpdated = mission.DateLastUpdated,
