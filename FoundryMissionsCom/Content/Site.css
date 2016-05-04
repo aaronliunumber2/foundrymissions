@@ -95,10 +95,11 @@ input#lastupdate {
     width: 173px;
 }
 
-div.gameplay-tags {
+ul.gameplay-tags {
     max-height: 300px;
     overflow-y: scroll;
 }
+
 
 /* Mission Details */
 

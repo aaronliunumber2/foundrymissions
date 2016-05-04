@@ -234,6 +234,9 @@
     <Compile Include="Models\FoundryMissionModels\Mission.cs" />
     <Compile Include="Models\FoundryMissionModels\MissionTagType.cs" />
     <Compile Include="Models\FoundryMissionModels\YoutubeVideo.cs" />
+    <Compile Include="Models\FoundryMissionViewModels\EditMissionViewModel.cs" />
+    <Compile Include="Models\FoundryMissionViewModels\ListMissionViewModel.cs" />
+    <Compile Include="Models\FoundryMissionViewModels\SubmitMissionViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -268,6 +271,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\mission.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -309,6 +313,8 @@
     <Content Include="Views\Missions\Submit.cshtml" />
     <Content Include="Views\Missions\Index.cshtml" />
     <Content Include="Views\Missions\Details.cshtml" />
+    <Content Include="Views\Missions\Edit.cshtml" />
+    <Content Include="Views\Missions\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />

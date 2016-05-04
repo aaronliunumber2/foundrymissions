@@ -60,6 +60,7 @@ namespace FoundryMissionsCom.Models
         public DbSet<MissionTagType> MissionTagTypes { get; set; }
         public DbSet<YoutubeVideo> YoutubeVideos { get; set; }
 
+
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //{
         //    base.OnModelCreating(modelBuilder);

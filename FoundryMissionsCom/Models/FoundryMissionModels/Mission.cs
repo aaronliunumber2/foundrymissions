@@ -51,6 +51,7 @@ namespace FoundryMissionsCom.Models.FoundryMissionModels
         public DateTime DateAdded { get; set; }
 
         [DataType(DataType.Date)]
+        [Display(Name="Last Updated")]
         [ScaffoldColumn(false)]
         public DateTime DateLastUpdated { get; set; }
 
@@ -60,10 +61,10 @@ namespace FoundryMissionsCom.Models.FoundryMissionModels
         [Required]
         public bool Published { get; set; }
         
-
+        [Required]
         public MissionStatus Status { get; set; }
 
-        public virtual ICollection<MissionTagType> Tags { get; set; }
-        public virtual ICollection<YoutubeVideo> Videos { get; set; }
+        public virtual List<MissionTagType> Tags { get; set; }
+        public virtual List<YoutubeVideo> Videos { get; set; }
     }
 }

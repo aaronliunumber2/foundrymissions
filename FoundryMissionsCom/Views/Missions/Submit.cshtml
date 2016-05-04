@@ -1,4 +1,4 @@
-﻿@model FoundryMissionsCom.Models.FoundryMissionModels.Mission
+﻿@model FoundryMissionsCom.Models.FoundryMissionViewModels.SubmitMissionViewModel
 
 @{
     ViewBag.Title = "Submit a Foundry Mission";
@@ -7,7 +7,7 @@
 <h2>Submit a Foundry Mission</h2>
 
 
-@using (Html.BeginForm("Submit", "Missions", FormMethod.Post, new { @class="missiondata" }))
+@using (Html.BeginForm("Submit", "Missions", FormMethod.Post, new { @class = "missiondata" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-vertical">
@@ -48,7 +48,7 @@
                     @Html.ValidationMessageFor(model => model.Length, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="form-group">
+                <div class="form-group col-md-6">
                     @Html.LabelFor(model => model.Published, htmlAttributes: new { @class = "control-label" })
                              
 
@@ -56,43 +56,26 @@
                     @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
                 </div>
 
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Spotlit, htmlAttributes: new { @class = "control-label" })
 
+                    @Html.DropDownListFor(model => model.Spotlit, (SelectList)ViewBag.PublishedSelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Spotlit, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
 
-                @Html.TextAreaFor(model => model.Description,htmlAttributes: new { @class = "form-control", rows="5", id="missiondescription" })
+                @Html.TextAreaFor(model => model.Description, htmlAttributes: new { @class = "form-control", rows = "5", id = "missiondescription" })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
 
-
-        <div class="row">
-            <div class="col-md-6">
-                Selected:
-                <div class="list-group gameplay-tags">
-                </div>
-            </div>
-            <div class="col-md-6">
-                Available:
-                <div class="list-group gameplay-tags">
-                    <a href="#" class="list-group-item gameplay-tag">Space Combat</a>
-                    <a href="#" class="list-group-item gameplay-tag">Ground Combat</a>
-                    <a href="#" class="list-group-item gameplay-tag">Single Player</a>
-                    <a href="#" class="list-group-item gameplay-tag">Team Play</a>
-                    <a href="#" class="list-group-item gameplay-tag">Puzzle</a>
-                    <a href="#" class="list-group-item gameplay-tag">Quarters</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
+        <div class="container row">
             <div class="form-group">
-
                 <input type="submit" name="submitButton" value="Save" class="btn btn-default" /> <input type="submit" name="submitButton" value="Save and Publish" class="btn btn-default" />
-
             </div>
         </div>
     </div>
@@ -101,5 +84,6 @@
 
 
         @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
+            @Scripts.Render("~/bundles/jqueryval")           
+            @Scripts.Render("~/bundles/mission")
         }

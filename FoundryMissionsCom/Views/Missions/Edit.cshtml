@@ -1,0 +1,86 @@
+﻿@model FoundryMissionsCom.Models.FoundryMissionViewModels.EditMissionViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "Missions", FormMethod.Post, new { @class = "missiondata" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-vertical">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CrypticId, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.CrypticId, new { htmlAttributes = new { @class = "form-control", @onkeyup = "InputToUpper(this);" } })
+                    @Html.ValidationMessageFor(model => model.CrypticId, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Faction, htmlAttributes: new { @class = "control-label" })
+                    @Html.EnumDropDownListFor(model => model.Faction, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Faction, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MinimumLevel, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.MinimumLevel, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MinimumLevel, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Length, htmlAttributes: new { @class = "control-label" })
+
+                    @Html.EnumDropDownListFor(model => model.Length, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Length, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Published, htmlAttributes: new { @class = "control-label" })
+
+                    @Html.DropDownListFor(model => model.Published, (SelectList)ViewBag.PublishedSelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Spotlit, htmlAttributes: new { @class = "control-label" })
+
+                    @Html.DropDownListFor(model => model.Spotlit, (SelectList)ViewBag.PublishedSelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Spotlit, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.Description, htmlAttributes: new { @class = "form-control", rows = "5", id = "missiondescription" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="container row">
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

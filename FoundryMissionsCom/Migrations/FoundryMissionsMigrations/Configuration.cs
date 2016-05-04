@@ -35,7 +35,7 @@ namespace FoundryMissionsCom.Migrations.FoundryMissionsMigrations
             SeedDataHelper.AddUsersAndRoles(context);
             context.MissionTagTypes.AddOrUpdate(
                 m => m.TagName,
-                SeedDataHelper.GetMissionTagTypes().ToArray(),
+                SeedDataHelper.GetMissionTagTypes().ToArray()
             );
 
 

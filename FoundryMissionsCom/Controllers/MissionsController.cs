@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using FoundryMissionsCom.Models;
 using FoundryMissionsCom.Models.FoundryMissionModels;
+using FoundryMissionsCom.Models.FoundryMissionModels.Enums;
+using FoundryMissionsCom.Models.FoundryMissionViewModels;
 
 namespace FoundryMissionsCom.Controllers
 {
@@ -26,7 +28,7 @@ namespace FoundryMissionsCom.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             Mission mission = db.Missions.Find(id);
             if (mission == null)
@@ -58,41 +60,52 @@ namespace FoundryMissionsCom.Controllers
         }
 
         // GET: Missions/Submit
+        [Authorize]
         public ActionResult Submit()
         {
             var publishedSelectItems = new List<SelectListItem>();
-            var missionTagTypes = db.MissionTagTypes.ToList();
-
             #region Published Select List
-            publishedSelectItems.Add(new SelectListItem()
-            {
-                Value = "true",
-                Text = "Yes",
-            });
             publishedSelectItems.Add(new SelectListItem()
             {
                 Value = "false",
                 Text = "No",
             });
+            publishedSelectItems.Add(new SelectListItem()
+            {
+                Value = "true",
+                Text = "Yes",
+            });
             #endregion
 
-
-            ViewBag.TagTypes = missionTagTypes;
             ViewBag.PublishedSelectList = new SelectList(publishedSelectItems, "Value", "Text");
+
 
             return View();
         }
 
-        // POST: Missions/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Submit([Bind(Include = "Id,AuthorUserId,CrypticId,Name,Description,Length,Faction,MinimumLevel,DateAdded,DateLastUpdated,Spotlit,Published")] Mission mission, string submitButton)
+        [Authorize]
+        public ActionResult Submit([Bind(Include = "CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published")] SubmitMissionViewModel missionViewModel, string submitButton)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser user = db.Users.FirstOrDefault(u => u.UserName.Equals(User.Identity.Name));
+                Mission mission = new Mission();
+
+                #region Copy Info
+
+                mission.CrypticId = missionViewModel.CrypticId;
+                mission.Description = missionViewModel.Description;
+                mission.Faction = missionViewModel.Faction;
+                mission.Length = missionViewModel.Length;
+                mission.MinimumLevel = missionViewModel.MinimumLevel;
+                mission.Name = missionViewModel.Name;
+                mission.Published = missionViewModel.Published;
+                mission.Spotlit = missionViewModel.Spotlit;
+
+                #endregion
+
                 mission.Author = user;
                 mission.DateAdded = DateTime.Today;
                 mission.DateLastUpdated = DateTime.Today;
@@ -120,7 +133,79 @@ namespace FoundryMissionsCom.Controllers
                 return RedirectToAction("Details", new { mission.Id });
             }
 
-            return View(mission);
+            return View(missionViewModel);
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            Mission mission = db.Missions.Find(id);
+            if (mission == null)
+            {
+                return HttpNotFound();
+            }
+
+            //only people who can edit a mission are the author or an admin
+            if (!mission.Author.UserName.Equals(User.Identity.Name) && !User.IsInRole("admin"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var publishedSelectItems = new List<SelectListItem>();
+            #region Published Select List
+            publishedSelectItems.Add(new SelectListItem()
+            {
+                Value = "false",
+                Text = "No",
+            });
+            publishedSelectItems.Add(new SelectListItem()
+            {
+                Value = "true",
+                Text = "Yes",
+            });
+            #endregion
+
+            var editModel = new EditMissionViewModel();
+            editModel.Id = mission.Id;
+            editModel.CrypticId = mission.CrypticId;
+            editModel.Name = mission.Name;
+            editModel.Description = mission.Description;
+            editModel.Length = mission.Length;
+            editModel.Faction = mission.Faction;
+            editModel.MinimumLevel = mission.MinimumLevel;
+            editModel.Spotlit = mission.Spotlit;
+            editModel.Published = mission.Published;
+
+            ViewBag.PublishedSelectList = new SelectList(publishedSelectItems, "Value", "Text");
+
+            return View(editModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult Edit([Bind(Include = "Id,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published")] EditMissionViewModel missionViewModel, string submitButton)
+        {
+            if (ModelState.IsValid)
+            {
+                var mission = db.Missions.Find(missionViewModel.Id);
+                mission.CrypticId = missionViewModel.CrypticId;
+                mission.Name = missionViewModel.Name;
+                mission.Description = missionViewModel.Description;
+                mission.Length = missionViewModel.Length;
+                mission.Faction = missionViewModel.Faction;
+                mission.MinimumLevel = missionViewModel.MinimumLevel;
+                mission.Spotlit = missionViewModel.Spotlit;
+                mission.Published = missionViewModel.Published;
+
+                db.SaveChanges();
+
+                return RedirectToAction("Details", new { mission.Id });
+            }
+            return View(missionViewModel);
         }
 
         public ActionResult Random()
@@ -130,43 +215,50 @@ namespace FoundryMissionsCom.Controllers
             return RedirectToAction("Details", new { id = missionId });
         }
 
-        public ActionResult Search(string query)
+        public ActionResult Search(string q)
         {
-            throw new NotImplementedException();
+            string upperQuery = q.ToUpper();
+            List<ListMissionViewModel> listMissions = new List<ListMissionViewModel>();
+            var missions = db.Missions.Where(m => m.Author.UserName.ToUpper().Contains(upperQuery) ||
+                                             m.CrypticId.ToUpper().Contains(upperQuery) ||
+                                             m.Description.ToUpper().Contains(upperQuery) ||
+                                             m.Name.ToUpper().Contains(upperQuery)).ToList();
+
+
+            foreach(var mission in missions)
+            {
+                var listMission = new ListMissionViewModel()
+                {
+                    Id = mission.Id,
+                    Name = mission.Name,
+                    CrypticId = mission.CrypticId,
+                    Author = mission.Author.UserName,
+                    MinimumLevel = mission.MinimumLevel,
+                    Faction = mission.Faction,
+                    DateLastUpdated = mission.DateLastUpdated,
+                    FactionImageUrl = GetFactionImageUrl(mission.Faction),
+                    LevelImageUrl = GetLevelImageUrl(mission.MinimumLevel),
+                };
+
+                listMissions.Add(listMission);
+            }
+
+            return View(listMissions);
         }
+
+        private string GetLevelImageUrl(int minimumLevel)
+        {
+            return "";
+        }
+
+        private string GetFactionImageUrl(Faction faction)
+        {
+            return "";
+        }
+
+
 
         #region  Auto generated
-
-        // GET: Missions/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Mission mission = db.Missions.Find(id);
-            if (mission == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mission);
-        }
-
-        // POST: Missions/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,AuthorUserId,CrypticId,Name,Description,Length,Faction,MinimumLevel,DateAdded,DateLastUpdated,Spotlit,Published")] Mission mission)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(mission).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(mission);
-        }
 
         // GET: Missions/Delete/5
         public ActionResult Delete(int? id)
