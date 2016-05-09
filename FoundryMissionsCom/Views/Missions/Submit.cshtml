@@ -4,10 +4,15 @@
     ViewBag.Title = "Submit a Foundry Mission";
 }
 
+@section opengraph{
+        <meta property="og:title" content="Submit a Foundry Mission"/>
+        <meta property="og:description" content="Submit your Star Trek Online foundry mission"/>
+    }
+
 <h2>Submit a Foundry Mission</h2>
 
 
-@using (Html.BeginForm("Submit", "Missions", FormMethod.Post, new { @class = "missiondata" }))
+@using (Html.BeginForm("submit", "missions", FormMethod.Post, new { @class = "missiondata" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-vertical">
@@ -23,10 +28,12 @@
                 
                 <div class="form-group">
                     @Html.LabelFor(model => model.CrypticId, htmlAttributes: new { @class = "control-label" })
-
-                    @Html.EditorFor(model => model.CrypticId, new { htmlAttributes = new { @class = "form-control", @onkeyup = "InputToUpper(this);" } })
+                    <div class="input-group">
+                        <span class="input-group-addon">ST-</span>
+                        @Html.EditorFor(model => model.CrypticId, new { htmlAttributes = new { @class = "form-control crypticid"} })
+                    </div>
                     @Html.ValidationMessageFor(model => model.CrypticId, "", new { @class = "text-danger" })
-                </div>
+                    </div>
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Faction, htmlAttributes: new { @class = "control-label" })

@@ -3,8 +3,18 @@
 @model FoundryMissionsCom.Models.FoundryMissionModels.Mission
 
 @{
-    
+
     ViewBag.Title = Model.Name;
+    var description = Model.Description;
+    if (description.Length > 100)
+    {
+        description = description.Substring(0, 100) + "...";
+    }
+}
+
+@section opengraph{
+    <meta property="og:title" content="@Model.Name" />
+    <meta property="og:description" content="@description"/>
 }
 
 

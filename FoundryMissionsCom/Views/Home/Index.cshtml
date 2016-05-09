@@ -4,6 +4,11 @@
     ViewBag.Title = "Home Page";
 }
 
+@section opengraph{
+    <meta property="og:title" content="Star Trek Online Foundry Missions Database" />
+    <meta property="og:description" content="Search or add your own Star Trek Online foundry missions"/>
+    }
+
 
 <div class="container">
     <div class="jumbotron">
@@ -18,7 +23,7 @@
             <ul class="list-group">
                 @foreach (Mission mission in ViewBag.RandomMissions)
                 {
-                    <li class="list-group-item">@Html.ActionLink(mission.Name, "Details", "Missions", new { id = mission.Id }, new { } ) - By: @Html.ActionLink(mission.Author.UserName, "Details", "Authors", new { username = mission.Author.UserName }, new { }) - @mission.Faction</li>
+                    <li class="list-group-item">@Html.ActionLink(mission.Name, "details", "missions", new { id = mission.Id }, new { } ) - By: @Html.ActionLink(mission.Author.CrypticTag, "details", "authors", new { username = mission.Author.UserName }, new { }) - @mission.Faction</li>
                 }
             </ul>
         </section><!-- Missions -->
@@ -27,7 +32,7 @@
             <ul class="list-group">
                 @foreach (Mission mission in ViewBag.RecentlyUpdatedMissions)
                 {
-                    <li class="list-group-item">@Html.ActionLink(mission.Name, "Details", "Missions", new { id = mission.Id }, new { }) - By: @Html.ActionLink(mission.Author.UserName, "Details", "Authors", new { username = mission.Author.UserName }, new { }) - @mission.Faction</li>
+                    <li class="list-group-item">@Html.ActionLink(mission.Name, "details", "missions", new { id = mission.Id }, new { }) - By: @Html.ActionLink(mission.Author.CrypticTag, "details", "authors", new { username = mission.Author.UserName }, new { }) - @mission.Faction</li>
                 }
             </ul>
         </section>

@@ -23,7 +23,29 @@ textarea {
     max-width: 280px;
 }
 
+/*Set the width if it is with a input group addon which are 40px wide*/
+.input-group input,
+.input-group select,
+.input-group textarea {
+    max-width: 240px;
+}
+
 /* My Styles*/
+
+    /*Search bar*/
+    @media (min-width: 768px) 
+    {
+        .searchbar{
+            display: none;
+        }
+    }
+
+    @media (min-width: 992px)
+    {
+        .searchbar{
+            display: initial;
+        }
+    }
 
 body {
     background-color: #1e2b37;
@@ -31,10 +53,18 @@ body {
     padding-top: 50px;
 }
 
-@media (max-width: 979px) {
+@media (max-width: 992px) {
     body {
         padding-top: 0px;
     }
+}
+
+.input-group-addon{
+    width: 40px;
+}
+
+.input-group{
+    width: 100%;
 }
 
 .jumbotron {
@@ -83,6 +113,10 @@ form.missiondata select,
 form.missiondata textarea 
 {
     max-width: 100%;
+}
+
+input.crypticid{
+    text-transform: uppercase;
 }
 
 form.missiondata {

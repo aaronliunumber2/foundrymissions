@@ -28,7 +28,7 @@ namespace FoundryMissionsCom.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("index", "home");
             }
             Mission mission = db.Missions.Find(id);
             if (mission == null)
@@ -95,7 +95,7 @@ namespace FoundryMissionsCom.Controllers
 
                 #region Copy Info
 
-                mission.CrypticId = missionViewModel.CrypticId;
+                mission.CrypticId = missionViewModel.CrypticId.ToUpper();
                 mission.Description = missionViewModel.Description;
                 mission.Faction = missionViewModel.Faction;
                 mission.Length = missionViewModel.Length;
@@ -130,7 +130,7 @@ namespace FoundryMissionsCom.Controllers
 
                 db.Missions.Add(mission);
                 db.SaveChanges();
-                return RedirectToAction("Details", new { mission.Id });
+                return RedirectToAction("details", new { mission.Id });
             }
 
             return View(missionViewModel);
@@ -140,7 +140,7 @@ namespace FoundryMissionsCom.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("index", "home");
             }
             Mission mission = db.Missions.Find(id);
             if (mission == null)
@@ -151,7 +151,7 @@ namespace FoundryMissionsCom.Controllers
             //only people who can edit a mission are the author or an admin
             if (!mission.Author.UserName.Equals(User.Identity.Name) && !User.IsInRole("admin"))
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("index", "home");
             }
 
             var publishedSelectItems = new List<SelectListItem>();
@@ -212,7 +212,7 @@ namespace FoundryMissionsCom.Controllers
         {
             int missionId = db.Missions.OrderBy(m => Guid.NewGuid()).Select(m => m.Id).FirstOrDefault();
 
-            return RedirectToAction("Details", new { id = missionId });
+            return RedirectToAction("details", new { id = missionId });
         }
 
         public ActionResult Search(string q)

@@ -4,6 +4,11 @@
     ViewBag.Title = "Search Results";
 }
 
+@section opengraph{
+
+    <meta property="og:title" content="Search Results"/>
+    }
+
 <h2>Search Results</h2>
 
 <table class="table">
@@ -32,13 +37,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.Name, "Details", new { id = item.Id })
+            @Html.ActionLink(item.Name, "details", new { id = item.Id })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CrypticId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Author.UserName)
+            @Html.DisplayFor(modelItem => item.Author.CrypticTag)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.MinimumLevel)
@@ -52,7 +57,7 @@
         <td>
             @if (User.IsInRole("Admin") || (item.Author.UserName.Equals(User.Identity.Name)))
             {
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id });
+                @Html.ActionLink("Edit", "edit", new { id = item.Id });
             }
         </td>
     </tr>

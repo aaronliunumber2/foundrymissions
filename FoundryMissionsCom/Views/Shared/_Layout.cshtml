@@ -7,28 +7,18 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-    <style>
+    <meta property="og:site_name" content="foundrymissions.com"/>
+    @RenderSection("opengraph", required: true) @*http://ogp.me/*@
 
-        @@media (min-width: 768px) 
-        {
-            .searchbar{
-                display: none;
-            }
-        }
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        @@media (min-width: 992px)
-        {
-            .searchbar{
-                display: initial;
-            }
-        }
-        @@media (min-width: 1200px) 
-        {
-            .searchbar{
-                display: initial;
-            }
-        }
-    </style>
+      ga('create', 'UA-76643373-1', 'auto');
+      ga('send', 'pageview');
+    </script>
 
 </head>
 <body>
@@ -40,17 +30,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Home", "index", "home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Random", "Random", "Missions")</li>
-                    <li>@Html.ActionLink("Submit", "Submit", "Missions")</li>
+                    <li>@Html.ActionLink("Random", "random", "missions")</li>
+                    <li>@Html.ActionLink("Submit", "submit", "missions")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right searchbar">
                     <li class="navbutton minornavbutton"><a href="search/">Advanced Search</a></li>
                     <li class="navsearch">
-                        @using (Html.BeginForm("Search", "Missions", FormMethod.Get, new { role="search", @class = "navbar-form navbar-left" }))
+                        @using (Html.BeginForm("search", "missions", FormMethod.Get, new { role="search", @class = "navbar-form navbar-left" }))
                         { 
                         <form class="navbar-form navbar-left" role="search" action="missions/">
                             <div class="form-group">

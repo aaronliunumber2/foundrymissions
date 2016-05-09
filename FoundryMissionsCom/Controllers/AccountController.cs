@@ -185,7 +185,7 @@ namespace FoundryMissionsCom.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("index", "home");
                 }
                 AddErrors(result);
             }
@@ -378,7 +378,7 @@ namespace FoundryMissionsCom.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Manage");
+                return RedirectToAction("index", "manage");
             }
 
             if (ModelState.IsValid)
