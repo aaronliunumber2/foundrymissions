@@ -14,17 +14,42 @@ namespace FoundryMissionsCom
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                "MissionLink",
+                "missions/{link}",
+                new { controller = "Missions", action = "Details" }
+            );
+
+            //routes.MapRoute(
+            //    "MissionLink",
+            //    "missions/details/{link}",
+            //    new { controller = "Missions", action = "Details" } 
+            //);
+
+            routes.MapRoute(
+                "EditMissionLink",
+                "missions/edit/{link}",
+                new { controller = "Missions", action = "Edit", link = "{LinkedList}" }
+            );
+
+            routes.MapRoute(
+                "RandomMission",
+                "missions/random",
+                new { controller = "Missions", action = "Random" }
+            );
+
+            routes.MapRoute(
+                "SubmitMission",
+                "missions/submit",
+                new { controller = "Missions", action = "Submit" }
+            );
+
+
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-
-            //routes.MapRoute(
-            //    "Missions",
-            //    "MissionsController/{id}",
-            //    new { controller = "Missions", action = "Details", id = UrlParameter.Optional },
-            //    new { id = @"\d+"}
-            //);
         }
     }
 }

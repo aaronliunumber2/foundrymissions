@@ -64,6 +64,9 @@ namespace FoundryMissionsCom.Models.FoundryMissionModels
         [Required]
         public MissionStatus Status { get; set; }
 
+        [ScaffoldColumn(false)]
+        public string MissionLink { get; set; }
+
         public virtual List<MissionTagType> Tags { get; set; }
         public virtual List<YoutubeVideo> Videos { get; set; }
     }

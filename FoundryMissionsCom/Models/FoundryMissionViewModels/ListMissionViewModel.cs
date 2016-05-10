@@ -32,5 +32,6 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
         [Display(Name = "Last Updated")]
         public DateTime DateLastUpdated { get; set; }
 
+        public string MissionLink { get; set; }
     }
 }

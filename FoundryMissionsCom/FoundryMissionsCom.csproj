@@ -207,6 +207,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MissionHelper.cs" />
     <Compile Include="Helpers\MyExtensions.cs" />
     <Compile Include="Helpers\SeedDataHelper.cs" />
     <Compile Include="Migrations\FoundryMissionsMigrations\201604160604482_UserSetup.cs" />
@@ -224,6 +225,10 @@
     <Compile Include="Migrations\FoundryMissionsMigrations\201604230626527_MissionRelations.cs" />
     <Compile Include="Migrations\FoundryMissionsMigrations\201604230626527_MissionRelations.Designer.cs">
       <DependentUpon>201604230626527_MissionRelations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\FoundryMissionsMigrations\201605100430465_MissionLink.cs" />
+    <Compile Include="Migrations\FoundryMissionsMigrations\201605100430465_MissionLink.Designer.cs">
+      <DependentUpon>201605100430465_MissionLink.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\FoundryMissionsMigrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -336,6 +341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\FoundryMissionsMigrations\201604230626527_MissionRelations.resx">
       <DependentUpon>201604230626527_MissionRelations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\FoundryMissionsMigrations\201605100430465_MissionLink.resx">
+      <DependentUpon>201605100430465_MissionLink.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

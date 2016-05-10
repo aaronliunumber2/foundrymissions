@@ -6,13 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace FoundryMissionsCom.Helpers
 {
     public class SeedDataHelper
     {
 
-        public static void AddUsersAndRoles(ApplicationDbContext context)
+        internal static void AddUsersAndRoles(ApplicationDbContext context)
         {
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
@@ -38,7 +39,7 @@ namespace FoundryMissionsCom.Helpers
             CreateRole(context, "Administrator", usersToAdd);
         }
 
-        public static List<MissionTagType> GetMissionTagTypes()
+        internal static List<MissionTagType> GetMissionTagTypes()
         {
             List<MissionTagType> tags = new List<MissionTagType>()
             {
@@ -52,6 +53,17 @@ namespace FoundryMissionsCom.Helpers
 
 
             return tags;
+        }
+
+        internal static void SetMissionLinks(ApplicationDbContext context)
+        {
+            var noLinkMissions = context.Missions.Where(m => string.IsNullOrEmpty(m.MissionLink)).ToList();
+
+            foreach (var mission in noLinkMissions)
+            {
+                mission.MissionLink = MissionHelper.GetMissionLink(context, mission);
+                context.SaveChanges();
+            }
         }
 
         private static void CreateRole(ApplicationDbContext context, string role, List<ApplicationUser> usersToAdd)

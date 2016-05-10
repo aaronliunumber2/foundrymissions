@@ -23,7 +23,7 @@
             <ul class="list-group">
                 @foreach (Mission mission in ViewBag.RandomMissions)
                 {
-                    <li class="list-group-item">@Html.ActionLink(mission.Name, "details", "missions", new { id = mission.Id }, new { } ) - By: @Html.ActionLink(mission.Author.CrypticTag, "details", "authors", new { username = mission.Author.UserName }, new { }) - @mission.Faction</li>
+                    <li class="list-group-item">@Html.ActionLink(mission.Name, "details", "missions", new { link = mission.MissionLink }, new { } ) - By: @Html.ActionLink(mission.Author.CrypticTag, "details", "authors", new { username = mission.Author.UserName }, new { }) - @mission.Faction</li>
                 }
             </ul>
         </section><!-- Missions -->
@@ -32,7 +32,7 @@
             <ul class="list-group">
                 @foreach (Mission mission in ViewBag.RecentlyUpdatedMissions)
                 {
-                    <li class="list-group-item">@Html.ActionLink(mission.Name, "details", "missions", new { id = mission.Id }, new { }) - By: @Html.ActionLink(mission.Author.CrypticTag, "details", "authors", new { username = mission.Author.UserName }, new { }) - @mission.Faction</li>
+                    <li class="list-group-item">@Html.ActionLink(mission.Name, "details", "missions", new { link = mission.MissionLink }, new { }) - By: @Html.ActionLink(mission.Author.CrypticTag, "details", "authors", new { username = mission.Author.UserName }, new { }) - @mission.Faction</li>
                 }
             </ul>
         </section>

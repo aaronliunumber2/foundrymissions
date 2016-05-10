@@ -38,8 +38,9 @@ namespace FoundryMissionsCom.Migrations.FoundryMissionsMigrations
                 SeedDataHelper.GetMissionTagTypes().ToArray()
             );
 
-
             context.SaveChanges();
+
+            SeedDataHelper.SetMissionLinks(context);
         }
     }
 }

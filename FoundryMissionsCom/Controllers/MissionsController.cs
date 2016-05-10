@@ -10,6 +10,7 @@ using FoundryMissionsCom.Models;
 using FoundryMissionsCom.Models.FoundryMissionModels;
 using FoundryMissionsCom.Models.FoundryMissionModels.Enums;
 using FoundryMissionsCom.Models.FoundryMissionViewModels;
+using FoundryMissionsCom.Helpers;
 
 namespace FoundryMissionsCom.Controllers
 {
@@ -24,13 +25,13 @@ namespace FoundryMissionsCom.Controllers
         }
 
         // GET: Missions/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(string link)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(link))
             {
                 return RedirectToAction("index", "home");
             }
-            Mission mission = db.Missions.Find(id);
+            Mission mission = db.Missions.Where(m => m.MissionLink.Equals(link)).FirstOrDefault();
             if (mission == null)
             {
                 return HttpNotFound();
@@ -103,6 +104,7 @@ namespace FoundryMissionsCom.Controllers
                 mission.Name = missionViewModel.Name;
                 mission.Published = missionViewModel.Published;
                 mission.Spotlit = missionViewModel.Spotlit;
+                mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
 
                 #endregion
 
@@ -136,13 +138,13 @@ namespace FoundryMissionsCom.Controllers
             return View(missionViewModel);
         }
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string link)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(link))
             {
                 return RedirectToAction("index", "home");
             }
-            Mission mission = db.Missions.Find(id);
+            Mission mission = db.Missions.Where(m => m.MissionLink.Equals(link)).FirstOrDefault();
             if (mission == null)
             {
                 return HttpNotFound();
@@ -178,6 +180,7 @@ namespace FoundryMissionsCom.Controllers
             editModel.MinimumLevel = mission.MinimumLevel;
             editModel.Spotlit = mission.Spotlit;
             editModel.Published = mission.Published;
+            mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
 
             ViewBag.PublishedSelectList = new SelectList(publishedSelectItems, "Value", "Text");
 
@@ -210,9 +213,9 @@ namespace FoundryMissionsCom.Controllers
 
         public ActionResult Random()
         {
-            int missionId = db.Missions.OrderBy(m => Guid.NewGuid()).Select(m => m.Id).FirstOrDefault();
+            var missionLink = db.Missions.OrderBy(m => Guid.NewGuid()).Select(m => m.MissionLink).FirstOrDefault();
 
-            return RedirectToAction("details", new { id = missionId });
+            return RedirectToAction("details", new { link = missionLink });
         }
 
         public ActionResult Search(string q)
@@ -236,8 +239,9 @@ namespace FoundryMissionsCom.Controllers
                     MinimumLevel = mission.MinimumLevel,
                     Faction = mission.Faction,
                     DateLastUpdated = mission.DateLastUpdated,
-                    FactionImageUrl = GetFactionImageUrl(mission.Faction),
-                    LevelImageUrl = GetLevelImageUrl(mission.MinimumLevel),
+                    FactionImageUrl = MissionHelper.GetFactionImageUrl(mission.Faction),
+                    LevelImageUrl = MissionHelper.GetLevelImageUrl(mission.MinimumLevel),
+                    MissionLink = mission.MissionLink
                 };
 
                 listMissions.Add(listMission);
@@ -245,17 +249,6 @@ namespace FoundryMissionsCom.Controllers
 
             return View(listMissions);
         }
-
-        private string GetLevelImageUrl(int minimumLevel)
-        {
-            return "";
-        }
-
-        private string GetFactionImageUrl(Faction faction)
-        {
-            return "";
-        }
-
 
 
         #region  Auto generated
