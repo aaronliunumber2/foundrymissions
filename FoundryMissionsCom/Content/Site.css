@@ -34,28 +34,37 @@ textarea {
 
 /* Hide things due to size*/
 
-    @media (min-width: 768px) 
-    {
-        .searchbar{
-            display: none;
-        }
-
+    .search-results-header{
+        display: none;
     }
 
-    @media (min-width: 992px)
-    {
-        .searchbar{
-            display: initial;
-        }
+    .searchbar{
+        display: none;
     }
 
-    /* have to do this after*/
-    @media (max-width: 768px) 
-    {
-        .jumbotron{
-            display: none;
-        }
+
+@media (min-width: 768px) 
+{   
+    .search-results-header{
+        display: block;
     }
+
+}
+
+@media (min-width: 992px)
+{
+    .searchbar{
+        display: initial;
+    }
+}
+
+/* have to do this after*/
+@media (max-width: 768px) 
+{
+    .jumbotron{
+        display: none;
+    }
+}
 
 body {
     background-color: #1e2b37;
@@ -88,7 +97,7 @@ nav.navbar {
     background-color: #001;
 }
 
-li.list-group-item {
+li.list-group-item.mission, .search-result{
     border: none;
     border-top: 1px gray solid;
     background-color: #001;
@@ -208,4 +217,14 @@ select#reviewrating {
 
 div.content {
     background-color: #001;
+}
+
+/* Search Results */
+
+.search-result, .search-results-header{
+    padding: .5em;
+}
+
+.search-results-header{
+    font-weight : bold;
 }

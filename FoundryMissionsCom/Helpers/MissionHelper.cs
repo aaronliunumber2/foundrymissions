@@ -11,7 +11,7 @@ namespace FoundryMissionsCom.Helpers
 {
     public static class MissionHelper
     {
-        private static string[] RestrictedMissionNames = { "SUBMIT", "DETAILS", "RANDOM", "EDIT", "SEARCH", "ADVSEARCH" };
+        private static string[] RestrictedMissionNames = { "SUBMIT", "DETAILS", "RANDOM", "EDIT", "SEARCH", "ADVANCED-SEARCH" };
 
         /// <summary>
         /// Get what the mission's link should be
@@ -23,8 +23,8 @@ namespace FoundryMissionsCom.Helpers
             var link = mission.Name;
    
             var counter = 1;
-            link = link.Replace(' ', '-'); // change spaces
             link = Regex.Replace(link, @"\p{P}", ""); //remove punctuation
+            link = link.Replace(' ', '-'); // change spaces
             link = link.ToLower();//lowercase
 
             var originalLink = link;
@@ -51,12 +51,59 @@ namespace FoundryMissionsCom.Helpers
             return RestrictedMissionNames.Contains(name.ToUpper());
         }
 
-        public static string GetLevelImageUrl(int minimumLevel, Faction faction)
+        public static string GetSmallLevelImageUrl(int minimumLevel, Faction faction)
+        {
+            var url = "small_";
+
+            if (minimumLevel >= 60)
+            {
+                url += "fleetadmiral_";
+            }
+            if (minimumLevel >= 50)
+            {
+                url += "viceadmiral_";
+            }
+            else if (minimumLevel >= 40)
+            {
+                url += "rearadmiral_";
+            }
+            else if (minimumLevel >= 30)
+            {
+                url += "captain_";
+            }
+            else if (minimumLevel >= 20)
+            {
+                url += "commander_";
+            }
+            else if (minimumLevel >= 10)
+            {
+                url += "ltcommander_";
+            }
+            else
+            {
+                url += "lieutenant_";
+            }
+
+            url += faction.ToString().ToLower();
+
+            url += ".png";
+
+            return url;
+        }
+
+        public static string GetSmallFactionImageUrl(Faction faction)
+        {
+            var url = "small_" + faction.ToString().ToLower() + ".png";
+
+            return url;
+        }
+
+        public static string GetBigLevelImageUrl(int minimumLevel, Faction faction)
         {
             return "";
         }
 
-        public static string GetFactionImageUrl(Faction faction)
+        public static string GetBigFactionImageUrl(Faction faction)
         {
             return "";
         }

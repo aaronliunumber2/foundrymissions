@@ -239,8 +239,8 @@ namespace FoundryMissionsCom.Controllers
                     MinimumLevel = mission.MinimumLevel,
                     Faction = mission.Faction,
                     DateLastUpdated = mission.DateLastUpdated,
-                    FactionImageUrl = MissionHelper.GetFactionImageUrl(mission.Faction),
-                    LevelImageUrl = MissionHelper.GetLevelImageUrl(mission.MinimumLevel),
+                    FactionImageUrl = MissionHelper.GetSmallFactionImageUrl(mission.Faction),
+                    LevelImageUrl = MissionHelper.GetSmallLevelImageUrl(mission.MinimumLevel, mission.Faction),
                     MissionLink = mission.MissionLink
                 };
 

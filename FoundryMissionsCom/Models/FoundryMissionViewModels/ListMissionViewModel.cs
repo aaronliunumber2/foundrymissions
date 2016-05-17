@@ -19,7 +19,7 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
         [Display(Name ="Author")]
         public ApplicationUser Author { get; set; }
 
-        [Display(Name = "Minimum Level")]
+        [Display(Name = "Level")]
         public int MinimumLevel { get; set; }
 
         public string LevelImageUrl { get; set; }
@@ -29,7 +29,7 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
         public string FactionImageUrl { get; set; }
 
         [DataType(DataType.Date)]
-        [Display(Name = "Last Updated")]
+        [Display(Name = "Updated")]
         public DateTime DateLastUpdated { get; set; }
 
         public string MissionLink { get; set; }

@@ -13,17 +13,6 @@ namespace FoundryMissionsCom
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                "MissionLink",
-                "missions/{link}",
-                new { controller = "Missions", action = "Details" }
-            );
-
-            //routes.MapRoute(
-            //    "MissionLink",
-            //    "missions/details/{link}",
-            //    new { controller = "Missions", action = "Details" } 
-            //);
 
             routes.MapRoute(
                 "EditMissionLink",
@@ -43,7 +32,17 @@ namespace FoundryMissionsCom
                 new { controller = "Missions", action = "Submit" }
             );
 
+            routes.MapRoute(
+                "SearchMission",
+                "missions/search",
+                new { controller = "Missions", action = "Search" }
+            );
 
+            routes.MapRoute(
+                "MissionLink",
+                "missions/{link}",
+                new { controller = "Missions", action = "Details" }
+            );
 
             routes.MapRoute(
                 name: "Default",
