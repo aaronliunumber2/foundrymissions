@@ -31,7 +31,7 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
         public Faction Faction { get; set; }
 
         [Required]
-        [Range(1, Double.MaxValue, ErrorMessage = "The minimum level must be 1 or greater.")]
+        [Range(1, 60, ErrorMessage = "Minimum level must be between 1 and 60.")]
         [Display(Name = "Minimum Level")]
         public int MinimumLevel { get; set; }
 

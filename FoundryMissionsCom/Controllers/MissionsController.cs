@@ -220,6 +220,12 @@ namespace FoundryMissionsCom.Controllers
 
         public ActionResult Search(string q)
         {
+
+            if (string.IsNullOrEmpty(q))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             string upperQuery = q.ToUpper();
             List<ListMissionViewModel> listMissions = new List<ListMissionViewModel>();
             var missions = db.Missions.Where(m => m.Author.UserName.ToUpper().Contains(upperQuery) ||

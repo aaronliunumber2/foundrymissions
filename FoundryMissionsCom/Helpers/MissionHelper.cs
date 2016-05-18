@@ -59,7 +59,7 @@ namespace FoundryMissionsCom.Helpers
             {
                 url += "fleetadmiral_";
             }
-            if (minimumLevel >= 50)
+            else if (minimumLevel >= 50)
             {
                 url += "viceadmiral_";
             }

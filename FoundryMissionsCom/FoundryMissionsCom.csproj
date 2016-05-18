@@ -259,8 +259,10 @@
     <Content Include="Content\Images\small_captain_klingon.png" />
     <Content Include="Content\Images\small_commander_federation.png" />
     <Content Include="Content\Images\small_commander_klingon.png" />
+    <Content Include="Content\Images\small_federation.png" />
     <Content Include="Content\Images\small_fleetadmiral_federation.png" />
     <Content Include="Content\Images\small_fleet_admiral_klingon.png" />
+    <Content Include="Content\Images\small_klingon.png" />
     <Content Include="Content\Images\small_lieutenant_federation.png" />
     <Content Include="Content\Images\small_lieutenant_klingon.png" />
     <Content Include="Content\Images\small_ltcommander_federation.png" />
