@@ -57,7 +57,26 @@ namespace FoundryMissionsCom.Controllers
                 }
             }
 
-            return View(mission);
+            ViewMissionViewModel viewMission = new ViewMissionViewModel()
+            {
+                Id = mission.Id,
+                Author = mission.Author,
+                CrypticId = mission.CrypticId,
+                Name = mission.Name,
+                Description = mission.Description,
+                Faction = mission.Faction,
+                FactionImageUrl = MissionHelper.GetBigFactionImageUrl(mission.Faction),
+                MinimumLevel = mission.MinimumLevel,
+                MinimumLevelImageUrl = MissionHelper.GetBigLevelImageUrl(mission.MinimumLevel, mission.Faction),
+                DateLastUpdated = mission.DateLastUpdated,
+                Tags = mission.Tags,
+                Videos = mission.Videos,
+                Images = new List<string>()
+            };
+
+            //It's okay to show the mission now
+
+            return View(viewMission);
         }
 
         // GET: Missions/Submit

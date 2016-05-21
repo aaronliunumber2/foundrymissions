@@ -1,6 +1,6 @@
 ﻿@using FoundryMissionsCom.Helpers;
 
-@model FoundryMissionsCom.Models.FoundryMissionModels.Mission
+@model FoundryMissionsCom.Models.FoundryMissionViewModels.ViewMissionViewModel
 
 @{
 
@@ -21,27 +21,45 @@
 <div class="container content">
 
     <article>
-        <header><h1>@Model.Name</h1></header>
-    </article>
-    <div class="missionbanner"></div>
-    <div class="row">
-        <section class="col-md-12 mission">
-            <aside class="missioninfo">
-                <p>Author: <a href="/author/zorbane/">@Model.Author.CrypticTag</a></p>
-                <p>Faction: <span class="@Model.Faction">@Html.DisplayFor(e => Model.Faction)</span></p>
-                <p>Level: @Model.MinimumLevel+</p><p>Length: @Model.Length.DisplayName()</p>
-                <p>Code: ST-@Model.CrypticId</p>
-                <p>First Published: @Model.DateAdded.ToShortDateString()</p>
-                <p>Last Updated: @Model.DateLastUpdated.ToShortDateString()</p>
-                @if (Model.Tags.Count > 0)
-                {
-                    var tags = "Tags: " + String.Join(", ", Model.Tags);
-                    <p>@tags</p>
-                }
-            </aside>
-            <div class="missiondescription">
-                <p><span style="white-space: pre-line">@Model.Description</span></p>
+        <div class="row mission-header">
+            <div class="col-md-4 col-xs-12">
+                <header>
+                    <h1>@Model.Name</h1>
+                </header>
+                <div class="missioninfo">
+                    @Model.Author.CrypticTag
+                </div>
+                <div class="missioninfo">
+                    ST-@Model.CrypticId
+                </div>
             </div>
-        </section>
-    </div>    
+            <div class="col-md-offset-4  col-xs-12 mission-restrictions">
+                <div>
+                    <img src="@Url.Content("~/Content/Images/"+Model.FactionImageUrl)" title="@Model.Faction.ToString()"/>
+                </div>
+                <div>
+                    @if (@Model.MinimumLevel == 1)
+                    {
+                        <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" title="Any Level" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" title="Level @Model.MinimumLevel+" />
+                    }
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="">
+            <section class="col-md-12 mission ">
+                <div class="missiondescription ">
+                    <p><span style="white-space: pre-line">@Model.Description</span></p>
+                </div>
+            </section>
+        </div>
+    </article>
 </div>
+
+<footer>
+    <p>Last Updated: @Model.DateLastUpdated.ToShortDateString()</p>
+</footer>

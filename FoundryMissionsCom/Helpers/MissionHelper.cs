@@ -100,12 +100,12 @@ namespace FoundryMissionsCom.Helpers
 
         public static string GetBigLevelImageUrl(int minimumLevel, Faction faction)
         {
-            return "";
+            return "big_captain_federation.png";
         }
 
         public static string GetBigFactionImageUrl(Faction faction)
         {
-            return "";
+            return "big_federation.png";
         }
     }
 }

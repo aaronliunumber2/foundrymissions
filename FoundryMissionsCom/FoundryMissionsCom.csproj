@@ -242,6 +242,7 @@
     <Compile Include="Models\FoundryMissionViewModels\EditMissionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ListMissionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\SubmitMissionViewModel.cs" />
+    <Compile Include="Models\FoundryMissionViewModels\ViewMissionViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
