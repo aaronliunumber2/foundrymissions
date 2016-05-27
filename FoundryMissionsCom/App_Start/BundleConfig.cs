@@ -26,8 +26,24 @@ namespace FoundryMissionsCom
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            //my bundles
+
             bundles.Add(new ScriptBundle("~/bundles/mission").Include(
                       "~/Scripts/mission.js"));
+
+            bundles.Add(new StyleBundle("~/Content/lightbox").Include(
+                      "~/Content/blueimp-gallery.min.css",
+                      "~/Content/bootstrap-image-gallery.min.css"
+                ));
+            bundles.Add(new ScriptBundle("~/bundles/lightbox").Include(
+                      "~/Scripts/jquery.blueimp-gallery.min.js",
+                      "~/Scripts/bootstrap-image-gallery.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/jscrollpane").Include(
+                "~/Content/jquery.jscrollpane.css"));      
+            bundles.Add(new ScriptBundle("~/bundles/jscrollpane").Include(
+                "~/Scriptts/jquery.jscrollpane.min.js"));
         }
     }
 }

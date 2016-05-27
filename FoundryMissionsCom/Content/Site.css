@@ -103,17 +103,6 @@ li.list-group-item.mission, .search-result{
     background-color: #001;
 }
 
-.bannerimage img {
-    display: block;
-    margin: 0 auto;
-    max-width:100%;
-    max-height:100%;
-}
-
-#databasebannertext {
-    margin-bottom: 0;
-}
-
 footer#pagefooter {
     margin-top: 2em;
     font-size: 80%;
@@ -165,6 +154,9 @@ ul.gameplay-tags {
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+        div.mission-tags {
+            max-height : 125px;
+        }
     }
 }
 
@@ -176,49 +168,77 @@ ul.gameplay-tags {
 /* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {  }
 
-
-
-div.missiondescription{
-    color: #E8E8E8;
-}
-
-section.mission{
-    border-style: solid;
-    border-width: 1px;
-    margin-bottom: 1em;
-}
-
 .missioninfo {
     font-weight: bold;
 }
 
 .mission-header{
+    color: #E8E8E8;
     position: relative;
+    margin-bottom: 1em;
 }
 
 .mission-restrictions{
-position: absolute;
+    position: absolute;
     bottom: 0;
     left: 0;
+    vertical-align: bottom;
 }
 
-div.screenshots {
-    margin-top: 1em;
+.mission-images {
+    height: 125px;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-bottom: 1em;
+    white-space: nowrap;
 }
 
-.thumbnail {
-    width: 150px;
-    height: 150px;
+.mission-video, .mission-image, .mission-tag-image{
+    position: relative;
     display: inline-block;
+    margin-right: 1em;
 }
 
-div#screenshotlinks {
-    display: block;
+.mission-video img, .mission-image img, .mission-tag-image img {
+    height: 100px;
 }
 
-select#reviewrating {
-    width: 100px;
+div.mission-tags{
+    color: #E8E8E8;
+    border-style: solid;
+    border-width: 2px;
+    margin-bottom: 1em;
+    height: 125px;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-bottom: 1em;
+    white-space: nowrap;
 }
+
+.mission-description-header {
+    background-color: #1e2b37;
+    margin: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: .5em;
+
+}
+
+.missiondescription{
+    color: #E8E8E8;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+    margin-bottom: 1em;
+        overflow: hidden;
+}
+
+.missiondescription p{
+    padding: .5em;
+}
+
 
 .content {
     background-color: #001;
