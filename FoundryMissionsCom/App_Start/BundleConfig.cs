@@ -40,10 +40,12 @@ namespace FoundryMissionsCom
                       "~/Scripts/jquery.blueimp-gallery.min.js",
                       "~/Scripts/bootstrap-image-gallery.min.js"));
 
-            bundles.Add(new StyleBundle("~/Content/jscrollpane").Include(
-                "~/Content/jquery.jscrollpane.css"));      
-            bundles.Add(new ScriptBundle("~/bundles/jscrollpane").Include(
-                "~/Scriptts/jquery.jscrollpane.min.js"));
+            bundles.Add(new StyleBundle("~/Content/missiondetails").Include(
+                "~/Content/jquery.jscrollpane.css",
+                "~/Content/scrollpane-styles.css"));      
+            bundles.Add(new ScriptBundle("~/bundles/missiondetails").Include(
+                "~/Scripts/jquery.jscrollpane.min.js",
+                "~/Scripts/mission-details.js"));
         }
     }
 }

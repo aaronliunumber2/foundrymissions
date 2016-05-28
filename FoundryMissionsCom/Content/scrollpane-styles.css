@@ -1,0 +1,19 @@
+﻿
+.jspHorizontalBar,
+.jspVerticalBar,
+.jspTrack
+{
+	background: #395269;
+}
+
+.jspDrag
+{
+	background:  #1e2b37;
+}
+
+.jspTrack .jspActive,
+.jspTrack .jspHover,
+.jspDrag:hover
+{
+	background: #8B8B9F;
+}

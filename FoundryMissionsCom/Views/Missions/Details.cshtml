@@ -20,122 +20,152 @@
 @section scripts{
 
     @Styles.Render("~/Content/lightbox")
-    @Styles.Render("~/Content/jscrollpane")
+    @Styles.Render("~/Content/missiondetails")
     @Scripts.Render("~/bundles/lightbox")
-    @Scripts.Render("~/bundles/jscrollpane")
-
+    @Scripts.Render("~/bundles/missiondetails")
     }
 
 
 <div class="container content">
 
     <article>
-        <div class="row mission-header">
-            <div class="col-md-4 col-xs-12">
-                <header>
-                    <h1>@Model.Name</h1>
-                </header>
-                <div class="missioninfo">
-                    <h3>@Model.Author.CrypticTag</h3>
-                </div>
-                <div class="missioninfo">
-                    ST-@Model.CrypticId
-                </div>
-            </div>
-            <div class="col-md-offset-4  col-xs-12 mission-restrictions">
-                <div>
-                    <img src="@Url.Content("~/Content/Images/"+Model.FactionImageUrl)" title="@Model.Faction.ToString()" /> @Model.Faction.ToString()
-                </div>
-                <div>
-                    @if (@Model.MinimumLevel == 1)
-                    {
-                        <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" /><text>Any Level</text>
-                    }
-                    else
-                    {
-                        <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" /><text>Level @Model.MinimumLevel+</text>
-                    }
-                </div>
-            </div>
-        </div>
         <div class="row">
-            <div class="col-md-12">
-                <div class="mission-images">
-                    @*Youtube first*@
-                    <figure class="mission-video">
-                        <a href="https://www.youtube.com/watch?v=nMxB9Ve0fbw"
-                           type="text/html"
-                           data-youtube="nMxB9Ve0fbw"
-                           data-gallery>
-                            <img src="http://img.youtube.com/vi/nMxB9Ve0fbw/0.jpg" />
-                        </a>
-                    </figure>
-                    <figure class="mission-video">
-                        <a href="https://www.youtube.com/watch?v=Me2njoQ3dAY"
-                           type="text/html"
-                           data-youtube="Me2njoQ3dAY"
-                           data-gallery>
-                            <img src="http://img.youtube.com/vi/Me2njoQ3dAY/0.jpg" />
-                        </a>
-                    </figure>
-                    @*Images*@
-                    <figure class="mission-image">
-                        <a href="@Url.Content("~/Content/Images/tempmissions/1.jpg")" data-gallery>
-                            <img src="@Url.Content("~/Content/Images/tempmissions/1-thumb.jpg")" />
-                        </a>
-                    </figure>
-                    <figure class="mission-image">
-                        <a href="@Url.Content("~/Content/Images/tempmissions/2.jpg")" data-gallery>
-                            <img src="@Url.Content("~/Content/Images/tempmissions/2-thumb.jpg")" />
-                        </a>
-                    </figure>
-                    <figure class="mission-image">
-                        <a href="@Url.Content("~/Content/Images/tempmissions/3.jpg")" data-gallery>
-                            <img src="@Url.Content("~/Content/Images/tempmissions/3-thumb.jpg")" />
-                        </a>
-                    </figure>
-                    <figure class="mission-image">
-                        <a href="@Url.Content("~/Content/Images/tempmissions/4.jpg")" data-gallery>
-                            <img src="@Url.Content("~/Content/Images/tempmissions/4-thumb.jpg")" />
-                        </a>
-                    </figure>
-                    <figure class="mission-image">
-                        <a href="@Url.Content("~/Content/Images/tempmissions/5.jpg")" data-gallery>
-                            <img src="@Url.Content("~/Content/Images/tempmissions/5-thumb.jpg")" />
-                        </a>
-                    </figure>
-                    <figure class="mission-image">
-                        <a href="@Url.Content("~/Content/Images/tempmissions/6.jpg")" data-gallery>
-                            <img src="@Url.Content("~/Content/Images/tempmissions/6-thumb.jpg")" />
-                        </a>
-                    </figure>
-                    <figure class="mission-image">
-                        <a href="@Url.Content("~/Content/Images/tempmissions/7.jpg")" data-gallery>
-                            <img src="@Url.Content("~/Content/Images/tempmissions/7-thumb.jpg")" />
-                        </a>
-                    </figure>
-                    <figure class="mission-image">
-                        <a href="@Url.Content("~/Content/Images/tempmissions/8.jpg")" data-gallery>
-                            <img src="@Url.Content("~/Content/Images/tempmissions/8-thumb.jpg")" />
-                        </a>
-                    </figure>
+            <div class="col-sm-10 col-xs-12">
+                <div class="mission-header">
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-12">
+                            <header>
+                                <h1>@Model.Name</h1>
+                            </header>
+                        </div>
+                        <div class="col-sm-8  col-xs-12 mission-restrictions">
+                            <div>
+                                <img src="@Url.Content("~/Content/Images/"+Model.FactionImageUrl)" /> @Model.Faction.ToString()
+                                @if (@Model.MinimumLevel == 1)
+                                {
+                                    <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" /><text>Any Level</text>
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" /><text>Level @Model.MinimumLevel+</text>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="missioninfo">
+                                <h3>@Model.Author.CrypticTag</h3> ST-@Model.CrypticId
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <section class="missiondescription">
-            <div class="row">
-                <div class="col-md-12 ">
-                    <header class=""><h3 class="mission-description-header">Mission Description</h3></header>
+                <div class="row">
+                    <div class="col-md-12">
+                    </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mission-images">
+                            @*Youtube first*@
+                            <figure class="mission-video">
+                                <a href="https://www.youtube.com/watch?v=nMxB9Ve0fbw"
+                                   type="text/html"
+                                   data-youtube="nMxB9Ve0fbw"
+                                   data-gallery>
+                                    <img src="http://img.youtube.com/vi/nMxB9Ve0fbw/0.jpg" />
+                                </a>
+                            </figure>
+                            <figure class="mission-video">
+                                <a href="https://www.youtube.com/watch?v=Me2njoQ3dAY"
+                                   type="text/html"
+                                   data-youtube="Me2njoQ3dAY"
+                                   data-gallery>
+                                    <img src="http://img.youtube.com/vi/Me2njoQ3dAY/0.jpg" />
+                                </a>
+                            </figure>
+                            @*Images*@
+                            <figure class="mission-image">
+                                <a href="@Url.Content("~/Content/Images/tempmissions/1.jpg")" data-gallery>
+                                    <img src="@Url.Content("~/Content/Images/tempmissions/1-thumb.jpg")" />
+                                </a>
+                            </figure>
+                            <figure class="mission-image">
+                                <a href="@Url.Content("~/Content/Images/tempmissions/2.jpg")" data-gallery>
+                                    <img src="@Url.Content("~/Content/Images/tempmissions/2-thumb.jpg")" />
+                                </a>
+                            </figure>
+                            <figure class="mission-image">
+                                <a href="@Url.Content("~/Content/Images/tempmissions/3.jpg")" data-gallery>
+                                    <img src="@Url.Content("~/Content/Images/tempmissions/3-thumb.jpg")" />
+                                </a>
+                            </figure>
+                            <figure class="mission-image">
+                                <a href="@Url.Content("~/Content/Images/tempmissions/4.jpg")" data-gallery>
+                                    <img src="@Url.Content("~/Content/Images/tempmissions/4-thumb.jpg")" />
+                                </a>
+                            </figure>
+                            <figure class="mission-image">
+                                <a href="@Url.Content("~/Content/Images/tempmissions/5.jpg")" data-gallery>
+                                    <img src="@Url.Content("~/Content/Images/tempmissions/5-thumb.jpg")" />
+                                </a>
+                            </figure>
+                            <figure class="mission-image">
+                                <a href="@Url.Content("~/Content/Images/tempmissions/6.jpg")" data-gallery>
+                                    <img src="@Url.Content("~/Content/Images/tempmissions/6-thumb.jpg")" />
+                                </a>
+                            </figure>
+                            <figure class="mission-image">
+                                <a href="@Url.Content("~/Content/Images/tempmissions/7.jpg")" data-gallery>
+                                    <img src="@Url.Content("~/Content/Images/tempmissions/7-thumb.jpg")" />
+                                </a>
+                            </figure>
+                            <figure class="mission-image">
+                                <a href="@Url.Content("~/Content/Images/tempmissions/8.jpg")" data-gallery>
+                                    <img src="@Url.Content("~/Content/Images/tempmissions/8-thumb.jpg")" />
+                                </a>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+                <section class="missiondescription">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <header class=""><h3 class="mission-description-header">Mission Description</h3></header>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <p><span style="white-space: pre-line">@Model.Description</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-            <div class="row">
-                <div class="col-md-12">
+            <div class="col-sm-2 col-xs-12">
+                <div class="mission-tags">
+                    <div><h4 class="mission-tag-header">Mission Tags</h4></div>
                     <div>
-                        <p><span style="white-space: pre-line">@Model.Description</span></p>
+                        <figure class="mission-tag-image">
+                            <div><img src="@Url.Content("~/Content/Images/Tags/ground-combat.jpg")" title="Ground Combat" /></div>
+                        </figure>
+                        <figure class="mission-tag-image">
+                            <img src="@Url.Content("~/Content/Images/Tags/space-combat.jpg")" title="Space Combat" />
+                        </figure>
+                        <figure class="mission-tag-image">
+                            <img src="@Url.Content("~/Content/Images/Tags/single-player.jpg")" title="Single Player" />
+                        </figure>
+                        <figure class="mission-tag-image">
+                            <img src="@Url.Content("~/Content/Images/Tags/multi-player.jpg")" title="Multi Player" />
+                        </figure>
+                        <figure class="mission-tag-image">
+                            <img src="@Url.Content("~/Content/Images/Tags/klingon.jpg")" title="Klingon" />
+                        </figure>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </article>
 </div>
 

@@ -148,15 +148,9 @@ ul.gameplay-tags {
 /* Mission Details */
 
 /* extra small devices */
-    aside.missioninfo {
-           margin-bottom: 5px;
-    }
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-        div.mission-tags {
-            max-height : 125px;
-        }
     }
 }
 
@@ -172,49 +166,75 @@ ul.gameplay-tags {
     font-weight: bold;
 }
 
+.missioninfo > h3 { 
+    display: inline-block; 
+    margin-top:0px;
+}
+
 .mission-header{
     color: #E8E8E8;
     position: relative;
+}
+
+.mission-restrictions {
+    top: 1em;
+}
+
+@media (min-width: 768px) {
+    .mission-restrictions{
+        text-align: right;
+    }
+}
+
+.mission-images{
     margin-bottom: 1em;
 }
 
-.mission-restrictions{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    vertical-align: bottom;
-}
-
-.mission-images {
+.mission-images{
     height: 125px;
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
-    margin-bottom: 1em;
     white-space: nowrap;
 }
 
-.mission-video, .mission-image, .mission-tag-image{
+.mission-video, .mission-image{
     position: relative;
     display: inline-block;
     margin-right: 1em;
 }
 
-.mission-video img, .mission-image img, .mission-tag-image img {
+.mission-video img, .mission-image img {
     height: 100px;
 }
 
-div.mission-tags{
+.mission-tags{
+    text-align: center;
     color: #E8E8E8;
-    border-style: solid;
-    border-width: 2px;
-    margin-bottom: 1em;
-    height: 125px;
+    border-radius: 10px;
+    border: solid 1px;
+    margin-top: 1em;
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    margin-bottom: 1em;
-    white-space: nowrap;
+    overflow: hidden;
+}
+
+.mission-tag-image {
+    
+    display: inline-block;
+    padding-left: 5px;
+    padding-bottom: 1em;
+}
+
+.mission-tag-image img {
+    height: 50px;
+}
+
+.mission-tag-header {
+    background-color: #1e2b37;
+    margin: 0px;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    margin-bottom: .5em;
 }
 
 .mission-description-header {
@@ -229,10 +249,9 @@ div.mission-tags{
 .missiondescription{
     color: #E8E8E8;
     border-radius: 10px;
-    border-style: solid;
-    border-width: 1px;
+    border: solid 1px;
     margin-bottom: 1em;
-        overflow: hidden;
+    overflow: hidden;
 }
 
 .missiondescription p{

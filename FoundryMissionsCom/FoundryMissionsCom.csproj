@@ -280,6 +280,8 @@
     <Content Include="Content\Images\small_viceadmiral_federation.png" />
     <Content Include="Content\Images\small_viceadmiral_klingon.png" />
     <Content Include="Content\Images\Tags\ground-combat.jpg" />
+    <Content Include="Content\Images\Tags\multi-player.jpg" />
+    <Content Include="Content\Images\Tags\single-player.jpg" />
     <Content Include="Content\Images\Tags\space-combat.jpg" />
     <Content Include="Content\Images\tempmissions\1-thumb.jpg" />
     <Content Include="Content\Images\tempmissions\1.jpg" />
@@ -297,7 +299,9 @@
     <Content Include="Content\Images\tempmissions\7.jpg" />
     <Content Include="Content\Images\tempmissions\8-thumb.jpg" />
     <Content Include="Content\Images\tempmissions\8.jpg" />
+    <Content Include="Content\Images\ui-icons.png" />
     <Content Include="Content\jquery.jscrollpane.css" />
+    <Content Include="Content\scrollpane-styles.css" />
     <Content Include="EF Package Manager.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -323,6 +327,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\mission-details.js" />
     <Content Include="Scripts\mission.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
