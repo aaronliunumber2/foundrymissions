@@ -280,6 +280,7 @@
     <Content Include="Content\Images\small_viceadmiral_federation.png" />
     <Content Include="Content\Images\small_viceadmiral_klingon.png" />
     <Content Include="Content\Images\Tags\ground-combat.jpg" />
+    <Content Include="Content\Images\Tags\klingon.jpg" />
     <Content Include="Content\Images\Tags\multi-player.jpg" />
     <Content Include="Content\Images\Tags\single-player.jpg" />
     <Content Include="Content\Images\Tags\space-combat.jpg" />
