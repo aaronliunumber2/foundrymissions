@@ -1,6 +1,7 @@
 ﻿using FoundryMissionsCom.Models;
 using FoundryMissionsCom.Models.FoundryMissionModels;
 using FoundryMissionsCom.Models.FoundryMissionModels.Enums;
+using FoundryMissionsCom.Models.FoundryMissionViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,6 +107,31 @@ namespace FoundryMissionsCom.Helpers
         public static string GetBigFactionImageUrl(Faction faction)
         {
             return "big_federation.png";
+        }
+
+        public static List<ListMissionViewModel> GetListMissionViewModels(List<Mission> missions)
+        {
+            List<ListMissionViewModel> listMissions = new List<ListMissionViewModel>();
+            foreach (var mission in missions)
+            {
+                var listMission = new ListMissionViewModel()
+                {
+                    Id = mission.Id,
+                    Name = mission.Name,
+                    CrypticId = mission.CrypticId,
+                    Author = mission.Author,
+                    MinimumLevel = mission.MinimumLevel,
+                    Faction = mission.Faction,
+                    DateLastUpdated = mission.DateLastUpdated,
+                    FactionImageUrl = MissionHelper.GetSmallFactionImageUrl(mission.Faction),
+                    LevelImageUrl = MissionHelper.GetSmallLevelImageUrl(mission.MinimumLevel, mission.Faction),
+                    MissionLink = mission.MissionLink
+                };
+
+                listMissions.Add(listMission);
+            }
+
+            return listMissions;
         }
     }
 }

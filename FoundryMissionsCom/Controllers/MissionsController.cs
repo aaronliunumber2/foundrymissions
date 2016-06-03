@@ -246,33 +246,19 @@ namespace FoundryMissionsCom.Controllers
             }
 
             string upperQuery = q.ToUpper();
-            List<ListMissionViewModel> listMissions = new List<ListMissionViewModel>();
+            
             var missions = db.Missions.Where(m => m.Author.UserName.ToUpper().Contains(upperQuery) ||
                                              m.CrypticId.ToUpper().Contains(upperQuery) ||
                                              m.Description.ToUpper().Contains(upperQuery) ||
                                              m.Name.ToUpper().Contains(upperQuery)).ToList();
-
-
-            foreach(var mission in missions)
-            {
-                var listMission = new ListMissionViewModel()
-                {
-                    Id = mission.Id,
-                    Name = mission.Name,
-                    CrypticId = mission.CrypticId,
-                    Author = mission.Author,
-                    MinimumLevel = mission.MinimumLevel,
-                    Faction = mission.Faction,
-                    DateLastUpdated = mission.DateLastUpdated,
-                    FactionImageUrl = MissionHelper.GetSmallFactionImageUrl(mission.Faction),
-                    LevelImageUrl = MissionHelper.GetSmallLevelImageUrl(mission.MinimumLevel, mission.Faction),
-                    MissionLink = mission.MissionLink
-                };
-
-                listMissions.Add(listMission);
-            }
+            List<ListMissionViewModel> listMissions = MissionHelper.GetListMissionViewModels(missions);
 
             return View(listMissions);
+        }
+
+        public ActionResult AdvancedSearch()
+        {
+            return View();
         }
 
 

@@ -1,6 +1,6 @@
-﻿@model FoundryMissionsCom.Models.IndexViewModel
+﻿@model FoundryMissionsCom.Models.ManageIndexViewModel
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = "User Control Panel";
 }
 
 @section opengraph{
@@ -9,82 +9,34 @@
 
     }
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 
-<p class="text-success">@ViewBag.StatusMessage</p>
-<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Change your password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
-        </dd>
-        <dt>External Logins:</dt>
-        <dd>
-            @Model.Logins.Count [
-            @Html.ActionLink("Manage", "ManageLogins") ]
-        </dd>
-        @*
-            Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-             
-             See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-             
-             Uncomment the following block after you have set up two-factor authentication
-        *@
-        @*  
-            <dt>Phone Number:</dt>
-            <dd>
-                @(Model.PhoneNumber ?? "None") [
-                @if (Model.PhoneNumber != null)
-                {
-                    @Html.ActionLink("Change", "AddPhoneNumber")
-                    @: &nbsp;|&nbsp;
-                    @Html.ActionLink("Remove", "RemovePhoneNumber")
-                }
-                else
-                {
-                    @Html.ActionLink("Add", "AddPhoneNumber")
-                }
-                ]
-            </dd>
-        *@
-        <dt>Two-Factor Authentication:</dt>
-        <dd>
-            <p>
-                There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication.
-            </p>
-            @*@if (Model.TwoFactor)
-                {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Enabled
-                        <input type="submit" value="Disable" class="btn btn-link" />
-                        </text>
-                    }
-                }
-                else
-                {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Disabled
-                        <input type="submit" value="Enable" class="btn btn-link" />
-                        </text>
-                    }
-                }*@
-        </dd>
-    </dl>
+<ul id="tabs" class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#myaccount">My Account</a></li>
+    <li><a data-toggle="tab" href="#mymissions">My Missions</a></li>
+    <li><a data-toggle="tab" href="#missionapproval">Mission Approval</a></li>
+    <li><a data-toggle="tab" href="#authorlist">Author List</a></li>
+</ul>
+
+<div class="tab-content content">
+    <div id="myaccount" class="tab-pane active control-panel-pane">
+        @Html.Partial("_ChangePassword", Model)
+    </div>
+    <div id="mymissions" class="tab-pane">
+        @Html.Partial("_MyMissions", Model.Missions)
+    </div>
+    <div id="missionapproval" class="tab-pane">
+
+    </div>
+    <div id="authorlist" class="tab-pane">
+
+    </div>
+
 </div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/controlpanel.js")" type="text/javascript"></script>
+}
