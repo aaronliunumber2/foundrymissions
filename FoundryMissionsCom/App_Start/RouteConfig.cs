@@ -15,12 +15,6 @@ namespace FoundryMissionsCom
 
 
             routes.MapRoute(
-                "EditMissionLink",
-                "missions/edit/{link}",
-                new { controller = "Missions", action = "Edit", link = "{LinkedList}" }
-            );
-
-            routes.MapRoute(
                 "RandomMission",
                 "missions/random",
                 new { controller = "Missions", action = "Random" }
@@ -36,6 +30,12 @@ namespace FoundryMissionsCom
                 "SearchMission",
                 "missions/search",
                 new { controller = "Missions", action = "Search" }
+            );
+
+            routes.MapRoute(
+                "EditMissionLink",
+                "missions/edit/{link}",
+                new { controller = "Missions", action = "Edit", link = "{link}" }
             );
 
             routes.MapRoute(

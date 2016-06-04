@@ -61,12 +61,12 @@
         @Html.DisplayFor(modelItem => item.DateLastUpdated)
     </div>
     <div class="col-sm-1 col-xs-12">
-        @*
+        
     @if (User.IsInRole("Admin") || (item.Author.UserName.Equals(User.Identity.Name)))
     {
-        @Html.ActionLink("Edit", "edit", new { id = item.Id });
+        @Html.ActionLink("Edit", "edit", new { link = item.MissionLink });
     }
-        *@
+        
     </div>
 
 </div>
