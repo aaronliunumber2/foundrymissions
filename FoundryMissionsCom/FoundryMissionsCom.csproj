@@ -207,6 +207,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ConstantsHelper.cs" />
     <Compile Include="Helpers\MissionHelper.cs" />
     <Compile Include="Helpers\MyExtensions.cs" />
     <Compile Include="Helpers\SeedDataHelper.cs" />
@@ -371,9 +372,10 @@
     <Content Include="Views\Missions\Details.cshtml" />
     <Content Include="Views\Missions\Edit.cshtml" />
     <Content Include="Views\Missions\Search.cshtml" />
-    <Content Include="Views\Manage\_ChangePassword.cshtml" />
+    <Content Include="Views\Manage\_MyAccount.cshtml" />
     <Content Include="Views\Manage\_MyMissions.cshtml" />
-    <Content Include="Views\Missions\AdvancedSearch.cshtml" />
+    <Content Include="Views\Missions\Advanced-Search.cshtml" />
+    <Content Include="Views\Manage\_MissionApproval.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

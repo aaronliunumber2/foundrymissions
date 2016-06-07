@@ -33,5 +33,7 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
         public DateTime DateLastUpdated { get; set; }
 
         public string MissionLink { get; set; }
+
+        public MissionStatus Status { get; set; }
     }
 }

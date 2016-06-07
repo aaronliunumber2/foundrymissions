@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FoundryMissionsCom.Models.FoundryMissionViewModels.ListMissionViewModel>
 
 <div class="container">
-    <div class="row my-missions-header">
+    <div class="row search-results-header">
         <div class="col-sm-2 col-xs-12">
             @Html.DisplayNameFor(model => model.Name)
         </div>
@@ -9,7 +9,7 @@
             @Html.DisplayNameFor(model => model.CrypticId)
         </div>
         <div class="col-sm-2 col-xs-12">
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.DisplayNameFor(model => model.Author)
         </div>
         <div class="col-sm-2 col-xs-12">
             @Html.DisplayNameFor(model => model.MinimumLevel)
@@ -21,19 +21,20 @@
             @Html.DisplayNameFor(model => model.DateLastUpdated)
         </div>
         <div class="col-sm-1 col-xs-12">
+            Action
         </div>
     </div>
     @foreach (var item in Model)
     {
-        <div class="row my-missions-result">
+        <div class="row search-result">
             <div class="col-sm-2 col-xs-12">
-                @Html.ActionLink(item.Name, "details", "missions", new { link = item.MissionLink }, new { })
+                @Html.ActionLink(item.Name, "details", new { link = item.MissionLink })
             </div>
             <div class="col-sm-2 col-xs-12">
                 ST-@Html.DisplayFor(modelItem => item.CrypticId)
             </div>
             <div class="col-sm-2 col-xs-12">
-                @Html.DisplayFor(modelItem => item.Status)
+                @Html.DisplayFor(modelItem => item.Author.CrypticTag)
             </div>
             <div class="col-sm-2 col-xs-12">
                 @if (item.MinimumLevel == 1)
@@ -52,13 +53,8 @@
                 @Html.DisplayFor(modelItem => item.DateLastUpdated)
             </div>
             <div class="col-sm-1 col-xs-12">
-                @*Put this check here just in case!!*@
-    @if (User.IsInRole("Admin") || (item.Author.UserName.Equals(User.Identity.Name)))
-    {
-        @Html.ActionLink("Edit", "edit", "missions", new { link = item.MissionLink }, new { });
-    }
+                <input type="submit" value="Approve" id="@item.Id" class="approve-button"/>
             </div>
-
         </div>
 
     }

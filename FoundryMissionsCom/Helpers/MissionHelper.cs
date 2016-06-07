@@ -123,9 +123,10 @@ namespace FoundryMissionsCom.Helpers
                     MinimumLevel = mission.MinimumLevel,
                     Faction = mission.Faction,
                     DateLastUpdated = mission.DateLastUpdated,
-                    FactionImageUrl = MissionHelper.GetSmallFactionImageUrl(mission.Faction),
-                    LevelImageUrl = MissionHelper.GetSmallLevelImageUrl(mission.MinimumLevel, mission.Faction),
-                    MissionLink = mission.MissionLink
+                    FactionImageUrl = GetSmallFactionImageUrl(mission.Faction),
+                    LevelImageUrl = GetSmallLevelImageUrl(mission.MinimumLevel, mission.Faction),
+                    MissionLink = mission.MissionLink,
+                    Status = mission.Status
                 };
 
                 listMissions.Add(listMission);

@@ -11,6 +11,8 @@ namespace FoundryMissionsCom.Models
     {
         public List<ListMissionViewModel> Missions { get; set; }
         public ChangePasswordViewModel ChangePasswordModel { get; set; }
+        public List<ListMissionViewModel> MissionsToApprove { get; set; }
+
         public ManageIndexViewModel()
         {
             ChangePasswordModel = new ChangePasswordViewModel();

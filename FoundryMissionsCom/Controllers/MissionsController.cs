@@ -256,6 +256,7 @@ namespace FoundryMissionsCom.Controllers
             return View(listMissions);
         }
 
+        [Route("Advanced-Search")]
         public ActionResult AdvancedSearch()
         {
             return View();

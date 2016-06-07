@@ -14,29 +14,34 @@
 <ul id="tabs" class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#myaccount">My Account</a></li>
     <li><a data-toggle="tab" href="#mymissions">My Missions</a></li>
+    @if (User.IsInRole(FoundryMissionsCom.Helpers.ConstantsHelper.AdminRole))
+    {
     <li><a data-toggle="tab" href="#missionapproval">Mission Approval</a></li>
     <li><a data-toggle="tab" href="#authorlist">Author List</a></li>
+    }
 </ul>
 
 <div class="tab-content content">
     <div id="myaccount" class="tab-pane active control-panel-pane">
-        @Html.Partial("_ChangePassword", Model)
+        @Html.Partial("_MyAccount")
     </div>
     <div id="mymissions" class="tab-pane">
         @Html.Partial("_MyMissions", Model.Missions)
     </div>
+    @if (User.IsInRole(FoundryMissionsCom.Helpers.ConstantsHelper.AdminRole))
+    {
     <div id="missionapproval" class="tab-pane">
-
+        @Html.Partial("_MissionApproval", Model.MissionsToApprove)
     </div>
     <div id="authorlist" class="tab-pane">
 
     </div>
-
+    }
 </div>
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/controlpanel.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/controlpanel.js")" type="text/javascript"></script>
 }
