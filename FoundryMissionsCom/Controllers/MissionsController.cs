@@ -172,7 +172,14 @@ namespace FoundryMissionsCom.Controllers
             //only people who can edit a mission are the author or an admin
             if (!mission.Author.UserName.Equals(User.Identity.Name) && !User.IsInRole("admin"))
             {
-                return RedirectToAction("index", "home");
+
+                return HttpNotFound();
+            }
+
+            //if the user is not an admin and it is removed it doesn't exisdt
+            if (mission.Status == MissionStatus.Removed && !User.IsInRole("admin"))
+            {
+                return HttpNotFound();
             }
 
             var publishedSelectItems = new List<SelectListItem>();
@@ -232,7 +239,7 @@ namespace FoundryMissionsCom.Controllers
 
         public ActionResult Random()
         {
-            var missionLink = db.Missions.OrderBy(m => Guid.NewGuid()).Select(m => m.MissionLink).FirstOrDefault();
+            var missionLink = db.Missions.OrderBy(m => Guid.NewGuid()).Where(m=> m.Status != MissionStatus.Removed).Select(m => m.MissionLink).FirstOrDefault();
 
             return RedirectToAction("details", new { link = missionLink });
         }
@@ -247,10 +254,11 @@ namespace FoundryMissionsCom.Controllers
 
             string upperQuery = q.ToUpper();
             
-            var missions = db.Missions.Where(m => m.Author.UserName.ToUpper().Contains(upperQuery) ||
+            var missions = db.Missions.Where(m => (m.Author.UserName.ToUpper().Contains(upperQuery) ||
                                              m.CrypticId.ToUpper().Contains(upperQuery) ||
                                              m.Description.ToUpper().Contains(upperQuery) ||
-                                             m.Name.ToUpper().Contains(upperQuery)).ToList();
+                                             m.Name.ToUpper().Contains(upperQuery)) &&
+                                             m.Status != MissionStatus.Removed).ToList();
             List<ListMissionViewModel> listMissions = MissionHelper.GetListMissionViewModels(missions);
 
             return View(listMissions);

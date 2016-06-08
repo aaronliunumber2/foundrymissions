@@ -2,61 +2,51 @@
 
 <div class="container">
     <div class="row my-missions-header">
-        <div class="col-sm-2 col-xs-12">
+        <div class="col-sm-3 col-xs-12">
             @Html.DisplayNameFor(model => model.Name)
         </div>
-        <div class="col-sm-2 col-xs-12">
+        <div class="col-sm-3 col-xs-12">
             @Html.DisplayNameFor(model => model.CrypticId)
         </div>
-        <div class="col-sm-2 col-xs-12">
+        <div class="col-sm-3 col-xs-12">
             @Html.DisplayNameFor(model => model.Status)
         </div>
-        <div class="col-sm-2 col-xs-12">
-            @Html.DisplayNameFor(model => model.MinimumLevel)
-        </div>
-        <div class="col-sm-2 col-xs-12">
-            @Html.DisplayNameFor(model => model.Faction)
-        </div>
-        <div class="col-sm-1 col-xs-12">
-            @Html.DisplayNameFor(model => model.DateLastUpdated)
-        </div>
-        <div class="col-sm-1 col-xs-12">
+        <div class="col-sm-3 col-xs-12">
+            Action
         </div>
     </div>
     @foreach (var item in Model)
     {
         <div class="row my-missions-result">
-            <div class="col-sm-2 col-xs-12">
+            <div class="col-sm-3 col-xs-12">
                 @Html.ActionLink(item.Name, "details", "missions", new { link = item.MissionLink }, new { })
             </div>
-            <div class="col-sm-2 col-xs-12">
+            <div class="col-sm-3 col-xs-12">
                 ST-@Html.DisplayFor(modelItem => item.CrypticId)
             </div>
-            <div class="col-sm-2 col-xs-12">
+            <div class="col-sm-3 col-xs-12 mission-status">                     
                 @Html.DisplayFor(modelItem => item.Status)
             </div>
-            <div class="col-sm-2 col-xs-12">
-                @if (item.MinimumLevel == 1)
-                {
-                    <img src="@Url.Content("~/Content/Images/" + item.LevelImageUrl)" /> <text>Any</text>
-                }
-                else
-                {
-                    <img src="@Url.Content("~/Content/Images/" + item.LevelImageUrl)" />@Html.DisplayFor(modelItem => item.MinimumLevel)<text>+</text>;
-                }
-            </div>
-            <div class="col-sm-2 col-xs-12">
-                <img src="@Url.Content("~/Content/Images/" + item.FactionImageUrl)" /> @Html.DisplayFor(modelItem => item.Faction)
-            </div>
-            <div class="col-sm-1 col-xs-12">
-                @Html.DisplayFor(modelItem => item.DateLastUpdated)
-            </div>
-            <div class="col-sm-1 col-xs-12">
+            <div class="col-sm-3 col-xs-12 mission-actions">
+
                 @*Put this check here just in case!!*@
-    @if (User.IsInRole("Admin") || (item.Author.UserName.Equals(User.Identity.Name)))
-    {
-        @Html.ActionLink("Edit", "edit", "missions", new { link = item.MissionLink }, new { });
-    }
+                    @if (User.IsInRole("Admin") || (item.Author.UserName.Equals(User.Identity.Name)))
+                    {
+                        switch (item.Status)
+                        {
+                            case FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.InReview:
+                                @Html.ActionLink("Edit", "edit", "missions", new { link = item.MissionLink }, new { @class="btn btn-default" });
+                                <input type="submit" value="Withdraw" class="btn btn-default set-status-button" mission="@item.Id" link="@item.MissionLink">
+                                break;
+                            case FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.Unpublished:
+                                @Html.ActionLink("Edit", "edit", "missions", new { link = item.MissionLink }, new { @class = "btn btn-default" });
+                                <input type="submit" value="Submit" class="btn btn-default set-status-button" mission="@item.Id" link="@item.MissionLink">
+                                break;
+                            case FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.Published:
+                                <input type="submit" value="Unpublish" class="btn btn-default set-status-button" mission="@item.Id" link="@item.MissionLink">
+                                break;
+                        }
+                    }
             </div>
 
         </div>

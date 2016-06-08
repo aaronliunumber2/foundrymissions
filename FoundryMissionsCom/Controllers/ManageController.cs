@@ -59,50 +59,67 @@ namespace FoundryMissionsCom.Controllers
         //
         // GET: /Manage/Index
         public ActionResult Index()
-        {        
+        {
             var model = new ManageIndexViewModel();
 
-            var missions = db.Missions.Where(m => m.Author.UserName.Equals(User.Identity.Name)).ToList();
+            var missions = db.Missions.Where(m => m.Author.UserName.Equals(User.Identity.Name) && m.Status != MissionStatus.Removed).ToList();
             model.Missions = MissionHelper.GetListMissionViewModels(missions);
 
             if (User.IsInRole(ConstantsHelper.AdminRole))
             {
-                model.MissionsToApprove = MissionHelper.GetListMissionViewModels(db.Missions.Where(m => m.Status == Models.FoundryMissionModels.Enums.MissionStatus.InReview).ToList());
+                model.MissionsToApprove = MissionHelper.GetListMissionViewModels(db.Missions.Where(m => m.Status == Models.FoundryMissionModels.Enums.MissionStatus.InReview).OrderBy(m => m.DateLastUpdated).ToList());
             }
 
             return View(model);
         }
 
         [HttpPost]
-        public JsonResult SetMissionStatus(int id, string missionstatus)
+        public JsonResult SubmitMission(int id) 
+        {
+            //check if the user is auto approved, if so set it to published, otherwise set it to review
+            string userId = User.Identity.GetUserId();
+            ApplicationUser user = db.Users.FirstOrDefault(u => u.Id.Equals(userId));
+
+            if (user == null)
+            {
+                return Json(new { success = "false", message = "Unable to find user info." });
+            }
+
+            if (user.AutoApproval || User.IsInRole(ConstantsHelper.AdminRole))
+            {
+                return SetMissionStatus(id, MissionStatus.Published);
+            }
+            else
+            {
+                return SetMissionStatus(id, MissionStatus.InReview);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult WithdrawMission(int id)
+        {
+            return SetMissionStatus(id, MissionStatus.Unpublished);
+        }
+
+        private JsonResult SetMissionStatus(int id, MissionStatus status)
         {
             Mission mission = db.Missions.FirstOrDefault(m => m.Id.Equals(id));
 
             if (mission == null)
             {
-                return Json("Unable to find mission.");
+                return Json(new { success = "false", message = "Unable to find mission." });
             }
 
             //need to check if the user is allowed to change the mission status.  Either mission owner or role is admin
             if (mission.Author.Id.Equals(User.Identity.GetUserId()) || User.IsInRole(ConstantsHelper.AdminRole))
             {
-                MissionStatus status;
-                if (Enum.TryParse(missionstatus, out status))
-                {
-                    mission.Status = status;
-                    db.SaveChanges();
-                    return Json("Success");
-                }
-                else
-                {
-                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return Json("Invalid Mission Status.");
-                }
+                mission.Status = status;
+                db.SaveChanges();
+                return Json(new { success = "true", message = status.DisplayName() });
             }
             else
             {
-                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                return Json("Unauthorized User");
+                return Json(new { success = "false", message = "Unauthorized User" });
             }
         }
 
@@ -118,6 +135,23 @@ namespace FoundryMissionsCom.Controllers
             }
 
             mission.Status = MissionStatus.Published;
+            db.SaveChanges();
+
+            return Json("Success");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = ConstantsHelper.AdminRole)]
+        public JsonResult DenyMission(int id)
+        {
+            Mission mission = db.Missions.FirstOrDefault(m => m.Id.Equals(id));
+
+            if (mission == null)
+            {
+                return Json("Unable to find mission.");
+            }
+
+            mission.Status = MissionStatus.Unpublished;
             db.SaveChanges();
 
             return Json("Success");

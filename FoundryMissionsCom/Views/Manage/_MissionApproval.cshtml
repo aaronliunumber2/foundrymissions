@@ -2,58 +2,34 @@
 
 <div class="container">
     <div class="row search-results-header">
-        <div class="col-sm-2 col-xs-12">
+        <div class="col-sm-3 col-xs-12">
             @Html.DisplayNameFor(model => model.Name)
         </div>
-        <div class="col-sm-2 col-xs-12">
-            @Html.DisplayNameFor(model => model.CrypticId)
-        </div>
-        <div class="col-sm-2 col-xs-12">
+        <div class="col-sm-3 col-xs-12">
             @Html.DisplayNameFor(model => model.Author)
         </div>
-        <div class="col-sm-2 col-xs-12">
-            @Html.DisplayNameFor(model => model.MinimumLevel)
-        </div>
-        <div class="col-sm-2 col-xs-12">
-            @Html.DisplayNameFor(model => model.Faction)
-        </div>
-        <div class="col-sm-1 col-xs-12">
+        <div class="col-sm-3 col-xs-12">
             @Html.DisplayNameFor(model => model.DateLastUpdated)
         </div>
-        <div class="col-sm-1 col-xs-12">
+        <div class="col-sm-3 col-xs-12">
             Action
         </div>
     </div>
     @foreach (var item in Model)
     {
         <div class="row search-result">
-            <div class="col-sm-2 col-xs-12">
+            <div class="col-sm-3 col-xs-12">
                 @Html.ActionLink(item.Name, "details", new { link = item.MissionLink })
             </div>
-            <div class="col-sm-2 col-xs-12">
-                ST-@Html.DisplayFor(modelItem => item.CrypticId)
-            </div>
-            <div class="col-sm-2 col-xs-12">
+            <div class="col-sm-3 col-xs-12">
                 @Html.DisplayFor(modelItem => item.Author.CrypticTag)
             </div>
-            <div class="col-sm-2 col-xs-12">
-                @if (item.MinimumLevel == 1)
-                {
-                    <img src="@Url.Content("~/Content/Images/" + item.LevelImageUrl)" /> <text>Any</text>
-                }
-                else
-                {
-                    <img src="@Url.Content("~/Content/Images/" + item.LevelImageUrl)" />@Html.DisplayFor(modelItem => item.MinimumLevel)<text>+</text>;
-                }
-            </div>
-            <div class="col-sm-2 col-xs-12">
-                <img src="@Url.Content("~/Content/Images/" + item.FactionImageUrl)" /> @Html.DisplayFor(modelItem => item.Faction)
-            </div>
-            <div class="col-sm-1 col-xs-12">
+            <div class="col-sm-3 col-xs-12">
                 @Html.DisplayFor(modelItem => item.DateLastUpdated)
             </div>
-            <div class="col-sm-1 col-xs-12">
+            <div class="col-sm-3 col-xs-12">
                 <input type="submit" value="Approve" id="@item.Id" class="approve-button"/>
+                <input type="submit" value="Deny" id="@item.Id" class="deny-button" />
             </div>
         </div>
 
