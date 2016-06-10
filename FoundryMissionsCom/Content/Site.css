@@ -97,7 +97,7 @@ nav.navbar {
     background-color: #001;
 }
 
-li.list-group-item.mission, .search-result, .my-missions-result{
+li.list-group-item.mission, .search-result, .my-missions-result, .author{
     border: none;
     border-top: 1px gray solid;
     background-color: #001;
@@ -265,11 +265,11 @@ ul.gameplay-tags {
 
 /* Search Results */
 
-.search-result, .search-results-header, .my-missions-header, .my-missions-result{
+.search-result, .search-results-header, .my-missions-header, .my-missions-result, .authors-header, .author{
     padding: .5em;
 }
 
-.search-results-header, .my-missions-header{
+.search-results-header, .my-missions-header, .authors-header{
     font-weight : bold;
 }
 /* Control Panel */

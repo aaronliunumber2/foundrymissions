@@ -207,6 +207,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AccountHelper.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
     <Compile Include="Helpers\MissionHelper.cs" />
     <Compile Include="Helpers\MyExtensions.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="Models\FoundryMissionModels\MissionTagType.cs" />
     <Compile Include="Models\FoundryMissionModels\YoutubeVideo.cs" />
     <Compile Include="Models\FoundryMissionViewModels\EditMissionViewModel.cs" />
+    <Compile Include="Models\FoundryMissionViewModels\ListAuthorViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ListMissionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\SubmitMissionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ViewMissionViewModel.cs" />
@@ -376,6 +378,7 @@
     <Content Include="Views\Manage\_MyMissions.cshtml" />
     <Content Include="Views\Missions\Advanced-Search.cshtml" />
     <Content Include="Views\Manage\_MissionApproval.cshtml" />
+    <Content Include="Views\Manage\_Authors.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<FoundryMissionsCom.Models.FoundryMissionViewModels.ListAuthorViewModel>
+
+<div class="container">
+    <div class="row authors-header">
+        <div class="col-sm-2 col-xs-12">
+            @Html.DisplayNameFor(model => model.Username)
+        </div>
+        <div class="col-sm-2 col-xs-12">
+            @Html.DisplayNameFor(model => model.Email)
+        </div>
+        <div class="col-sm-2 col-xs-12">
+            @Html.DisplayNameFor(model => model.DateRegistered)
+        </div>
+        <div class="col-sm-6 col-xs-12">
+        </div>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="row author">
+
+            <div class="col-sm-2">
+                @Html.DisplayFor(modelItem => item.Username)
+            </div>
+            <div class="col-sm-2">
+                @Html.DisplayFor(modelItem => item.Email)
+            </div>
+            <div class="col-sm-2">
+                @Html.DisplayFor(modelItem => item.DateRegistered)
+            </div>
+            <div class="col-sm-2">
+                @Html.EditorFor(modelItem => item.Admin) @Html.DisplayNameFor(model => model.Admin)
+            </div>
+            <div class="col-sm-2">
+                @Html.EditorFor(modelItem => item.AutoApprove) @Html.DisplayNameFor(model => model.AutoApprove)
+            </div>
+            <div class="col-sm-2">
+                @Html.EditorFor(modelItem => item.Lockedout) @Html.DisplayNameFor(model => model.Lockedout)
+            </div>
+
+        </div>
+    }
+</div>
