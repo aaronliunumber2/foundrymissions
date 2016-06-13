@@ -138,8 +138,8 @@ namespace FoundryMissionsCom.Controllers
                     }
                     else
                     {
-                        //mission.Status = Models.FoundryMissionModels.Enums.MissionStatus.InReview;
-                        mission.Status = Models.FoundryMissionModels.Enums.MissionStatus.Published;
+                        mission.Status = Models.FoundryMissionModels.Enums.MissionStatus.InReview;
+                        //mission.Status = Models.FoundryMissionModels.Enums.MissionStatus.Published;
                     }
                 }
                 else //if (submitButton.Equals("Save"))
