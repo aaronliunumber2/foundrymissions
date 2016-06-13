@@ -94,15 +94,15 @@ $('.mission-actions').on('click', '.set-status-button', function () {
                 //set the new buttons
                 if (message == 'Unpublished') {
                     //edit and submit
-                    button.parent().html(edithtml + submithtml);
+                    button.parent().html(edithtml + submithtml)
                 }
                 else if (message == 'In Review') {
                     //edit and withdraw
-                    button.parent().html(edithtml + withdrawhtml);
+                    button.parent().html(edithtml + withdrawhtml)
                 }
                 else if (message == 'Published') {
                     //Unpublish
-                    button.parent().html(unpublishhtml);
+                    button.parent().html(unpublishhtml)
                     
                 }
             }
@@ -112,4 +112,78 @@ $('.mission-actions').on('click', '.set-status-button', function () {
 
         }
     });
+});
+
+$('#authors').on('change', '.author .admin-checkbox-container .admin-checkbox', function () {
+
+    var checkbox = $(this)
+    var user = $.trim(checkbox.closest('.author').children('.username').text())
+    var checked = this.checked
+
+    $.ajax({
+        url: 'manage/setrole',
+        type: 'POST',
+        data: { username: user, role: 'Administrator', inRole: checked },
+        success: function (data) {
+            var success = data['success']
+
+            if (success == 'true') {
+                var inrole = data['inrole']
+                checkbox.prop('checked', inrole == 'true')
+            }
+            else {
+                var message = data['message']
+                alert(message)
+            }
+        }
+    });
+
+});
+
+$('#authors').on('change', '.author .locked-out-checkbox-container .locked-out-checkbox', function () {
+    var checkbox = $(this)
+    var user = $.trim(checkbox.closest('.author').children('.username').text())
+    var checked = this.checked
+
+    $.ajax({
+        url: 'manage/setlockout',
+        type: 'POST',
+        data: { username: user, lockout: checked },
+        success: function (data) {
+            var success = data['success']            
+
+            if(success == 'true') {
+            }
+            else {
+                var message = data['message']
+                alert(message)
+            }
+        }
+    });
+
+});
+
+$('#authors').on('change', '.author .auto-approve-checkbox-container .auto-approve-checkbox', function () {
+
+    var checkbox = $(this)
+    var user = $.trim(checkbox.closest('.author').children('.username').text())
+    var checked = this.checked
+
+    $.ajax({
+        url: 'manage/setautoapprove',
+        type: 'POST',
+        data: { username: user, autoapprove: checked },
+        success: function (data) {
+            var success = data['success']
+
+            if (success == 'true') {
+
+            }
+            else {
+                var message = data['message']
+                alert(message)
+            }
+        }
+    });
+
 });

@@ -281,3 +281,7 @@ ul.gameplay-tags {
 .my-missions-result {
     overflow: hidden;
 }
+
+.manage-account-tabs > li > a {
+    color :#999999;
+}

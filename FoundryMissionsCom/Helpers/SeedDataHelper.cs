@@ -19,24 +19,31 @@ namespace FoundryMissionsCom.Helpers
             var userManager = new UserManager<ApplicationUser>(userStore);
             var usersToAdd = new List<ApplicationUser>();
 
-            //check if zorbane exists
-            ApplicationUser zorbane = context.Users.FirstOrDefault(u => u.UserName.Equals("Zorbane"));
-            if (zorbane == null)
+            usersToAdd.Add(CreateAdminUser("Zorbane", "Zorbane", "Zorbane", "aaron.liu.bc@gmail.com", "359Battlewolffoundrymissions", context, userManager));
+
+            CreateRole(context, "Administrator", usersToAdd);
+        }
+
+        private static ApplicationUser CreateAdminUser(string username, string twitter, string cryptic, string email, string password, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        {
+
+            //check if user exists
+            ApplicationUser user = context.Users.FirstOrDefault(u => u.UserName.Equals(username));
+            if (user == null)
             {
-                zorbane = new ApplicationUser()
+                user = new ApplicationUser()
                 {
-                    UserName = "Zorbane",
-                    TwitterUsername = "Zorbane",
+                    UserName = username,
+                    TwitterUsername = twitter,
                     AutoApproval = true,
-                    CrypticTag = "Zorbane",
-                    Email = "aaron.liu.bc@gmail.com",
+                    CrypticTag = cryptic,
+                    Email = email,
                     JoinDate = new DateTime(2016, 4, 20),
                 };
-                userManager.Create(zorbane, "359Battlewolffoundrymissions");
+                userManager.Create(user, "password");
             }
 
-            usersToAdd.Add(zorbane);
-            CreateRole(context, "Administrator", usersToAdd);
+            return user;
         }
 
         internal static List<MissionTagType> GetMissionTagTypes()
@@ -77,7 +84,10 @@ namespace FoundryMissionsCom.Helpers
 
             foreach (var user in usersToAdd)
             {
-                UserManager.AddToRole(user.Id, role);
+                if (!UserManager.IsInRole(user.Id, role))
+                {
+                    UserManager.AddToRole(user.Id, role);
+                }
             }
         }
     }

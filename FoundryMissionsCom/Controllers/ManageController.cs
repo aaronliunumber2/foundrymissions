@@ -69,7 +69,7 @@ namespace FoundryMissionsCom.Controllers
             if (User.IsInRole(ConstantsHelper.AdminRole))
             {
                 model.MissionsToApprove = MissionHelper.GetListMissionViewModels(db.Missions.Where(m => m.Status == Models.FoundryMissionModels.Enums.MissionStatus.InReview).OrderBy(m => m.DateLastUpdated).ToList());
-                model.Authors = AccountHelper.GetAuthorViewModels(db.Users.ToList(), db);
+                model.Authors = AccountHelper.GetAuthorViewModels(db.Users.OrderBy(u => u.UserName).ToList(), db);
             }
 
             return View(model);
@@ -167,7 +167,7 @@ namespace FoundryMissionsCom.Controllers
             if (username.Equals("Zorbane") ||
                 username.Equals("RogueEnterprise"))
             {
-                return Json(new { success = "false", message = "Cannot edit Zorbane or RogueEnterprise" });
+                return Json(new { success = "false", message = ConstantsHelper.ErrorReservedUser });
             }
 
             var user = db.Users.FirstOrDefault(u => u.UserName.Equals(username));
@@ -190,7 +190,7 @@ namespace FoundryMissionsCom.Controllers
                 userManager.RemoveFromRole(userId, role);
             }
 
-            return Json(new { success = "true", inrole = inRole.ToString() });
+            return Json(new { success = "true", inrole = inRole.ToString().ToLower() });
         }
 
         [HttpPost]
@@ -201,7 +201,7 @@ namespace FoundryMissionsCom.Controllers
             if (username.Equals("Zorbane") ||
                 username.Equals("RogueEnterprise"))
             {
-                return Json(new { success = "false", message = "Cannot edit Zorbane or RogueEnterprise" });
+                return Json(new { success = "false", message = ConstantsHelper.ErrorReservedUser });
             }
 
             var user = db.Users.FirstOrDefault(u => u.UserName.Equals(username));
@@ -214,9 +214,32 @@ namespace FoundryMissionsCom.Controllers
             user.AutoApproval = autoapprove;
             db.SaveChanges();
 
-            return Json(new { success = "true", autoapprove = autoapprove.ToString() });
+            return Json(new { success = "true", autoapprove = autoapprove.ToString().ToLower() });
         }
 
+        [HttpPost]
+        [Authorize(Roles = ConstantsHelper.AdminRole)]
+        public JsonResult SetLockout(string username, bool lockout)
+        {
+            //never change Zorbane or RogueEnterprise
+            if (username.Equals("Zorbane") ||
+                username.Equals("RogueEnterprise"))
+            {
+                return Json(new { success = "false", message = ConstantsHelper.ErrorReservedUser });
+            }
+
+            var user = db.Users.FirstOrDefault(u => u.UserName.Equals(username));
+
+            if (user == null)
+            {
+                return Json(new { success = "false", message = "Unable to find user " + username });
+            }
+
+            user.LockoutEnabled = lockout;
+            db.SaveChanges();
+
+            return Json(new { success = "true", autoapprove = lockout.ToString().ToLower() });
+        }
 
 
         #region Two Factor Authentication
