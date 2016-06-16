@@ -27,6 +27,8 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
 
         public string MinimumLevelImageUrl { get; set; }
 
+        public MissionStatus Status { get; set; }
+
         public DateTime DateLastUpdated { get; set; }
 
         public List<MissionTagType> Tags { get; set; }

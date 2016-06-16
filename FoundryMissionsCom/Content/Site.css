@@ -162,6 +162,11 @@ ul.gameplay-tags {
 /* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {  }
 
+.mission-status{
+    color:red;
+    text-align: center;
+}
+
 .missioninfo {
     font-weight: bold;
 }

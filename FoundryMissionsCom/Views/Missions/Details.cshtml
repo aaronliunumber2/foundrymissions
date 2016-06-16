@@ -28,6 +28,21 @@
 
 <div class="container content">
 
+    <div class="mission-status">
+        @switch(Model.Status)
+        {
+            case FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.InReview:
+                <h3>This mission is currently under review by the Admin team</h3>
+                break;
+            case FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.Removed:
+                <h3>This mission has been removed by the Admin team</h3>
+                break;
+            case FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.Unpublished:
+                <h3>This mission has not been published and only visible to you</h3>
+                break;
+        }
+    </div>
+
     <article>
         <div class="row">
             <div class="col-sm-10 col-xs-12">
@@ -42,7 +57,7 @@
                             <div>
                                 <img src="@Url.Content("~/Content/Images/"+Model.FactionImageUrl)" /> @Model.Faction.ToString()
                                 @if (@Model.MinimumLevel == 1)
-                                {
+            {
                                     <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" /><text>Any Level</text>
                                 }
                                 else

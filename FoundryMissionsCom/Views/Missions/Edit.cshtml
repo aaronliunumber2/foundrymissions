@@ -10,11 +10,11 @@
 
     }
 
-<h2>Edit</h2>
+<h2>Editing @Model.Name</h2>
 
 
-@using (Html.BeginForm("edit", "missions", FormMethod.Post, new { @class = "missiondata" }))
-{
+@*@using (Html.BeginForm("edit", "missions", FormMethod.Post, new { @class = "missiondata" }))*@
+<form action="" method="post" class="missiondata">
     @Html.AntiForgeryToken()
 
     <div class="form-vertical">
@@ -77,12 +77,33 @@
 
         <div class="container row">
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                @*Set the buttons*@
+                @{
+                    if (Model.Status == FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.Unpublished)
+                    {
+                        <input type="submit" value="Submit" name="action:publishmission" class="btn btn-default" />
+                        <input type="submit" value="Save" name="action:savemission"  class="btn btn-default"/>
+                    }
+                    else if (Model.Status != FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.Removed)
+                    {
+                        @* this is published/inreview *@
+                        <input type="submit" value="Submit" name="action:publishmission"  class="btn btn-default"/>
+                        <input type="submit" value="Withdraw" name="action:withdrawmission" class="btn btn-default"/>
+                        if (!Model.AutoApprove && !User.IsInRole(FoundryMissionsCom.Helpers.ConstantsHelper.AdminRole))
+                        {
+                             <text>Resubmitting this mission will require a review by an Admin before being published.</text>
+                        }
+                    }
+                    else
+                    {
+                        @* this is removed - only admins can see this.  Use the withdraw action to return it to unpublish *@
+                        <input type="submit" value="Recover Mission" name="action:withdrawmission" class="btn btn-default"/>
+                    }
+                }
             </div>
         </div>
     </div>
-}
-
+</form>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -40,5 +40,9 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
 
         [Required]
         public bool Published { get; set; }
+
+        public ApplicationUser Author { get; set; }
+        public bool AutoApprove { get; set; }
+        public MissionStatus Status { get; set; }
     }
 }

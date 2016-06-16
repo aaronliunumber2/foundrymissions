@@ -11,6 +11,9 @@ using FoundryMissionsCom.Models.FoundryMissionModels;
 using FoundryMissionsCom.Models.FoundryMissionModels.Enums;
 using FoundryMissionsCom.Models.FoundryMissionViewModels;
 using FoundryMissionsCom.Helpers;
+using FoundryMissionsCom.Attributes;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FoundryMissionsCom.Controllers
 {
@@ -71,6 +74,7 @@ namespace FoundryMissionsCom.Controllers
                 DateLastUpdated = mission.DateLastUpdated,
                 Tags = mission.Tags,
                 Videos = mission.Videos,
+                Status = mission.Status,
                 Images = new List<string>()
             };
 
@@ -170,14 +174,14 @@ namespace FoundryMissionsCom.Controllers
             }
 
             //only people who can edit a mission are the author or an admin
-            if (!mission.Author.UserName.Equals(User.Identity.Name) && !User.IsInRole("admin"))
+            if (!mission.Author.UserName.Equals(User.Identity.Name) && !User.IsInRole(ConstantsHelper.AdminRole))
             {
 
                 return HttpNotFound();
             }
 
-            //if the user is not an admin and it is removed it doesn't exisdt
-            if (mission.Status == MissionStatus.Removed && !User.IsInRole("admin"))
+            //if the user is not an admin and it is removed it doesn't exist
+            if (mission.Status == MissionStatus.Removed && !User.IsInRole(ConstantsHelper.AdminRole))
             {
                 return HttpNotFound();
             }
@@ -206,7 +210,11 @@ namespace FoundryMissionsCom.Controllers
             editModel.MinimumLevel = mission.MinimumLevel;
             editModel.Spotlit = mission.Spotlit;
             editModel.Published = mission.Published;
+            editModel.Status = mission.Status;
+            editModel.Author = mission.Author;
+            editModel.AutoApprove = mission.Author.AutoApproval;
             mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
+            
 
             ViewBag.PublishedSelectList = new SelectList(publishedSelectItems, "Value", "Text");
 
@@ -216,11 +224,49 @@ namespace FoundryMissionsCom.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Id,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published")] EditMissionViewModel missionViewModel, string submitButton)
+        [MultipleButton(Name = "action", Argument = "publishmission")]
+        public ActionResult PublishMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published")] EditMissionViewModel missionViewModel)
+        {
+            var mission = db.Missions.Find(missionViewModel.Id);
+            var author = mission.Author;
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            if (author.AutoApproval || UserManager.IsInRole(author.Id, ConstantsHelper.AdminRole))
+            {
+                missionViewModel.Status = MissionStatus.Published;
+            }
+            else
+            {
+                missionViewModel.Status = MissionStatus.InReview;
+            }
+
+            return Edit(missionViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        [MultipleButton(Name = "action", Argument = "savemission")]
+        public ActionResult SaveMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published")] EditMissionViewModel missionViewModel)
+        {
+            return Edit(missionViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        [MultipleButton(Name = "action", Argument = "withdrawmission")]
+        public ActionResult WithdrawMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published")] EditMissionViewModel missionViewModel)
+        {
+            missionViewModel.Status = MissionStatus.Unpublished;
+            return Edit(missionViewModel);
+        }
+
+        private ActionResult Edit(EditMissionViewModel missionViewModel)
         {
             if (ModelState.IsValid)
             {
                 var mission = db.Missions.Find(missionViewModel.Id);
+                var user = mission.Author;              
                 mission.CrypticId = missionViewModel.CrypticId;
                 mission.Name = missionViewModel.Name;
                 mission.Description = missionViewModel.Description;
@@ -228,7 +274,7 @@ namespace FoundryMissionsCom.Controllers
                 mission.Faction = missionViewModel.Faction;
                 mission.MinimumLevel = missionViewModel.MinimumLevel;
                 mission.Spotlit = missionViewModel.Spotlit;
-                mission.Published = missionViewModel.Published;
+                mission.Status = missionViewModel.Status;
 
                 db.SaveChanges();
 
@@ -264,7 +310,7 @@ namespace FoundryMissionsCom.Controllers
             return View(listMissions);
         }
 
-        [Route("Advanced-Search")]
+        [ActionName("Advanced-Search")]
         public ActionResult AdvancedSearch()
         {
             return View();

@@ -33,6 +33,12 @@ namespace FoundryMissionsCom
             );
 
             routes.MapRoute(
+                "AdvancedSearch",
+                "missions/advanced-search",
+                new { controller = "Missions", action = "Advanced-Search" }
+            );
+
+            routes.MapRoute(
                 "EditMissionLink",
                 "missions/edit/{link}",
                 new { controller = "Missions", action = "Edit", link = "{link}" }

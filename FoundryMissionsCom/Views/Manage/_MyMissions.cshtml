@@ -32,14 +32,13 @@
                 @*Put this check here just in case!!*@
                     @if (User.IsInRole("Admin") || (item.Author.UserName.Equals(User.Identity.Name)))
                     {
+                        @Html.ActionLink("Edit", "edit", "missions", new { link = item.MissionLink }, new { @class = "btn btn-default" });
                         switch (item.Status)
                         {
                             case FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.InReview:
-                                @Html.ActionLink("Edit", "edit", "missions", new { link = item.MissionLink }, new { @class="btn btn-default" });
                                 <input type="submit" value="Withdraw" class="btn btn-default set-status-button" mission="@item.Id" link="@item.MissionLink">
                                 break;
                             case FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.Unpublished:
-                                @Html.ActionLink("Edit", "edit", "missions", new { link = item.MissionLink }, new { @class = "btn btn-default" });
                                 <input type="submit" value="Submit" class="btn btn-default set-status-button" mission="@item.Id" link="@item.MissionLink">
                                 break;
                             case FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.Published:
