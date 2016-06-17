@@ -380,6 +380,7 @@
     <Content Include="Views\Missions\Advanced-Search.cshtml" />
     <Content Include="Views\Manage\_MissionApproval.cshtml" />
     <Content Include="Views\Manage\_Authors.cshtml" />
+    <Content Include="Views\Home\Contact-Us.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

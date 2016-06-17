@@ -13,6 +13,10 @@ namespace FoundryMissionsCom
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute(
+                "ContactUs",
+                "contact-us",
+                new { controller = "home", action = "contact-us" });
 
             routes.MapRoute(
                 "RandomMission",

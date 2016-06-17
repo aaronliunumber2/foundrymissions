@@ -72,6 +72,7 @@ namespace FoundryMissionsCom.Controllers
                 MinimumLevel = mission.MinimumLevel,
                 MinimumLevelImageUrl = MissionHelper.GetBigLevelImageUrl(mission.MinimumLevel, mission.Faction),
                 DateLastUpdated = mission.DateLastUpdated,
+                Length = mission.Length,
                 Tags = mission.Tags,
                 Videos = mission.Videos,
                 Status = mission.Status,
@@ -285,7 +286,7 @@ namespace FoundryMissionsCom.Controllers
 
         public ActionResult Random()
         {
-            var missionLink = db.Missions.OrderBy(m => Guid.NewGuid()).Where(m=> m.Status != MissionStatus.Removed).Select(m => m.MissionLink).FirstOrDefault();
+            var missionLink = db.Missions.OrderBy(m => Guid.NewGuid()).Where(m=> m.Status == MissionStatus.Published).Select(m => m.MissionLink).FirstOrDefault();
 
             return RedirectToAction("details", new { link = missionLink });
         }
@@ -304,7 +305,7 @@ namespace FoundryMissionsCom.Controllers
                                              m.CrypticId.ToUpper().Contains(upperQuery) ||
                                              m.Description.ToUpper().Contains(upperQuery) ||
                                              m.Name.ToUpper().Contains(upperQuery)) &&
-                                             m.Status != MissionStatus.Removed).ToList();
+                                             m.Status == MissionStatus.Published).ToList();
             List<ListMissionViewModel> listMissions = MissionHelper.GetListMissionViewModels(missions);
 
             return View(listMissions);

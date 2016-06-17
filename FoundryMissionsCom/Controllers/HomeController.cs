@@ -33,5 +33,11 @@ namespace FoundryMissionsCom.Controllers
 
             return View();
         }
+
+        [ActionName("contact-us")]
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
     }
 }

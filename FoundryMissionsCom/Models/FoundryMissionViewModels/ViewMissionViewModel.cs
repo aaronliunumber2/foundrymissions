@@ -31,6 +31,8 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
 
         public DateTime DateLastUpdated { get; set; }
 
+        public MissionLength Length { get; set; }
+
         public List<MissionTagType> Tags { get; set; }
 
         public List<YoutubeVideo> Videos { get; set; }

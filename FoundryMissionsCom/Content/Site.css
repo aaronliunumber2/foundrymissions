@@ -1,9 +1,4 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-/* Set padding to keep content from hitting the edges */
+﻿/* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -74,7 +69,7 @@ body {
 
 @media (max-width: 992px) {
     body {
-        padding-top: 0px;
+        /*padding-top: 0px;*/
     }
 }
 
@@ -168,7 +163,14 @@ ul.gameplay-tags {
 }
 
 .missioninfo {
+    padding-top : 20px;
     font-weight: bold;
+}
+
+@media (min-width: 992px){
+    .missioninfo {
+        padding-top : 0;
+    }
 }
 
 .missioninfo > h3 { 
