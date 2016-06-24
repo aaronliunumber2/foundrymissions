@@ -29,7 +29,7 @@ namespace FoundryMissionsCom
 
             //my bundles
 
-            bundles.Add(new ScriptBundle("~/bundles/mission").Include(
+            bundles.Add(new ScriptBundle("~/bundles/editmission").Include(
                       "~/Scripts/mission.js"));
 
             bundles.Add(new StyleBundle("~/Content/lightbox").Include(

@@ -38,7 +38,7 @@
                 <h3>This mission has been removed by the Admin team</h3>
                 break;
             case FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.Unpublished:
-                <h3>This mission has not been published and only visible to you</h3>
+                <h3>This mission has not been published and is only visible to you</h3>
                 break;
         }
     </div>
@@ -158,28 +158,22 @@
                     </div>
                 </section>
             </div>
+            @if (Model.Tags.Count > 0)
+            {
             <div class="col-sm-2 col-xs-12">
                 <div class="mission-tags">
                     <div><h4 class="mission-tag-header">Mission Tags</h4></div>
                     <div>
-                        <figure class="mission-tag-image">
-                            <div><img src="@Url.Content("~/Content/Images/Tags/ground-combat.jpg")" title="Ground Combat" /></div>
-                        </figure>
-                        <figure class="mission-tag-image">
-                            <img src="@Url.Content("~/Content/Images/Tags/space-combat.jpg")" title="Space Combat" />
-                        </figure>
-                        <figure class="mission-tag-image">
-                            <img src="@Url.Content("~/Content/Images/Tags/single-player.jpg")" title="Single Player" />
-                        </figure>
-                        <figure class="mission-tag-image">
-                            <img src="@Url.Content("~/Content/Images/Tags/multi-player.jpg")" title="Multi Player" />
-                        </figure>
-                        <figure class="mission-tag-image">
-                            <img src="@Url.Content("~/Content/Images/Tags/klingon.jpg")" title="Klingon" />
-                        </figure>
+                        @foreach (var tag in Model.Tags)
+                        {
+                            <figure class="mission-tag-image">
+                                <div><img src="@Url.Content("~/Content/Images/Tags/" + MissionHelper.GetTagImageUrl(tag))" title="@tag.TagName" /></div>
+                            </figure>
+                        }
                     </div>
                 </div>
             </div>
+            }
         </div>
     </article>
 </div>

@@ -110,6 +110,11 @@ namespace FoundryMissionsCom.Helpers
             return "big_federation.png";
         }
 
+        public static string GetTagImageUrl(MissionTagType tag)
+        {
+            return tag.TagName.ToLower().Replace(' ', '-') + ".jpg";
+        }
+
         public static List<ListMissionViewModel> GetListMissionViewModels(List<Mission> missions)
         {
             List<ListMissionViewModel> listMissions = new List<ListMissionViewModel>();

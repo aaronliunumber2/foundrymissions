@@ -226,7 +226,7 @@ namespace FoundryMissionsCom.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         [MultipleButton(Name = "action", Argument = "publishmission")]
-        public ActionResult PublishMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published")] EditMissionViewModel missionViewModel)
+        public ActionResult PublishMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published, Tags")] EditMissionViewModel missionViewModel)
         {
             var mission = db.Missions.Find(missionViewModel.Id);
             var author = mission.Author;
@@ -247,7 +247,7 @@ namespace FoundryMissionsCom.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         [MultipleButton(Name = "action", Argument = "savemission")]
-        public ActionResult SaveMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published")] EditMissionViewModel missionViewModel)
+        public ActionResult SaveMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published, Tags")] EditMissionViewModel missionViewModel)
         {
             return Edit(missionViewModel);
         }
@@ -256,7 +256,7 @@ namespace FoundryMissionsCom.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         [MultipleButton(Name = "action", Argument = "withdrawmission")]
-        public ActionResult WithdrawMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published")] EditMissionViewModel missionViewModel)
+        public ActionResult WithdrawMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published, Tags")] EditMissionViewModel missionViewModel)
         {
             missionViewModel.Status = MissionStatus.Unpublished;
             return Edit(missionViewModel);
@@ -277,6 +277,7 @@ namespace FoundryMissionsCom.Controllers
                 mission.Spotlit = missionViewModel.Spotlit;
                 mission.Status = missionViewModel.Status;
                 mission.DateLastUpdated = DateTime.Today;
+                mission.Tags.AddRange(db.MissionTagTypes.Where(t => missionViewModel.Tags.Contains(t.TagName)).ToList());
 
                 db.SaveChanges();
 

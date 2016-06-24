@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Edit Mission";
+    var counter = 0;
 }
 
 @section opengraph{
@@ -30,11 +31,14 @@
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="form-group">
+                <div class="form-group">                    
                     @Html.LabelFor(model => model.CrypticId, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CrypticId, new { htmlAttributes = new { @class = "form-control", @onkeyup = "InputToUpper(this);" } })
+                    <div class="input-group">
+                        <span class="input-group-addon">ST-</span>
+                        @Html.EditorFor(model => model.CrypticId, new { htmlAttributes = new { @class = "form-control crypticid", @onkeyup = "InputToUpper(this);" } })
+                    </div>
                     @Html.ValidationMessageFor(model => model.CrypticId, "", new { @class = "text-danger" })
-                </div>
+                    </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Faction, htmlAttributes: new { @class = "control-label" })
                     @Html.EnumDropDownListFor(model => model.Faction, htmlAttributes: new { @class = "form-control" })
@@ -75,6 +79,29 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Gameplay Tags</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                Selected:
+                <div class="list-group gameplay-tags" id="selected-tags">
+                </div>
+            </div>
+            <div class="col-md-6">
+                Available:
+                <div class="list-group gameplay-tags" id="available-tags">
+                    @foreach (var tag in ViewBag.AvailableTags)
+                    {
+                        <a href="#" class="list-group-item gameplay-tag" value="@tag">@tag</a>
+                        counter++;
+                    }
+                </div>
+            </div>
+        </div>
+
         <div class="container row">
             <div class="form-group">
                 @*Set the buttons*@
@@ -106,4 +133,5 @@
 </form>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/editmission")
 }
