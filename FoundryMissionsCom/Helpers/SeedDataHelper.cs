@@ -12,6 +12,9 @@ namespace FoundryMissionsCom.Helpers
 {
     public class SeedDataHelper
     {
+        private static string[] DefaultTags = { "Story", "Combat", "No Combat", "Space", "Ground", "Small Craft", "Puzzles", "Diplomacy", "Exploration",
+                                         "Time Travel", "Orions", "Klingons", "Tholians", "Na'Kuhl", "Mirror Federation", "Nausicaans", "Borg",
+                                         "True Way", "Cardassians", "Iconians", "Custom Aliens", "Romulans", "Remans"};
 
         internal static void AddUsersAndRoles(ApplicationDbContext context)
         {
@@ -48,16 +51,12 @@ namespace FoundryMissionsCom.Helpers
 
         internal static List<MissionTagType> GetMissionTagTypes()
         {
-            List<MissionTagType> tags = new List<MissionTagType>()
+            List<MissionTagType> tags = new List<MissionTagType>();
+            foreach(var tag in DefaultTags)
             {
-                new Models.FoundryMissionModels.MissionTagType() { TagName = "Space Combat" },
-                new Models.FoundryMissionModels.MissionTagType() { TagName = "Ground Combat" },
-                new Models.FoundryMissionModels.MissionTagType() { TagName = "Single Player" },
-                new Models.FoundryMissionModels.MissionTagType() { TagName = "Team Play" },
-                new Models.FoundryMissionModels.MissionTagType() { TagName = "Puzzle" },
-                new Models.FoundryMissionModels.MissionTagType() { TagName = "Quarters" },
-            };
+                tags.Add(new MissionTagType() { TagName = tag });
 
+            }
 
             return tags;
         }

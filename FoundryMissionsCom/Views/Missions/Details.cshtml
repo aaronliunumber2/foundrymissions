@@ -10,6 +10,15 @@
     {
         description = description.Substring(0, 100) + "...";
     }
+    var colsize = "";
+    if (Model.Tags.Count > 0)
+    {
+        colsize = "col-sm-10";
+    }
+    else
+    {
+        colsize = "col-sm-12";
+    }
 }
 
 @section opengraph{
@@ -45,15 +54,15 @@
 
     <article>
         <div class="row">
-            <div class="col-sm-10 col-xs-12">
+            <div class="@colsize">
                 <div class="mission-header">
                     <div class="row">
-                        <div class="col-sm-5 col-xs-12">
+                        <div class="col-sm-5">
                             <header>
                                 <h1>@Model.Name</h1>
                             </header>
                         </div>
-                        <div class="col-sm-6  col-xs-12 mission-restrictions">
+                        <div class="col-sm-6 mission-restrictions">
                             <div>
                                 <img src="@Url.Content("~/Content/Images/"+Model.FactionImageUrl)" /> @Model.Faction.ToString()
                                 @if (@Model.MinimumLevel == 1)

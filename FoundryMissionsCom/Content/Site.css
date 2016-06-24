@@ -134,7 +134,7 @@ input#lastupdate {
     width: 173px;
 }
 
-ul.gameplay-tags {
+.gameplay-tags {
     max-height: 300px;
     overflow-y: scroll;
 }
