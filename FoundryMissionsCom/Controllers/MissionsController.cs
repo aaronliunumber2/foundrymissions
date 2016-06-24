@@ -88,20 +88,8 @@ namespace FoundryMissionsCom.Controllers
         [Authorize]
         public ActionResult Submit()
         {
-            var publishedSelectItems = new List<SelectListItem>();
-            #region Published Select List
-            publishedSelectItems.Add(new SelectListItem()
-            {
-                Value = "false",
-                Text = "No",
-            });
-            publishedSelectItems.Add(new SelectListItem()
-            {
-                Value = "true",
-                Text = "Yes",
-            });
-            #endregion
-
+            List<SelectListItem> publishedSelectItems = MissionHelper.GetYesNoSelectList();
+            ViewBag.AvailableTags = db.MissionTagTypes.Select(t => t.TagName).ToList();
             ViewBag.PublishedSelectList = new SelectList(publishedSelectItems, "Value", "Text");
 
 
@@ -111,10 +99,21 @@ namespace FoundryMissionsCom.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Submit([Bind(Include = "CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published")] SubmitMissionViewModel missionViewModel, string submitButton)
+        public ActionResult Submit([Bind(Include = "CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags")] SubmitMissionViewModel missionViewModel, string submitButton)
         {
             if (ModelState.IsValid)
             {
+                //check if cryptic id is already used
+                if (db.Missions.Any(m => m.CrypticId.Equals(missionViewModel.CrypticId)))
+                {
+                    ModelState.AddModelError("DuplicateCrypticID", "Duplicate Cryptic ID.");
+
+                    List<SelectListItem> publishedSelectItems = MissionHelper.GetYesNoSelectList();
+                    ViewBag.AvailableTags = db.MissionTagTypes.Select(t => t.TagName).ToList();
+                    ViewBag.PublishedSelectList = new SelectList(publishedSelectItems, "Value", "Text");
+                    return View(missionViewModel);
+                }
+
                 ApplicationUser user = db.Users.FirstOrDefault(u => u.UserName.Equals(User.Identity.Name));
                 Mission mission = new Mission();
 
@@ -214,9 +213,10 @@ namespace FoundryMissionsCom.Controllers
             editModel.Status = mission.Status;
             editModel.Author = mission.Author;
             editModel.AutoApprove = mission.Author.AutoApproval;
+            editModel.Tags = mission.Tags.Select(t => t.TagName).ToList();
             mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
-            
 
+            ViewBag.AvailableTags = db.MissionTagTypes.Select(t => t.TagName).ToList();
             ViewBag.PublishedSelectList = new SelectList(publishedSelectItems, "Value", "Text");
 
             return View(editModel);
@@ -276,6 +276,7 @@ namespace FoundryMissionsCom.Controllers
                 mission.MinimumLevel = missionViewModel.MinimumLevel;
                 mission.Spotlit = missionViewModel.Spotlit;
                 mission.Status = missionViewModel.Status;
+                mission.DateLastUpdated = DateTime.Today;
 
                 db.SaveChanges();
 

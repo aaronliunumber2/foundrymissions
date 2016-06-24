@@ -41,6 +41,7 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
         [Required]
         public bool Published { get; set; }
 
+        public List<String> Tags { get; set; }
 
         public SubmitMissionViewModel()
         {

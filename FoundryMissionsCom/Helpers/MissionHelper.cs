@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Mvc;
 
 namespace FoundryMissionsCom.Helpers
 {
@@ -133,6 +134,24 @@ namespace FoundryMissionsCom.Helpers
             }
 
             return listMissions;
+        }
+
+        public static List<SelectListItem> GetYesNoSelectList()
+        {
+            var publishedSelectItems = new List<SelectListItem>();
+            #region Published Select List
+            publishedSelectItems.Add(new SelectListItem()
+            {
+                Value = "false",
+                Text = "No",
+            });
+            publishedSelectItems.Add(new SelectListItem()
+            {
+                Value = "true",
+                Text = "Yes",
+            });
+            #endregion
+            return publishedSelectItems;
         }
     }
 }

@@ -1,22 +1,42 @@
 ﻿$(function () {
 
-    $('#availabletags').on('click', '.gameplay-tag', function (event) {
-        event.preventDefault();
+    $('#available-tags').on('click', '.gameplay-tag', function (event) {
+        event.preventDefault()
 
-        var tagitem = $(this).clone();
-        tagitem.attr('name', 'selectedtag');
-        tagitem.appendTo('#selectedtags');
-        $(this).remove();       
+        var tagitem = $(this).clone()
+        tagitem.appendTo('#selected-tags')
+        $(this).remove()
+        SetTags()
     });
 
-    $('#selectedtags').on('click', '.gameplay-tag', function () {
-        event.preventDefault();
+    $('#selected-tags').on('click', '.gameplay-tag', function () {
+        event.preventDefault()
 
-        var tagitem = $(this).clone();
-        tagitem.removeAttr('name');
-        tagitem.appendTo('#availabletags');
-        $(this).remove();
+        var tagitem = $(this).clone()
+        tagitem.appendTo('#available-tags')
+        $(this).remove()
+        SetTags()
     });
-
 
 })
+
+function SetTags() {
+    var selectedTags = $('#selected-tags');
+    var counter = 0;
+
+    //remove all the hidden inputs
+    selectedTags.children('.tag-input').each(function () {
+        $(this.remove())
+    })
+
+    //readd the hidden inputs
+    selectedTags.children('.gameplay-tag').each(function () {
+        $('<input>').attr({
+            type: 'hidden',
+            class: 'tag-input',
+            name: 'Tags[' + counter + ']',
+            value: $(this).attr('value')
+        }).appendTo('#selected-tags')
+        counter++
+    })
+}

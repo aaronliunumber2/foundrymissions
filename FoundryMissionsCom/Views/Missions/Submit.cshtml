@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Submit a Foundry Mission";
+    int counter = 0;
 }
 
 @section opengraph{
@@ -80,6 +81,29 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Gameplay Tags</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                Selected:
+                <div class="list-group gameplay-tags" id="selected-tags">
+                </div>
+            </div>
+            <div class="col-md-6">
+                Available:
+                <div class="list-group gameplay-tags" id="available-tags">                    
+                    @foreach (var tag in ViewBag.AvailableTags)
+                    {
+                        <a href="#" class="list-group-item gameplay-tag" value="@tag">@tag</a>
+                        counter++;
+                    }
+                </div>
+            </div>
+        </div>
+
         <div class="container row">
             <div class="form-group">
                 <input type="submit" name="submitButton" value="Save" class="btn btn-default" /> <input type="submit" name="submitButton" value="Save and Publish" class="btn btn-default" />
@@ -87,7 +111,7 @@
         </div>
     </div>
 
-        }
+}
 
 
         @section Scripts {
