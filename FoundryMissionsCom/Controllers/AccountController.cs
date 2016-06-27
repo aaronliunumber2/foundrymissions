@@ -173,6 +173,7 @@ namespace FoundryMissionsCom.Controllers
                     CrypticTag = model.CrypticTag,
                     JoinDate = DateTime.Today,
                     AutoApproval = false,
+                    LockoutEnabled = false,
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

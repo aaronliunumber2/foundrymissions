@@ -14,7 +14,7 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
         [Required]
         [Display(Name = "Cryptic Id")]
         [StringLength(9, MinimumLength = 9, ErrorMessage = "Cryptic Id must be 9 characters long.")]
-        [RegularExpression("^[A-Z0-9_]*$", ErrorMessage = "Cryptic Id must only contain uppercase alphanumeric characters.")]
+        [RegularExpression(@"(^[0-9a-zA-Z]*$)", ErrorMessage = "Cryptic Id must only contain uppercase alphanumeric characters.")]
         public string CrypticId { get; set; }
 
         [Required]

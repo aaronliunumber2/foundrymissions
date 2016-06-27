@@ -64,7 +64,7 @@ namespace FoundryMissionsCom.Controllers
             {
                 Id = mission.Id,
                 Author = mission.Author,
-                CrypticId = mission.CrypticId,
+                CrypticId = mission.CrypticId.ToUpper(),
                 Name = mission.Name,
                 Description = mission.Description,
                 Faction = mission.Faction,
@@ -73,7 +73,7 @@ namespace FoundryMissionsCom.Controllers
                 MinimumLevelImageUrl = MissionHelper.GetBigLevelImageUrl(mission.MinimumLevel, mission.Faction),
                 DateLastUpdated = mission.DateLastUpdated,
                 Length = mission.Length,
-                Tags = mission.Tags,
+                Tags = mission.Tags.OrderBy(t => t.TagName).ToList(),
                 Videos = mission.Videos,
                 Status = mission.Status,
                 Images = new List<string>()
@@ -127,10 +127,12 @@ namespace FoundryMissionsCom.Controllers
                 mission.Name = missionViewModel.Name;
                 mission.Published = missionViewModel.Published;
                 mission.Spotlit = missionViewModel.Spotlit;
-                mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
 
                 #endregion
 
+                mission.Tags = db.MissionTagTypes.Where(t => missionViewModel.Tags.Contains(t.TagName)).ToList();
+                
+                mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
                 mission.Author = user;
                 mission.DateAdded = DateTime.Today;
                 mission.DateLastUpdated = DateTime.Today;
@@ -155,7 +157,7 @@ namespace FoundryMissionsCom.Controllers
 
                 db.Missions.Add(mission);
                 db.SaveChanges();
-                return RedirectToAction("details", new { mission.Id });
+                return RedirectToAction("details", new { link = mission.MissionLink });
             }
 
             return View(missionViewModel);
@@ -268,7 +270,7 @@ namespace FoundryMissionsCom.Controllers
             {
                 var mission = db.Missions.Find(missionViewModel.Id);
                 var user = mission.Author;              
-                mission.CrypticId = missionViewModel.CrypticId;
+                mission.CrypticId = missionViewModel.CrypticId.ToUpper();
                 mission.Name = missionViewModel.Name;
                 mission.Description = missionViewModel.Description;
                 mission.Length = missionViewModel.Length;
@@ -277,11 +279,12 @@ namespace FoundryMissionsCom.Controllers
                 mission.Spotlit = missionViewModel.Spotlit;
                 mission.Status = missionViewModel.Status;
                 mission.DateLastUpdated = DateTime.Today;
-                mission.Tags.AddRange(db.MissionTagTypes.Where(t => missionViewModel.Tags.Contains(t.TagName)).ToList());
+                mission.Tags = db.MissionTagTypes.Where(t => missionViewModel.Tags.Contains(t.TagName)).ToList();
+                mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
 
                 db.SaveChanges();
 
-                return RedirectToAction("Details", new { mission.Id });
+                return RedirectToAction("details", new { link = mission.MissionLink });
             }
             return View(missionViewModel);
         }
@@ -308,6 +311,7 @@ namespace FoundryMissionsCom.Controllers
                                              m.Description.ToUpper().Contains(upperQuery) ||
                                              m.Name.ToUpper().Contains(upperQuery)) &&
                                              m.Status == MissionStatus.Published).ToList();
+            
             List<ListMissionViewModel> listMissions = MissionHelper.GetListMissionViewModels(missions);
 
             return View(listMissions);
