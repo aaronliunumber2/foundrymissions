@@ -19,6 +19,8 @@
     {
         colsize = "col-sm-12";
     }
+
+    var editable = User.IsInRole(ConstantsHelper.AdminRole) || User.Identity.Name.Equals(Model.Author.UserName);
 }
 
 @section opengraph{
@@ -84,12 +86,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
+
+                @if (editable)
+                {
+                    <div>
+                        @Html.ActionLink("Edit", "edit", new { link = Model.MissionLink }, new { @class = "btn btn-default details-edit-mission" })
                     </div>
-                </div>
+                }
  
-                <section class="missiondescription">
+                <section class="mission-description">
                     <div class="row">
                         <div class="col-md-12 ">
                             <header class=""><h3 class="mission-description-header">Mission Description</h3></header>
@@ -121,6 +126,7 @@
             </div>
             }
         </div>
+
     </article>
 </div>
 

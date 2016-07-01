@@ -38,5 +38,7 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
         public List<YoutubeVideo> Videos { get; set; }
 
         public List<string> Images { get; set; }
+
+        public string MissionLink { get; set; }
     }
 }

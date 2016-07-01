@@ -76,7 +76,8 @@ namespace FoundryMissionsCom.Controllers
                 Tags = mission.Tags.OrderBy(t => t.TagName).ToList(),
                 Videos = mission.Videos,
                 Status = mission.Status,
-                Images = new List<string>()
+                MissionLink = mission.MissionLink,
+                Images = new List<string>(),
             };
 
             //It's okay to show the mission now
@@ -296,7 +297,7 @@ namespace FoundryMissionsCom.Controllers
             return RedirectToAction("details", new { link = missionLink });
         }
 
-        public ActionResult Search(string q)
+        public ActionResult Search(string q, int? page)
         {
 
             if (string.IsNullOrEmpty(q))
@@ -304,15 +305,45 @@ namespace FoundryMissionsCom.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            string upperQuery = q.ToUpper();
+            int pageNumber = 1;
+            if (page != null)
+            {
+                pageNumber = (int)page;
+            }
+
             
+            string upperQuery = q.Trim().ToUpper();
+
+            #region Get Missions
             var missions = db.Missions.Where(m => (m.Author.UserName.ToUpper().Contains(upperQuery) ||
                                              m.CrypticId.ToUpper().Contains(upperQuery) ||
                                              m.Description.ToUpper().Contains(upperQuery) ||
                                              m.Name.ToUpper().Contains(upperQuery)) &&
-                                             m.Status == MissionStatus.Published).ToList();
-            
+                                             m.Status == MissionStatus.Published)
+                                       .OrderBy(m => m.Name)
+                                       .Skip(ConstantsHelper.MissionsPerPage * (pageNumber-1))
+                                       .Take(ConstantsHelper.MissionsPerPage)
+                                       .ToList();
             List<ListMissionViewModel> listMissions = MissionHelper.GetListMissionViewModels(missions);
+            #endregion
+
+            #region Paging Info
+
+            var missionCount = db.Missions.Where(m => (m.Author.UserName.ToUpper().Contains(upperQuery) ||
+                                             m.CrypticId.ToUpper().Contains(upperQuery) ||
+                                             m.Description.ToUpper().Contains(upperQuery) ||
+                                             m.Name.ToUpper().Contains(upperQuery)) &&
+                                             m.Status == MissionStatus.Published)
+                                       .Count();
+
+            var totalPages = (missionCount + ConstantsHelper.MissionsPerPage -1 ) / ConstantsHelper.MissionsPerPage;
+
+            ViewBag.Query = q;
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.MissionCount = missionCount;
+
+            #endregion
 
             return View(listMissions);
         }

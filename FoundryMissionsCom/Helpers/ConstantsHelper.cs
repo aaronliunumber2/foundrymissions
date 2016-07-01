@@ -10,5 +10,9 @@ namespace FoundryMissionsCom.Helpers
         public const string AdminRole = "Administrator";
 
         public const string ErrorReservedUser = "This is a reserved user and cannot be edited.";
+
+        public const int MissionsPerPage = 5;
+
+        public const int PagesToShow = 5;
     }
 }

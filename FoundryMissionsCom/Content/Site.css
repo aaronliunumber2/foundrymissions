@@ -253,15 +253,16 @@ input#lastupdate {
 
 }
 
-.missiondescription{
+.mission-description{
     color: #E8E8E8;
     border-radius: 10px;
     border: solid 1px;
     margin-bottom: 1em;
+    margin-top: 1em;
     overflow: hidden;
 }
 
-.missiondescription p{
+.mission-description p{
     padding: .5em;
 }
 
@@ -279,6 +280,11 @@ input#lastupdate {
 .search-results-header, .my-missions-header, .authors-header{
     font-weight : bold;
 }
+
+.paging{
+    text-align: right;
+}
+
 /* Control Panel */
 .control-panel-pane
 {

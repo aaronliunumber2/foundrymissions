@@ -1,7 +1,72 @@
-﻿@model IEnumerable<FoundryMissionsCom.Models.FoundryMissionViewModels.ListMissionViewModel>
+﻿@using FoundryMissionsCom.Helpers;
+@model IEnumerable<FoundryMissionsCom.Models.FoundryMissionViewModels.ListMissionViewModel>
 
 @{
     ViewBag.Title = "Search Results";
+    var pageHtml = "";
+
+    var query = ViewBag.Query;
+    var currentPage = ViewBag.CurrentPage;
+    var totalPages = ViewBag.TotalPages;
+    var missionCount = ViewBag.MissionCount;
+
+    if (totalPages > 0)
+    {
+        if (currentPage == 1)
+        {
+            pageHtml = "« ";
+        }
+        else
+        {
+            pageHtml = "<a href=\"/missions/search?q=" + query + "&page=" + (currentPage - 1) + "\">« </a> ";
+        }
+
+        var pagesCounter = currentPage - (ConstantsHelper.PagesToShow/2);
+        var counter = 0;
+        var pagesHtml = "";
+
+        if (pagesCounter < 1)
+        {
+            pagesCounter = 1;
+        }
+        else if (pagesCounter + ConstantsHelper.PagesToShow > totalPages )
+        {
+            pagesCounter = totalPages - ConstantsHelper.PagesToShow + 1;
+        }
+
+        if (pagesCounter > 1)
+        {
+            pagesHtml += "<a href =\"/missions/search?q=" + query + "&page=" + 1 + "\">" + 1 + " </a> ... ";
+        }
+
+        for(counter = pagesCounter; counter < pagesCounter + ConstantsHelper.PagesToShow && counter <= totalPages; counter++)
+        {
+            if (counter == currentPage)
+            {
+                pagesHtml += counter + " ";
+            }
+            else
+            {
+                pagesHtml += " <a href =\"/missions/search?q=" + query + "&page=" + counter + "\">" + counter + " </a> ";
+            }
+        }
+
+        if (counter <= totalPages)
+        {
+            pagesHtml += "... <a href =\"/missions/search?q=" + query + "&page=" + totalPages + "\">" + totalPages + " </a> ";
+        }
+
+        pageHtml += pagesHtml;
+
+        if (currentPage >= totalPages)
+        {
+            pageHtml += "»";
+        }
+        else
+        {
+            pageHtml += "<a href=\"/missions/search?q=" + query + "&page=" + (currentPage + 1) + "\">» </a>";
+        }
+    }
 }
 
 @section opengraph{
@@ -62,7 +127,7 @@
     </div>
     <div class="col-sm-1 col-xs-12">
         
-    @if (User.IsInRole(FoundryMissionsCom.Helpers.ConstantsHelper.AdminRole) || (item.Author.UserName.Equals(User.Identity.Name)))
+    @if (User.IsInRole(ConstantsHelper.AdminRole) || (item.Author.UserName.Equals(User.Identity.Name)))
     {
         @Html.ActionLink("Edit", "edit", new { link = item.MissionLink });
     }
@@ -70,5 +135,14 @@
     </div>
 
 </div>
-
 }
+
+<div class="container">
+    <div class="row">
+        <div class="total-results col-sm-6">Total results: @missionCount</div>
+        @if (totalPages > 1)
+        {
+            <div class="paging col-sm-6">@Html.Raw(pageHtml)</div>
+        }
+    </div>
+</div>
