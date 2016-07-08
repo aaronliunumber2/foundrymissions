@@ -242,6 +242,7 @@
     <Compile Include="Models\FoundryMissionModels\Mission.cs" />
     <Compile Include="Models\FoundryMissionModels\MissionTagType.cs" />
     <Compile Include="Models\FoundryMissionModels\YoutubeVideo.cs" />
+    <Compile Include="Models\FoundryMissionViewModels\AdvancedSearchViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\EditMissionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ListAuthorViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ListMissionViewModel.cs" />
@@ -393,10 +394,10 @@
     <Content Include="Views\Missions\Search.cshtml" />
     <Content Include="Views\Manage\_MyAccount.cshtml" />
     <Content Include="Views\Manage\_MyMissions.cshtml" />
-    <Content Include="Views\Missions\Advanced-Search.cshtml" />
     <Content Include="Views\Manage\_MissionApproval.cshtml" />
     <Content Include="Views\Manage\_Authors.cshtml" />
     <Content Include="Views\Home\Contact-Us.cshtml" />
+    <Content Include="Views\Missions\Advanced-Search.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
