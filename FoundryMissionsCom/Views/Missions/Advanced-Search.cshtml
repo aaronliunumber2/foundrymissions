@@ -5,83 +5,80 @@
     int counter = 0;
 }
 
-<h2>AdvancedSearch</h2>
+<div class="container">
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>AdvancedSearchViewModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <h2>Search</h2>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    @using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "advanced-search" }))
+    {
+        @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MinimumLevel, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MinimumLevel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MinimumLevel, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Faction, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Faction, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Faction, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <h4>Gameplay Tags</h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                Selected:
-                <div class="list-group gameplay-tags" id="selected-tags">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-6">
-                Available:
-                <div class="list-group gameplay-tags" id="available-tags">
-                    @foreach (var tag in ViewBag.AvailableTags)
-                    {
-                        <a href="#" class="list-group-item gameplay-tag" value="@tag">@tag</a>
-                        counter++;
-                    }
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MinimumLevel, htmlAttributes: new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MinimumLevel, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MinimumLevel, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Faction, htmlAttributes: new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.EnumDropDownListFor(model => model.Faction, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Faction, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Gameplay Tags</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    Selected:
+                    <div class="list-group gameplay-tags" id="selected-tags">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    Available:
+                    <div class="list-group gameplay-tags" id="available-tags">
+                        @foreach (var tag in ViewBag.AvailableTags)
+                        {
+                            <a href="#" class="list-group-item gameplay-tag" value="@tag">@tag</a>
+                            counter++;
+                        }
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+        <div class="container row">
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-default" />
+            </div>
+        </div>
+    }
+
 </div>
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

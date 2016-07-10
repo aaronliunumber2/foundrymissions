@@ -1,0 +1,158 @@
+﻿@using FoundryMissionsCom.Helpers;
+@model FoundryMissionsCom.Models.FoundryMissionViewModels.AdvancedSearchViewModel
+
+@{
+    ViewBag.Title = "Search Results";
+
+    var missions = Model.Missions;
+    var query = ViewBag.Query;
+    var currentPage = ViewBag.CurrentPage;
+    var totalPages = ViewBag.TotalPages;
+    var missionCount = ViewBag.MissionCount;
+    var startPage = ViewBag.StartPage;
+}
+
+@section opengraph{
+
+    <meta property="og:title" content="Search Results" />
+}
+
+<h2>Search Results</h2>
+
+<div class="row search-results-header">
+    <div class="col-sm-2 col-xs-12">
+        @Html.DisplayNameFor(model => model.Missions[0].Name)
+    </div>
+    <div class="col-sm-2 col-xs-12">
+        @Html.DisplayNameFor(model => model.Missions[0].CrypticId)
+    </div>
+    <div class="col-sm-2 col-xs-12">
+        @Html.DisplayNameFor(model => model.Missions[0].Author)
+    </div>
+    <div class="col-sm-2 col-xs-12">
+        @Html.DisplayNameFor(model => model.Missions[0].MinimumLevel)
+    </div>
+    <div class="col-sm-2 col-xs-12">
+        @Html.DisplayNameFor(model => model.Missions[0].Faction)
+    </div>
+    <div class="col-sm-1 col-xs-12">
+        @Html.DisplayNameFor(model => model.Missions[0].DateLastUpdated)
+    </div>
+    <div class="col-sm-1 col-xs-12">
+    </div>
+</div>
+@foreach (var item in Model.Missions)
+{
+    <div class="row search-result">
+        <div class="col-sm-2 col-xs-12">
+            @Html.ActionLink(item.Name, "details", new { link = item.MissionLink })
+        </div>
+        <div class="col-sm-2 col-xs-12">
+            ST-@Html.DisplayFor(modelItem => item.CrypticId)
+        </div>
+        <div class="col-sm-2 col-xs-12">
+            @Html.DisplayFor(modelItem => item.Author.CrypticTag)
+        </div>
+        <div class="col-sm-2 col-xs-12">
+            @if (item.MinimumLevel == 1)
+            {
+                <img src="@Url.Content("~/Content/Images/" + item.LevelImageUrl)" /> <text>Any</text>
+            }
+            else
+            {
+                <img src="@Url.Content("~/Content/Images/" + item.LevelImageUrl)" />@Html.DisplayFor(modelItem => item.MinimumLevel)<text>+</text>;
+            }
+        </div>
+        <div class="col-sm-2 col-xs-12">
+            <img src="@Url.Content("~/Content/Images/" + item.FactionImageUrl)" /> @Html.DisplayFor(modelItem => item.Faction)
+        </div>
+        <div class="col-sm-1 col-xs-12">
+            @Html.DisplayFor(modelItem => item.DateLastUpdated)
+        </div>
+        <div class="col-sm-1 col-xs-12">
+
+            @if (User.IsInRole(ConstantsHelper.AdminRole) || (item.Author.UserName.Equals(User.Identity.Name)))
+            {
+                @Html.ActionLink("Edit", "edit", new { link = item.MissionLink });
+            }
+
+        </div>
+
+    </div>
+}
+
+<div class="container">
+    <div class="row">
+        <div class="total-results col-sm-6">Total results: @missionCount</div>
+        @if (totalPages > 1)
+        {
+            <div class="paging col-sm-6">
+                    @Html.AntiForgeryToken()
+                    @if (currentPage == 1)
+                    {
+                        <text>« </text>
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class="paging-item" } ))
+                        {
+                            <input type="submit" class="btn btn-link" value="@(currentPage - 1)" />
+                            <input type="hidden" name="page" value="@(currentPage - 1)" />
+                        }
+                    }
+
+                    @{var counter = 0;}
+
+
+
+                    @if (startPage > 1)
+                    {
+                        using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
+                        {
+                            <input type="submit" class="btn btn-link" />
+                            <input type="hidden" name="page" value="1" /><text> ... </text>
+                        }
+                    }
+
+                    @for (counter = startPage; counter < startPage + ConstantsHelper.PagesToShow && counter <= totalPages; counter++)
+                    {
+                        if (counter == currentPage)
+                        {
+                            <text>@counter</text>
+                        }
+                        else
+                        {
+ 
+                            using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
+                            {
+                                <input type="submit" class="btn btn-link" value="@counter" />
+                                <input type="hidden" name="page" value="@counter" />
+                            }
+                        }
+                    }
+
+                    @if (counter <= totalPages)
+                    {
+                        using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
+                        {
+                            <input type="submit" class="btn btn-link" value="@totalPages" />
+                            <input type="hidden" name="page" value="@totalPages" /><text> ... </text>
+                        }
+                    }
+
+                    @if (currentPage >= totalPages)
+                    {
+                        <text>»</text>
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
+                        {
+                            <input type="submit" class="btn btn-link" value="»" />
+                            <input type="hidden" name="page" value="@(currentPage + 1)" />
+                        }
+                    }
+            </div>
+        }
+    </div>
+</div>

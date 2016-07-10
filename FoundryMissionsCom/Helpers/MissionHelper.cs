@@ -13,7 +13,7 @@ namespace FoundryMissionsCom.Helpers
 {
     public static class MissionHelper
     {
-        private static string[] RestrictedMissionNames = { "SUBMIT", "DETAILS", "RANDOM", "EDIT", "SEARCH", "ADVANCED-SEARCH" };
+        private static string[] RestrictedMissionNames = { "SUBMIT", "DETAILS", "RANDOM", "EDIT", "SEARCH", "ADVANCED-SEARCH", "SEARCHRESULTS" };
 
         /// <summary>
         /// Get what the mission's link should be

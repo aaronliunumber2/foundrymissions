@@ -22,6 +22,6 @@ namespace FoundryMissionsCom.Models.FoundryMissionModels
         public override string ToString()
         {
             return TagName;
-        }
+        }       
     }
 }

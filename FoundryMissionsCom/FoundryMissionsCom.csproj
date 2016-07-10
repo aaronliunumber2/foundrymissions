@@ -398,6 +398,7 @@
     <Content Include="Views\Manage\_Authors.cshtml" />
     <Content Include="Views\Home\Contact-Us.cshtml" />
     <Content Include="Views\Missions\Advanced-Search.cshtml" />
+    <Content Include="Views\Missions\SearchResults.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

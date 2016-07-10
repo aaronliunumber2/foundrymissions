@@ -130,6 +130,11 @@ form.missiondata {
     max-width: 100%;
 }
 
+.advanced-search {
+    background-color: #F0F0F0;
+    padding: 1em;
+}
+
 input#lastupdate {
     width: 173px;
 }
@@ -283,6 +288,10 @@ input#lastupdate {
 
 .paging{
     text-align: right;
+}
+
+.paging-item{
+    display: inline;
 }
 
 /* Control Panel */

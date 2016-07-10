@@ -14,6 +14,7 @@ using FoundryMissionsCom.Helpers;
 using FoundryMissionsCom.Attributes;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Linq.Expressions;
 
 namespace FoundryMissionsCom.Controllers
 {
@@ -338,10 +339,21 @@ namespace FoundryMissionsCom.Controllers
 
             var totalPages = (missionCount + ConstantsHelper.MissionsPerPage -1 ) / ConstantsHelper.MissionsPerPage;
 
+            var pagesCounter = pageNumber - (ConstantsHelper.PagesToShow / 2);
+            if (pagesCounter < 1)
+            {
+                pagesCounter = 1;
+            }
+            else if (pagesCounter + ConstantsHelper.PagesToShow > totalPages)
+            {
+                pagesCounter = totalPages - ConstantsHelper.PagesToShow + 1;
+            }
+
             ViewBag.Query = q;
             ViewBag.CurrentPage = pageNumber;
             ViewBag.TotalPages = totalPages;
             ViewBag.MissionCount = missionCount;
+            ViewBag.StartPage = pagesCounter;
 
             #endregion
 
@@ -351,8 +363,101 @@ namespace FoundryMissionsCom.Controllers
         [ActionName("Advanced-Search")]
         public ActionResult AdvancedSearch()
         {
+            ViewBag.AvailableTags = db.MissionTagTypes.Select(t => t.TagName).ToList();
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SearchResults(AdvancedSearchViewModel model, int? page)
+        {
+            if (model == null)
+            {
+                RedirectToAction("advanced-search");
+            }
+
+            int pageNumber = 1;
+            if (page != null)
+            {
+                pageNumber = (int)page;
+            }
+
+            //build the query
+            var qry = db.Missions.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(model.Title))
+            {
+                qry = qry.Where(m => m.Name.ToUpper().Contains(model.Title.ToUpper()));
+            }
+            if (model.Faction != null)
+            {
+                qry = qry.Where(m => m.Faction == model.Faction);
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.Author))
+            {
+                qry = qry.Where(m => m.Author.CrypticTag.ToUpper().Contains(model.Author.ToUpper()));
+            }
+
+            if (model.MinimumLevel != null)
+            {
+                qry = qry.Where(m => m.MinimumLevel >= model.MinimumLevel);
+            }
+
+            List<Mission> missions = qry.OrderBy(m => m.Name).ToList();
+            List<Mission> filteredMissions = new List<Mission>();
+
+            //filter on the tags
+            if (model.Tags != null && model.Tags.Count > 0)
+            {
+                List<MissionTagType> tags = db.MissionTagTypes.Where(t => model.Tags.Contains(t.TagName)).ToList();               
+
+                foreach(var mission in missions)
+                {
+                    if (mission.Tags.Intersect(tags).Count() > 0)
+                    {
+                        filteredMissions.Add(mission);
+                    }
+                }
+
+            }
+            else
+            {
+                filteredMissions = missions;
+            }
+
+            var missionCount = filteredMissions.Count();
+
+            missions = filteredMissions.Skip(ConstantsHelper.MissionsPerPage * (pageNumber - 1)).Take(ConstantsHelper.MissionsPerPage).ToList();
+            List<ListMissionViewModel> listmissions = MissionHelper.GetListMissionViewModels(missions);
+            model.Missions = listmissions;
+
+
+
+            #region Paging Info
+
+            var totalPages = (missionCount + ConstantsHelper.MissionsPerPage - 1) / ConstantsHelper.MissionsPerPage;
+
+            var pagesCounter = pageNumber - (ConstantsHelper.PagesToShow / 2);
+            if (pagesCounter < 1)
+            {
+                pagesCounter = 1;
+            }
+            else if (pagesCounter + ConstantsHelper.PagesToShow > totalPages)
+            {
+                pagesCounter = totalPages - ConstantsHelper.PagesToShow + 1;
+            }
+
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.MissionCount = missionCount;
+            ViewBag.StartPage = pagesCounter;
+
+            #endregion
+
+            return View(model);
+        }
+
+
 
 
         #region  Auto generated
