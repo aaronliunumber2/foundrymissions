@@ -19,6 +19,36 @@
 
 <h2>Search Results</h2>
 
+@*
+    @if (!string.IsNullOrWhiteSpace(Model.Title))
+    {
+        <div>Title: @Model.Title</div>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.Author))
+    {
+        <div>Author: @Model.Author</div>
+    }
+    @if (Model.Faction != null)
+    {
+        <div>Faction: @Model.Faction </div >
+    }
+    @if (Model.MinimumLevel != null)
+    {
+        <div>Minimum Level: @Model.MinimumLevel</div>
+    }
+    @if(Model.Tags != null && Model.Tags.Count > 0)
+    {
+        <div>
+            Tags:
+            @foreach(var tag in Model.Tags)
+            {
+                <span>@tag </span>
+            }
+        </div>
+    }
+*@
+<hr />
+
 <div class="row search-results-header">
     <div class="col-sm-2 col-xs-12">
         @Html.DisplayNameFor(model => model.Missions[0].Name)
@@ -96,7 +126,7 @@
                     {
                         using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class="paging-item" } ))
                         {
-                            <input type="submit" class="btn btn-link" value="@(currentPage - 1)" />
+                            <input type="submit" class="btn-link" value="@(currentPage - 1)" />
                             <input type="hidden" name="page" value="@(currentPage - 1)" />
                         }
                     }
@@ -109,7 +139,7 @@
                     {
                         using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
                         {
-                            <input type="submit" class="btn btn-link" />
+                            <input type="submit" class="btn-link" />
                             <input type="hidden" name="page" value="1" /><text> ... </text>
                         }
                     }
@@ -125,7 +155,7 @@
  
                             using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
                             {
-                                <input type="submit" class="btn btn-link" value="@counter" />
+                                <input type="submit" class="btn-link" value="@counter" />
                                 <input type="hidden" name="page" value="@counter" />
                             }
                         }
@@ -135,7 +165,7 @@
                     {
                         using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
                         {
-                            <input type="submit" class="btn btn-link" value="@totalPages" />
+                            <input type="submit" class="btn-link" value="@totalPages" />
                             <input type="hidden" name="page" value="@totalPages" /><text> ... </text>
                         }
                     }
@@ -148,7 +178,7 @@
                     {
                         using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
                         {
-                            <input type="submit" class="btn btn-link" value="»" />
+                            <input type="submit" class="btn-link" value="»" />
                             <input type="hidden" name="page" value="@(currentPage + 1)" />
                         }
                     }

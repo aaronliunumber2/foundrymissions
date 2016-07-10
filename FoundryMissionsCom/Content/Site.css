@@ -292,6 +292,11 @@ input#lastupdate {
 
 .paging-item{
     display: inline;
+ 
+}
+
+form.paging-item input{
+    padding: 0 1px 0 1px;  
 }
 
 /* Control Panel */

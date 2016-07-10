@@ -376,6 +376,16 @@ namespace FoundryMissionsCom.Controllers
                 RedirectToAction("advanced-search");
             }
 
+            //if everything in the model is null also go back
+            if (string.IsNullOrWhiteSpace(model.Author) &&
+                (model.Faction == null) &&
+                (model.MinimumLevel == null) &&
+                (model.Tags == null || model.Tags.Count == 0) &&
+                string.IsNullOrWhiteSpace(model.Title))
+            {
+                RedirectToAction("advanced-search");
+            }
+
             int pageNumber = 1;
             if (page != null)
             {
