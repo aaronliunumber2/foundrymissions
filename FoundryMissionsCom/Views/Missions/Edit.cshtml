@@ -11,13 +11,15 @@
 
     }
 
-<h2>Editing @Model.Name</h2>
+
 
 
 @*@using (Html.BeginForm("edit", "missions", FormMethod.Post, new { @class = "missiondata" }))*@
-<form action="" method="post" class="missiondata">
+<form action="" method="post" class="content  mission-data">
     @Html.AntiForgeryToken()
 
+    <h2>Editing @Model.Name</h2>
+    <hr />
     <div class="form-vertical">
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

@@ -25,7 +25,7 @@ namespace FoundryMissionsCom.Controllers
         // GET: Missions
         public ActionResult Index()
         {
-            RedirectToAction("index", "home");
+            return RedirectToAction("index", "home");
             //return View(db.Missions.ToList());
         }
 
@@ -450,7 +450,7 @@ namespace FoundryMissionsCom.Controllers
 
                 foreach(var mission in missions)
                 {
-                    if (mission.Tags.Intersect(tags).Count() > 0)
+                    if (mission.Tags.Intersect(tags).Count() == tags.Count)
                     {
                         filteredMissions.Add(mission);
                     }

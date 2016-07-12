@@ -7,12 +7,13 @@
 
 <div class="container">
 
-    <h2>Search</h2>
 
-    @using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "advanced-search" }))
+
+    @using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "content  mission-data" }))
     {
         @Html.AntiForgeryToken()
-
+        <h2>Search</h2>
+        <hr />
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">

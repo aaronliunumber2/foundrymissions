@@ -113,9 +113,9 @@ li.minornavbutton {
 
 /* Submit mission */
 
-form.missiondata input,
-form.missiondata select,
-form.missiondata textarea 
+form.mission-data input,
+form.mission-data select,
+form.mission-data textarea 
 {
     max-width: 100%;
 }
@@ -124,8 +124,8 @@ input.crypticid{
     text-transform: uppercase;
 }
 
-form.missiondata {
-    background-color: #F0F0F0;
+form.mission-data {
+    /*background-color: #F0F0F0;*/
     padding: 1em;
     max-width: 100%;
 }

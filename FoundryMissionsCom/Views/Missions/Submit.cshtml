@@ -10,11 +10,13 @@
         <meta property="og:description" content="Submit your Star Trek Online foundry mission"/>
     }
 
-<h2>Submit a Foundry Mission</h2>
 
 
-@using (Html.BeginForm("submit", "missions", FormMethod.Post, new { @class = "missiondata" }))
+
+@using (Html.BeginForm("submit", "missions", FormMethod.Post, new { @class = "content mission-data" }))
 {
+    <h2>Submit a Foundry Mission</h2>
+    <hr/>
     @Html.AntiForgeryToken()
     <div class="form-vertical">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
