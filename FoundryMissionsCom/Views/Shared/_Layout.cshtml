@@ -43,14 +43,12 @@
                     <li class="navsearch">
                         @using (Html.BeginForm("search", "missions", FormMethod.Get, new { role="search", @class = "navbar-form navbar-left" }))
                         { 
-                        <form class="navbar-form navbar-left" role="search" action="missions/">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Search" name="q">
                             </div>
                             <button type="submit" class="btn btn-default">
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
-                        </form>
                         }
                     </li>
                 </ul>
@@ -62,7 +60,7 @@
         @RenderBody()
         <hr />
         <footer id="pagefooter">
-            Copyright © @DateTime.Now.Year. Website by Zorbane and RogueEnterprise for Star Trek Online.  Star Trek Online logo and all related images are registered trademarks or trademarks of <a href="http://arcgames.com">Perfect World Entertainment</a>.
+            Copyright © @DateTime.Now.Year. Icons and Logos by Tomasi "Toa" Akimeta. Star Trek Online logo and all related images are registered trademarks or trademarks of <a href="http://arcgames.com">Perfect World Entertainment</a>.
         </footer>
     </div>
 

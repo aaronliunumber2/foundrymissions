@@ -88,6 +88,12 @@
             <div class="col-md-6">
                 Selected:
                 <div class="list-group gameplay-tags" id="selected-tags">
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <a href="#" class="list-group-item gameplay-tag" value="@tag">@tag</a>
+                        <input type="hidden" name="Tags[@counter]" value="@tag"/> 
+                        counter++;
+                    }
                 </div>
             </div>
             <div class="col-md-6">
@@ -96,7 +102,6 @@
                     @foreach (var tag in ViewBag.AvailableTags)
                     {
                         <a href="#" class="list-group-item gameplay-tag" value="@tag">@tag</a>
-                        counter++;
                     }
                 </div>
             </div>

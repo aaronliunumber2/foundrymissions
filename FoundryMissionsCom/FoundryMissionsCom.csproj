@@ -294,11 +294,13 @@
     <Content Include="Content\Images\Tags\iconians.jpg" />
     <Content Include="Content\Images\Tags\klingons.jpg" />
     <Content Include="Content\Images\Tags\mirror-federation.jpg" />
-    <Content Include="Content\Images\Tags\na%27khul.jpg" />
+    <Content Include="Content\Images\Tags\na%27kuhl.jpg" />
     <Content Include="Content\Images\Tags\nausicaans.jpg" />
     <Content Include="Content\Images\Tags\no-combat.jpg" />
     <Content Include="Content\Images\Tags\orions.jpg" />
     <Content Include="Content\Images\Tags\puzzles.jpg" />
+    <Content Include="Content\Images\Tags\remans.jpg" />
+    <Content Include="Content\Images\Tags\romulans.jpg" />
     <Content Include="Content\Images\Tags\small-craft.jpg" />
     <Content Include="Content\Images\Tags\space.jpg" />
     <Content Include="Content\Images\Tags\story.jpg" />

@@ -25,7 +25,8 @@ namespace FoundryMissionsCom.Controllers
         // GET: Missions
         public ActionResult Index()
         {
-            return View(db.Missions.ToList());
+            RedirectToAction("index", "home");
+            //return View(db.Missions.ToList());
         }
 
         // GET: Missions/5
@@ -220,7 +221,12 @@ namespace FoundryMissionsCom.Controllers
             editModel.Tags = mission.Tags.Select(t => t.TagName).ToList();
             mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
 
-            ViewBag.AvailableTags = db.MissionTagTypes.Select(t => t.TagName).ToList();
+            var unselectedTags = db.MissionTagTypes.Select(t => t.TagName).ToList();
+            foreach (var tags in editModel.Tags)
+            {
+                unselectedTags.Remove(tags);
+            }
+            ViewBag.AvailableTags = unselectedTags;
             ViewBag.PublishedSelectList = new SelectList(publishedSelectItems, "Value", "Text");
 
             return View(editModel);
@@ -281,8 +287,29 @@ namespace FoundryMissionsCom.Controllers
                 mission.Spotlit = missionViewModel.Spotlit;
                 mission.Status = missionViewModel.Status;
                 mission.DateLastUpdated = DateTime.Today;
-                mission.Tags = db.MissionTagTypes.Where(t => missionViewModel.Tags.Contains(t.TagName)).ToList();
                 mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
+
+                //first remove the tags that don't exist anymore
+                var currentTags = mission.Tags;
+                foreach(var tag in currentTags)
+                {
+                    if (!missionViewModel.Tags.Contains(tag.TagName))
+                    {
+                        mission.Tags.Remove(tag);
+                    }
+                }
+                //now add the tags that don't exist
+                foreach (var tag in missionViewModel.Tags)
+                {
+                    var tagType = db.MissionTagTypes.FirstOrDefault(t => t.TagName.Equals(tag));
+                    if (tagType != null)
+                    {
+                        if (!mission.Tags.Contains(tagType))
+                        {
+                            mission.Tags.Add(tagType);
+                        }
+                    }
+                }
 
                 db.SaveChanges();
 
