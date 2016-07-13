@@ -264,6 +264,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\big_captain_federation.png" />
     <Content Include="Content\Images\big_federation.png" />
+    <Content Include="Content\Images\favicon.ico" />
     <Content Include="Content\Images\federation.png" />
     <Content Include="Content\Images\giant-ufp.png" />
     <Content Include="Content\Images\klingon.png" />
