@@ -7,7 +7,7 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li class="minornavbutton">
-            <a href="#">Hello @User.Identity.GetUserName()!</a>
+            <span class="navbar-text minornavtext">Hello @User.Identity.GetUserName()!</span>
         </li>
         <li class="minornavbutton">
             @Html.ActionLink("Control Panel", "index", "manage", routeValues: null, htmlAttributes: new { title = "Manage" })

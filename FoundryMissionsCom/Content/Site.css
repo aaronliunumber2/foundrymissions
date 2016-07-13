@@ -111,6 +111,10 @@ li.minornavbutton {
     font-size: 75%;
 }
 
+.minornavtext{
+    line-height: 20px;
+}
+
 /* Submit mission */
 
 form.mission-data input,

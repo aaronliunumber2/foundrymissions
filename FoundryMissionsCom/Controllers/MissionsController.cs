@@ -449,7 +449,7 @@ namespace FoundryMissionsCom.Controllers
 
             if (model.MinimumLevel != null)
             {
-                qry = qry.Where(m => m.MinimumLevel >= model.MinimumLevel);
+                qry = qry.Where(m => m.MinimumLevel <= model.MinimumLevel);
             }
 
             List<Mission> missions = qry.OrderByDescending(m => m.DateLastUpdated).ToList();
