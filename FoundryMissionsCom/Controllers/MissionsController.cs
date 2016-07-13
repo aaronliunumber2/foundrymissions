@@ -397,7 +397,7 @@ namespace FoundryMissionsCom.Controllers
         public ActionResult AdvancedSearch()
         {
             ViewBag.AvailableTags = db.MissionTagTypes.Select(t => t.TagName).ToList();
-            ViewBag.MinimumLevelSelectList = new SelectList(MissionHelper.GetMinimumLevelSelectList(), "Value", "Text");
+            ViewBag.MinimumLevelSelectList = new SelectList(MissionHelper.GetMinimumLevelSelectList(true), "Value", "Text");
             return View();
         }
         

@@ -162,7 +162,22 @@ namespace FoundryMissionsCom.Helpers
 
         public static List<SelectListItem> GetMinimumLevelSelectList()
         {
+            return GetMinimumLevelSelectList(false);
+        }
+
+        public static List<SelectListItem> GetMinimumLevelSelectList(bool includeBlank)
+        {
             var list = new List<SelectListItem>();
+
+            //if i am to include a blank add it
+            if (includeBlank)
+            {
+                list.Add(new SelectListItem()
+                {
+                    Value = null,
+                    Text = null,
+                });
+            }
 
             //add level 1 as any
             list.Add(new SelectListItem()
