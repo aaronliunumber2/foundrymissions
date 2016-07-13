@@ -130,6 +130,12 @@ form.mission-data {
     max-width: 100%;
 }
 
+form.advanced-search input,
+form.advanced-search select
+{
+    max-width: 100%;
+}
+
 .advanced-search {
     background-color: #F0F0F0;
     padding: 1em;

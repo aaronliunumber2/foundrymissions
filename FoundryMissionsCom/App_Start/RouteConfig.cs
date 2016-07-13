@@ -49,6 +49,12 @@ namespace FoundryMissionsCom
             );
 
             routes.MapRoute(
+                "AuthorPage",
+                "missions/author",
+                new { controller = "Missions", action = "author", author= "{author}" }
+            );
+
+            routes.MapRoute(
                 "EditMissionLink",
                 "missions/edit/{link}",
                 new { controller = "Missions", action = "Edit", link = "{link}" }

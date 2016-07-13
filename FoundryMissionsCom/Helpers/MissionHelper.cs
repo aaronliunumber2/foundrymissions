@@ -14,6 +14,7 @@ namespace FoundryMissionsCom.Helpers
     public static class MissionHelper
     {
         private static string[] RestrictedMissionNames = { "SUBMIT", "DETAILS", "RANDOM", "EDIT", "SEARCH", "ADVANCED-SEARCH", "SEARCHRESULTS" };
+        private static int[] MinimumLevelSelectors = { 1, 16, 21, 31, 35, 41, 46, 50, 51, 57 };
 
         /// <summary>
         /// Get what the mission's link should be
@@ -157,6 +158,20 @@ namespace FoundryMissionsCom.Helpers
             });
             #endregion
             return publishedSelectItems;
+        }
+
+        public static List<SelectListItem> GetMinimumLevelSelectList()
+        {
+            var list = new List<SelectListItem>();
+            foreach(var level in MinimumLevelSelectors)
+            {
+                list.Add(new SelectListItem()
+                {
+                    Value = level.ToString(),
+                    Text = level.ToString(),
+                });
+            }
+            return list;
         }
     }
 }

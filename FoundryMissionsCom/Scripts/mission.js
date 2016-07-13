@@ -29,7 +29,7 @@ function SetTags() {
         $(this.remove())
     })
 
-    //readd the hidden inputs
+    //read the hidden inputs
     selectedTags.children('.gameplay-tag').each(function () {
         $('<input>').attr({
             type: 'hidden',

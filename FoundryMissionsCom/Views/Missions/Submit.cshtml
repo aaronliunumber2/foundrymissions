@@ -48,7 +48,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.MinimumLevel, htmlAttributes: new { @class = "control-label" })
 
-                    @Html.EditorFor(model => model.MinimumLevel, new { htmlAttributes = new { @class = "form-control" } })
+                    @*Html.EditorFor(model => model.MinimumLevel, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.DropDownListFor(model => model.MinimumLevel, (SelectList)ViewBag.MinimumLevelSelectList, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.MinimumLevel, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
@@ -57,10 +58,10 @@
                     @Html.EnumDropDownListFor(model => model.Length, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Length, "", new { @class = "text-danger" })
                 </div>
-
+@*
                 <div class="form-group col-md-6">
                     @Html.LabelFor(model => model.Published, htmlAttributes: new { @class = "control-label" })
-                             
+
 
                     @Html.DropDownListFor(model => model.Published, (SelectList)ViewBag.PublishedSelectList, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
@@ -72,6 +73,7 @@
                     @Html.DropDownListFor(model => model.Spotlit, (SelectList)ViewBag.PublishedSelectList, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Spotlit, "", new { @class = "text-danger" })
                 </div>
+*@
             </div>
         </div>
         <div class="row">

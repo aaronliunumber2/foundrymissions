@@ -94,7 +94,7 @@ namespace FoundryMissionsCom.Controllers
             List<SelectListItem> publishedSelectItems = MissionHelper.GetYesNoSelectList();
             ViewBag.AvailableTags = db.MissionTagTypes.Select(t => t.TagName).ToList();
             ViewBag.PublishedSelectList = new SelectList(publishedSelectItems, "Value", "Text");
-
+            ViewBag.MinimumLevelSelectList = new SelectList(MissionHelper.GetMinimumLevelSelectList(), "Value", "Text");
 
             return View();
         }
@@ -228,6 +228,7 @@ namespace FoundryMissionsCom.Controllers
             }
             ViewBag.AvailableTags = unselectedTags;
             ViewBag.PublishedSelectList = new SelectList(publishedSelectItems, "Value", "Text");
+            ViewBag.MinimumLevelSelectList = new SelectList(MissionHelper.GetMinimumLevelSelectList(), "Value", "Text");
 
             return View(editModel);
         }
@@ -287,10 +288,15 @@ namespace FoundryMissionsCom.Controllers
                 mission.Spotlit = missionViewModel.Spotlit;
                 mission.Status = missionViewModel.Status;
                 mission.DateLastUpdated = DateTime.Today;
-                mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
 
+
+                // in case the tags list is null create a blank one
+                if (missionViewModel.Tags == null)
+                {
+                    missionViewModel.Tags = new List<string>();
+                }
                 //first remove the tags that don't exist anymore
-                var currentTags = mission.Tags;
+                var currentTags = mission.Tags.ToList();
                 foreach(var tag in currentTags)
                 {
                     if (!missionViewModel.Tags.Contains(tag.TagName))
@@ -391,7 +397,13 @@ namespace FoundryMissionsCom.Controllers
         public ActionResult AdvancedSearch()
         {
             ViewBag.AvailableTags = db.MissionTagTypes.Select(t => t.TagName).ToList();
+            ViewBag.MinimumLevelSelectList = new SelectList(MissionHelper.GetMinimumLevelSelectList(), "Value", "Text");
             return View();
+        }
+        
+        public ActionResult Author(string author)
+        {
+            return RedirectToAction("index", "home");
         }
 
         [HttpPost]

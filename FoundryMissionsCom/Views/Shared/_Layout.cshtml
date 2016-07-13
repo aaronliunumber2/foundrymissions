@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,7 +41,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right searchbar">
                     <li class="navsearch">
-                        @using (Html.BeginForm("search", "missions", FormMethod.Get, new { role="search", @class = "navbar-form navbar-left" }))
+                        @using (Html.BeginForm("search", "missions", FormMethod.Get, new {  @class = "navbar-form navbar-left" }))
                         { 
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Search" name="q">

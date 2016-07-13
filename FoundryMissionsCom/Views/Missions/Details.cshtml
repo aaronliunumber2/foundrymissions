@@ -66,14 +66,14 @@
                         </div>
                         <div class="col-sm-6 mission-restrictions">
                             <div>
-                                <img src="@Url.Content("~/Content/Images/"+Model.FactionImageUrl)" /> @Model.Faction.ToString()
+                                <img src="@Url.Content("~/Content/Images/"+Model.FactionImageUrl)" alt="@Model.Faction.ToString()"/> @Model.Faction.ToString()
                                 @if (@Model.MinimumLevel == 1)
                                 {
-                                    <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" /><text>Any Level</text>
+                                    <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" alt="Any Level" /><text>Any Level</text>
                                 }
                                 else
                                 {
-                                    <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" /><text>Level @Model.MinimumLevel+</text>
+                                    <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" alt="@Model.MinimumLevel+"/><text>Level @Model.MinimumLevel+</text>
                                 }
                             </div>
                         </div>
@@ -83,6 +83,11 @@
                             <div class="missioninfo">
                                 <h3>@Model.Author.CrypticTag</h3> ST-@Model.CrypticId
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Model.Length.DisplayName()
                         </div>
                     </div>
                 </div>
@@ -118,7 +123,7 @@
                         @foreach (var tag in Model.Tags)
                         {
                             <figure class="mission-tag-image">
-                                <div><img src="@Url.Content("~/Content/Images/Tags/" + MissionHelper.GetTagImageUrl(tag))" title="@tag.TagName" /></div>
+                                <div><img src="@Url.Content("~/Content/Images/Tags/" + MissionHelper.GetTagImageUrl(tag))" title="@tag.TagName" alt="@tag.TagName"/></div>
                             </figure>
                         }
                     </div>
