@@ -354,7 +354,7 @@ namespace FoundryMissionsCom.Controllers
                                              m.Description.ToUpper().Contains(upperQuery) ||
                                              m.Name.ToUpper().Contains(upperQuery)) &&
                                              m.Status == MissionStatus.Published)
-                                       .OrderBy(m => m.Name)
+                                       .OrderByDescending(m => m.DateLastUpdated)
                                        .Skip(ConstantsHelper.MissionsPerPage * (pageNumber-1))
                                        .Take(ConstantsHelper.MissionsPerPage)
                                        .ToList();
@@ -452,7 +452,7 @@ namespace FoundryMissionsCom.Controllers
                 qry = qry.Where(m => m.MinimumLevel >= model.MinimumLevel);
             }
 
-            List<Mission> missions = qry.OrderBy(m => m.Name).ToList();
+            List<Mission> missions = qry.OrderByDescending(m => m.DateLastUpdated).ToList();
             List<Mission> filteredMissions = new List<Mission>();
 
             //filter on the tags

@@ -7,7 +7,10 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li class="minornavbutton">
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            <a href="#">Hello @User.Identity.GetUserName()!</a>
+        </li>
+        <li class="minornavbutton">
+            @Html.ActionLink("Control Panel", "index", "manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
         <li class="minornavbutton"><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
