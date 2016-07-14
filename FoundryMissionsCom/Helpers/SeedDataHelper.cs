@@ -22,12 +22,13 @@ namespace FoundryMissionsCom.Helpers
             var userManager = new UserManager<ApplicationUser>(userStore);
             var usersToAdd = new List<ApplicationUser>();
 
-            usersToAdd.Add(CreateAdminUser("Zorbane", "Zorbane", "Zorbane", "aaron.liu.bc@gmail.com", "359Battlewolffoundrymissions", context, userManager));
+            usersToAdd.Add(CreateAdminUser("Zorbane", "Zorbane", "Zorbane", "aaron.liu.bc@gmail.com", context, userManager));
+            usersToAdd.Add(CreateAdminUser("RogueEnterprise", "RogueEnterprise", "RogueEnterprise", "sconom@gmail.com", context, userManager));
 
             CreateRole(context, "Administrator", usersToAdd);
         }
 
-        private static ApplicationUser CreateAdminUser(string username, string twitter, string cryptic, string email, string password, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        private static ApplicationUser CreateAdminUser(string username, string twitter, string cryptic, string email, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
 
             //check if user exists
