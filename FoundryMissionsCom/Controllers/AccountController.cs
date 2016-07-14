@@ -152,16 +152,16 @@ namespace FoundryMissionsCom.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             //check recaptcha
-            //RecaptchaVerificationHelper recaptchaHelper = this.GetRecaptchaVerificationHelper();
-            //if (String.IsNullOrEmpty(recaptchaHelper.Response))
-            //{
-            //    ModelState.AddModelError("", "Captcha answer cannot be empty.");
-            //}
-            //RecaptchaVerificationResult recaptchaResult = await recaptchaHelper.VerifyRecaptchaResponseTaskAsync();
-            //if (recaptchaResult != RecaptchaVerificationResult.Success)
-            //{
-            //    ModelState.AddModelError("", "Incorrect captcha answer.");
-            //}
+            RecaptchaVerificationHelper recaptchaHelper = this.GetRecaptchaVerificationHelper();
+            if (String.IsNullOrEmpty(recaptchaHelper.Response))
+            {
+                ModelState.AddModelError("", "Captcha answer cannot be empty.");
+            }
+            RecaptchaVerificationResult recaptchaResult = await recaptchaHelper.VerifyRecaptchaResponseTaskAsync();
+            if (recaptchaResult != RecaptchaVerificationResult.Success)
+            {
+                ModelState.AddModelError("", "Incorrect captcha answer.");
+            }
 
 
             if (ModelState.IsValid)

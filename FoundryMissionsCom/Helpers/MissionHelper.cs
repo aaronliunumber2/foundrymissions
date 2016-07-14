@@ -103,7 +103,7 @@ namespace FoundryMissionsCom.Helpers
 
         public static string GetBigLevelImageUrl(int minimumLevel, Faction faction)
         {
-            var url = "small_";
+            var url = "big_";
 
             if (minimumLevel >= 60)
             {

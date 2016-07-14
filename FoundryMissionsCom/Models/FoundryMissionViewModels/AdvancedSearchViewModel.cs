@@ -20,6 +20,9 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
         public Faction? Faction { get; set; }
         public List<string> Tags { get; set; }
 
+        [DisplayName("Description Keywords")]
+        public string Keywords { get; set; }
+
         public List<ListMissionViewModel> Missions { get; set; }
     }
 }

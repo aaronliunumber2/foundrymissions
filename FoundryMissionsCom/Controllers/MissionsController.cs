@@ -349,7 +349,7 @@ namespace FoundryMissionsCom.Controllers
             string upperQuery = q.Trim().ToUpper();
 
             #region Get Missions
-            var missions = db.Missions.Where(m => (m.Author.UserName.ToUpper().Contains(upperQuery) ||
+            var missions = db.Missions.Where(m => (m.Author.CrypticTag.ToUpper().Contains(upperQuery) ||
                                              m.CrypticId.ToUpper().Contains(upperQuery) ||
                                              m.Description.ToUpper().Contains(upperQuery) ||
                                              m.Name.ToUpper().Contains(upperQuery)) &&
@@ -363,7 +363,7 @@ namespace FoundryMissionsCom.Controllers
 
             #region Paging Info
 
-            var missionCount = db.Missions.Where(m => (m.Author.UserName.ToUpper().Contains(upperQuery) ||
+            var missionCount = db.Missions.Where(m => (m.Author.CrypticTag.ToUpper().Contains(upperQuery) ||
                                              m.CrypticId.ToUpper().Contains(upperQuery) ||
                                              m.Description.ToUpper().Contains(upperQuery) ||
                                              m.Name.ToUpper().Contains(upperQuery)) &&

@@ -17,7 +17,7 @@ namespace FoundryMissionsCom.Models
 
         [Display(Name ="Cryptic Tag")]
         [Required]
-        [RegularExpression("^[a-zA-Z0-9_.-]*$", ErrorMessage = "Cryptic Tag can only have alphanumeric characters")]
+        [RegularExpression("^[a-zA-Z0-9_.#-]*$", ErrorMessage = "Cryptic Tag can only have alphanumeric characters")]
         public string CrypticTag { get; set; }
 
         [Display(Name = "Join Date")]
