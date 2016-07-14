@@ -103,12 +103,49 @@ namespace FoundryMissionsCom.Helpers
 
         public static string GetBigLevelImageUrl(int minimumLevel, Faction faction)
         {
-            return "big_captain_federation.png";
+            var url = "small_";
+
+            if (minimumLevel >= 60)
+            {
+                url += "fleetadmiral_";
+            }
+            else if (minimumLevel >= 50)
+            {
+                url += "viceadmiral_";
+            }
+            else if (minimumLevel >= 40)
+            {
+                url += "rearadmiral_";
+            }
+            else if (minimumLevel >= 30)
+            {
+                url += "captain_";
+            }
+            else if (minimumLevel >= 20)
+            {
+                url += "commander_";
+            }
+            else if (minimumLevel >= 10)
+            {
+                url += "ltcommander_";
+            }
+            else
+            {
+                url += "lieutenant_";
+            }
+
+            url += faction.ToString().ToLower();
+
+            url += ".png";
+
+            return url;
         }
 
         public static string GetBigFactionImageUrl(Faction faction)
         {
-            return "big_federation.png";
+            var url = "big_" + faction.ToString().ToLower() + ".png";
+
+            return url;
         }
 
         public static string GetTagImageUrl(MissionTagType tag)

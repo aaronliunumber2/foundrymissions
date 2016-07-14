@@ -355,9 +355,9 @@ namespace FoundryMissionsCom.Controllers
                                              m.Name.ToUpper().Contains(upperQuery)) &&
                                              m.Status == MissionStatus.Published)
                                        .OrderByDescending(m => m.DateLastUpdated)
-                                       .Skip(ConstantsHelper.MissionsPerPage * (pageNumber-1))
-                                       .Take(ConstantsHelper.MissionsPerPage)
                                        .ToList();
+            missions = missions.Skip(ConstantsHelper.MissionsPerPage * (pageNumber - 1))
+                                .Take(ConstantsHelper.MissionsPerPage).ToList();
             List<ListMissionViewModel> listMissions = MissionHelper.GetListMissionViewModels(missions);
             #endregion
 
@@ -382,11 +382,16 @@ namespace FoundryMissionsCom.Controllers
                 pagesCounter = totalPages - ConstantsHelper.PagesToShow + 1;
             }
 
+            if (pagesCounter == 0)
+            {
+                pagesCounter = 1;
+            }
+
             ViewBag.Query = q;
             ViewBag.CurrentPage = pageNumber;
             ViewBag.TotalPages = totalPages;
             ViewBag.MissionCount = missionCount;
-            ViewBag.StartPage = pagesCounter;
+            ViewBag.StartPage = pagesCounter;  //this is where it starts dispalying clickable page links
 
             #endregion
 
