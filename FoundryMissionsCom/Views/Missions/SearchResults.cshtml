@@ -141,7 +141,7 @@
                         using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
                         {
                             @Html.AntiForgeryToken()
-                            <input type="submit" class="btn-link" />
+                            <input type="submit" class="btn-link" value="1" />
                             <input type="hidden" name="page" value="1" /><text> ... </text>
                         }
                     }
