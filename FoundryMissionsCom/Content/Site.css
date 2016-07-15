@@ -111,9 +111,19 @@ li.minornavbutton {
     font-size: 75%;
 }
 
-.minornavtext{
-    line-height: 20px;
+    .minornavtext{
+         line-height:20px;
+    }
+
+
+@media (max-width: 768px) 
+{
+    .minornavtext{
+         display: none;
+    }
 }
+
+
 
 /* Submit mission */
 
