@@ -109,11 +109,12 @@ namespace FoundryMissionsCom.Controllers
                 //check if cryptic id is already used
                 if (db.Missions.Any(m => m.CrypticId.Equals(missionViewModel.CrypticId)))
                 {
-                    ModelState.AddModelError("DuplicateCrypticID", "Duplicate Cryptic ID.");
+                    ModelState.AddModelError("DuplicateCrypticID", "Cryptic ID already exists.");
 
                     List<SelectListItem> publishedSelectItems = MissionHelper.GetYesNoSelectList();
                     ViewBag.AvailableTags = db.MissionTagTypes.Select(t => t.TagName).ToList();
                     ViewBag.PublishedSelectList = new SelectList(publishedSelectItems, "Value", "Text");
+                    ViewBag.MinimumLevelSelectList = new SelectList(MissionHelper.GetMinimumLevelSelectList(), "Value", "Text");
                     return View(missionViewModel);
                 }
 
@@ -277,6 +278,19 @@ namespace FoundryMissionsCom.Controllers
         {
             if (ModelState.IsValid)
             {
+                //check if cryptic id is already used
+                if (db.Missions.Any(m => m.CrypticId.Equals(missionViewModel.CrypticId) && m.Id != missionViewModel.Id))
+                {
+                    ModelState.AddModelError("DuplicateCrypticID", "Cryptic ID already exists.");
+
+                    List<SelectListItem> publishedSelectItems = MissionHelper.GetYesNoSelectList();
+                    ViewBag.AvailableTags = db.MissionTagTypes.Select(t => t.TagName).ToList();
+                    ViewBag.PublishedSelectList = new SelectList(publishedSelectItems, "Value", "Text");
+                    ViewBag.MinimumLevelSelectList = new SelectList(MissionHelper.GetMinimumLevelSelectList(), "Value", "Text");
+                    return View("edit", missionViewModel);
+                }
+
+
                 var mission = db.Missions.Find(missionViewModel.Id);
                 var user = mission.Author;              
                 mission.CrypticId = missionViewModel.CrypticId.ToUpper();
@@ -321,7 +335,7 @@ namespace FoundryMissionsCom.Controllers
 
                 return RedirectToAction("details", new { link = mission.MissionLink });
             }
-            return View(missionViewModel);
+            return View("edit", missionViewModel);
         }
 
         public ActionResult Random()

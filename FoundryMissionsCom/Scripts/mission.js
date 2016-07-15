@@ -9,7 +9,7 @@
         SetTags()
     });
 
-    $('#selected-tags').on('click', '.gameplay-tag', function () {
+    $('#selected-tags').on('click', '.gameplay-tag', function (event) {
         event.preventDefault()
 
         var tagitem = $(this).clone()
