@@ -14,7 +14,7 @@ namespace FoundryMissionsCom.Helpers
     {
         private static string[] DefaultTags = { "Story", "Combat", "No Combat", "Space", "Ground", "Small Craft", "Puzzles", "Diplomacy", "Exploration",
                                          "Time Travel", "Orions", "Klingons", "Tholians", "Na'Kuhl", "Mirror Federation", "Nausicaans", "Borg",
-                                         "True Way", "Cardassians", "Iconians", "Custom Aliens", "Romulans", "Remans"};
+                                         "True Way", "Cardassians", "Iconians", "Custom Aliens", "Romulans", "Remans", "Gorn", "Q", "Federation", "Voth"};
 
         internal static void AddUsersAndRoles(ApplicationDbContext context)
         {

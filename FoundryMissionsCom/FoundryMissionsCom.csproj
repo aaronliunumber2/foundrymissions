@@ -302,6 +302,8 @@
     <Content Include="Content\Images\Tags\custom-aliens.jpg" />
     <Content Include="Content\Images\Tags\diplomacy.jpg" />
     <Content Include="Content\Images\Tags\exploration.jpg" />
+    <Content Include="Content\Images\Tags\federation.jpg" />
+    <Content Include="Content\Images\Tags\gorn.jpg" />
     <Content Include="Content\Images\Tags\ground.jpg" />
     <Content Include="Content\Images\Tags\iconians.jpg" />
     <Content Include="Content\Images\Tags\klingons.jpg" />
@@ -311,6 +313,7 @@
     <Content Include="Content\Images\Tags\no-combat.jpg" />
     <Content Include="Content\Images\Tags\orions.jpg" />
     <Content Include="Content\Images\Tags\puzzles.jpg" />
+    <Content Include="Content\Images\Tags\q.jpg" />
     <Content Include="Content\Images\Tags\remans.jpg" />
     <Content Include="Content\Images\Tags\romulans.jpg" />
     <Content Include="Content\Images\Tags\small-craft.jpg" />
@@ -319,6 +322,7 @@
     <Content Include="Content\Images\Tags\tholians.jpg" />
     <Content Include="Content\Images\Tags\time-travel.jpg" />
     <Content Include="Content\Images\Tags\true-way.jpg" />
+    <Content Include="Content\Images\Tags\voth.jpg" />
     <Content Include="Content\Images\tempmissions\1-thumb.jpg" />
     <Content Include="Content\Images\tempmissions\1.jpg" />
     <Content Include="Content\Images\tempmissions\2-thumb.jpg" />
