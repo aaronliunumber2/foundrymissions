@@ -29,7 +29,7 @@ namespace FoundryMissionsCom.Controllers
             //return View(db.Missions.ToList());
         }
 
-        // GET: Missions/5
+        // GET: Missions/duritanium-man
         public ActionResult Details(string link)
         {
             if (string.IsNullOrEmpty(link))
@@ -417,29 +417,19 @@ namespace FoundryMissionsCom.Controllers
         {
             ViewBag.AvailableTags = db.MissionTagTypes.Select(t => t.TagName).ToList();
             ViewBag.MinimumLevelSelectList = new SelectList(MissionHelper.GetMinimumLevelSelectList(true), "Value", "Text");
+            ViewBag.Factions = new SelectList(MissionHelper.GetFactionSelectList(true), "Value", "Text");
             return View();
         }
-        
-        public ActionResult Author(string author)
-        {
-            return RedirectToAction("index", "home");
-        }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SearchResults(AdvancedSearchViewModel model, int? page)
-        {
-            if (model == null)
-            {
-                RedirectToAction("advanced-search");
-            }
 
+        public ActionResult SearchResults(string author, string title, string faction, int? minimumlevel, List<string> tags, int? page)
+        {
             //if everything in the model is null also go back
-            if (string.IsNullOrWhiteSpace(model.Author) &&
-                (model.Faction == null) &&
-                (model.MinimumLevel == null) &&
-                (model.Tags == null || model.Tags.Count == 0) &&
-                string.IsNullOrWhiteSpace(model.Title))
+            if (string.IsNullOrWhiteSpace(author) &&
+                (faction == null) &&
+                (minimumlevel == null) &&
+                (tags == null || tags.Count == 0) &&
+                string.IsNullOrWhiteSpace(title))
             {
                 RedirectToAction("advanced-search");
             }
@@ -452,41 +442,40 @@ namespace FoundryMissionsCom.Controllers
 
             //build the query
             var qry = db.Missions.AsQueryable();
-            if (!string.IsNullOrWhiteSpace(model.Title))
+            if (!string.IsNullOrWhiteSpace(title))
             {
-                qry = qry.Where(m => m.Name.ToUpper().Contains(model.Title.ToUpper()));
+                qry = qry.Where(m => m.Name.ToUpper().Contains(title.ToUpper()));
             }
-            if (model.Faction != null)
+            if (!string.IsNullOrWhiteSpace(faction))
             {
-                qry = qry.Where(m => m.Faction == model.Faction);
-            }
-
-            if (!string.IsNullOrWhiteSpace(model.Author))
-            {
-                qry = qry.Where(m => m.Author.CrypticTag.ToUpper().Contains(model.Author.ToUpper()));
+                qry = qry.Where(m => m.Faction.ToString() == faction);
             }
 
-            if (model.MinimumLevel != null)
+            if (!string.IsNullOrWhiteSpace(author))
             {
-                qry = qry.Where(m => m.MinimumLevel <= model.MinimumLevel);
+                qry = qry.Where(m => m.Author.CrypticTag.ToUpper().Contains(author.ToUpper()));
+            }
+
+            if (minimumlevel != null)
+            {
+                qry = qry.Where(m => m.MinimumLevel <= minimumlevel);
             }
 
             List<Mission> missions = qry.OrderByDescending(m => m.DateLastUpdated).ToList();
             List<Mission> filteredMissions = new List<Mission>();
 
             //filter on the tags
-            if (model.Tags != null && model.Tags.Count > 0)
+            if (tags != null &&tags.Count > 0)
             {
-                List<MissionTagType> tags = db.MissionTagTypes.Where(t => model.Tags.Contains(t.TagName)).ToList();               
+                List<MissionTagType> selectedTags = db.MissionTagTypes.Where(t => tags.Contains(t.TagName)).ToList();
 
-                foreach(var mission in missions)
+                foreach (var mission in missions)
                 {
-                    if (mission.Tags.Intersect(tags).Count() == tags.Count)
+                    if (mission.Tags.Intersect(selectedTags).Count() == tags.Count)
                     {
                         filteredMissions.Add(mission);
                     }
                 }
-
             }
             else
             {
@@ -497,36 +486,37 @@ namespace FoundryMissionsCom.Controllers
 
             missions = filteredMissions.Skip(ConstantsHelper.MissionsPerPage * (pageNumber - 1)).Take(ConstantsHelper.MissionsPerPage).ToList();
             List<ListMissionViewModel> listmissions = MissionHelper.GetListMissionViewModels(missions);
-            model.Missions = listmissions;
-
-
 
             #region Paging Info
 
             var totalPages = (missionCount + ConstantsHelper.MissionsPerPage - 1) / ConstantsHelper.MissionsPerPage;
 
             var pagesCounter = pageNumber - (ConstantsHelper.PagesToShow / 2);
-            if (pagesCounter < 1)
-            {
-                pagesCounter = 1;
-            }
-            else if (pagesCounter + ConstantsHelper.PagesToShow > totalPages)
+
+            if (pagesCounter + ConstantsHelper.PagesToShow > totalPages)
             {
                 pagesCounter = totalPages - ConstantsHelper.PagesToShow + 1;
             }
 
+            if (pagesCounter < 1)
+            {
+                pagesCounter = 1;
+            }
+
             ViewBag.CurrentPage = pageNumber;
-            ViewBag.TotalPages = totalPages;
+            ViewBag.TotalPages = totalPages; 
             ViewBag.MissionCount = missionCount;
             ViewBag.StartPage = pagesCounter;
 
             #endregion
 
-            return View(model);
+            return View(listmissions);
         }
 
-
-
+        public ActionResult Author(string author)
+        {
+            return RedirectToAction("index", "home");
+        }
 
         #region  Auto generated
 

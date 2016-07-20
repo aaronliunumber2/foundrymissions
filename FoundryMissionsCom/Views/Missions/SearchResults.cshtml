@@ -1,10 +1,8 @@
 ﻿@using FoundryMissionsCom.Helpers;
-@model FoundryMissionsCom.Models.FoundryMissionViewModels.AdvancedSearchViewModel
-
+@model IEnumerable<FoundryMissionsCom.Models.FoundryMissionViewModels.ListMissionViewModel>
 @{
     ViewBag.Title = "Search Results";
 
-    var missions = Model.Missions;
     var query = ViewBag.Query;
     var currentPage = ViewBag.CurrentPage;
     var totalPages = ViewBag.TotalPages;
@@ -51,27 +49,27 @@
 
 <div class="row search-results-header">
     <div class="col-sm-2 col-xs-12">
-        @Html.DisplayNameFor(model => model.Missions[0].Name)
+        @Html.DisplayNameFor(model => model.Name)
     </div>
     <div class="col-sm-2 col-xs-12">
-        @Html.DisplayNameFor(model => model.Missions[0].CrypticId)
+        @Html.DisplayNameFor(model => model.CrypticId)
     </div>
     <div class="col-sm-2 col-xs-12">
-        @Html.DisplayNameFor(model => model.Missions[0].Author)
+        @Html.DisplayNameFor(model => model.Author)
     </div>
     <div class="col-sm-2 col-xs-12">
-        @Html.DisplayNameFor(model => model.Missions[0].MinimumLevel)
+        @Html.DisplayNameFor(model => model.MinimumLevel)
     </div>
     <div class="col-sm-2 col-xs-12">
-        @Html.DisplayNameFor(model => model.Missions[0].Faction)
+        @Html.DisplayNameFor(model => model.Faction)
     </div>
     <div class="col-sm-1 col-xs-12">
-        @Html.DisplayNameFor(model => model.Missions[0].DateLastUpdated)
+        @Html.DisplayNameFor(model => model.DateLastUpdated)
     </div>
     <div class="col-sm-1 col-xs-12">
     </div>
 </div>
-@foreach (var item in Model.Missions)
+@foreach (var item in Model)
 {
     <div class="row search-result">
         <div class="col-sm-2 col-xs-12">
@@ -124,11 +122,11 @@
                     }
                     else
                     {
-                        using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
+                        using (Html.BeginForm("searchresults", "missions", FormMethod.Get, new { @class = "paging-item" }))
                         {
-                            @Html.AntiForgeryToken()
                             <input type="submit" class="btn-link" value="«" />
                             <input type="hidden" name="page" value="@(currentPage - 1)" />
+                            @Html.Partial("_searchresultsvalues")
                         }
                     }
 
@@ -138,11 +136,11 @@
 
                     @if (startPage > 1)
                     {
-                        using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
+                        using (Html.BeginForm("searchresults", "missions", FormMethod.Get, new { @class = "paging-item" }))
                         {
-                            @Html.AntiForgeryToken()
                             <input type="submit" class="btn-link" value="1" />
                             <input type="hidden" name="page" value="1" /><text> ... </text>
+                            @Html.Partial("_searchresultsvalues")
                         }
                     }
 
@@ -155,22 +153,23 @@
                         else
                         {
 
-                            using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
+                            using (Html.BeginForm("searchresults", "missions", FormMethod.Get, new { @class = "paging-item" }))
                             {
-                                @Html.AntiForgeryToken()
                                 <input type="submit" class="btn-link" value="@counter" />
                                 <input type="hidden" name="page" value="@counter" />
+                                @Html.Partial("_searchresultsvalues")
                             }
                         }
                     }
 
                     @if (counter <= totalPages)
                     {
-                        using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
+                        using (Html.BeginForm("searchresults", "missions", FormMethod.Get, new { @class = "paging-item" }))
                         {
-                            @Html.AntiForgeryToken()
+                            <text> ... </text>
                             <input type="submit" class="btn-link" value="@totalPages" />
-                            <input type="hidden" name="page" value="@totalPages" /><text> ... </text>
+                            <input type="hidden" name="page" value="@totalPages" />
+                            @Html.Partial("_searchresultsvalues")
                         }
                     }
 
@@ -180,11 +179,11 @@
                     }
                     else
                     {
-                        using (Html.BeginForm("searchresults", "missions", FormMethod.Post, new { @class = "paging-item" }))
+                        using (Html.BeginForm("searchresults", "missions", FormMethod.Get, new { @class = "paging-item" }))
                         {
-                            @Html.AntiForgeryToken()
                             <input type="submit" class="btn-link" value="»" />
                             <input type="hidden" name="page" value="@(currentPage + 1)" />
+                            @Html.Partial("_searchresultsvalues")
                         }
                     }
             </div>

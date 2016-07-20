@@ -1,0 +1,24 @@
+﻿@if (!string.IsNullOrWhiteSpace(Request.QueryString["author"]))
+{
+    <input type="hidden" name="author" value="@Request.QueryString["author"]" />
+}
+@if (!string.IsNullOrWhiteSpace(Request.QueryString["title"]))
+{
+    <input type="hidden" name="title" value="@Request.QueryString["title"]" />
+}
+@if (!string.IsNullOrWhiteSpace(Request.QueryString["faction"]))
+{
+    <input type="hidden" name="faction" value="@Request.QueryString["faction"]" />
+}
+@if (!string.IsNullOrWhiteSpace(Request.QueryString["minimumlevel"]))
+{
+    <input type="hidden" name="minimumlevel" value="@Request.QueryString["minimumlevel"]" />
+}
+@* tags *@
+@{
+    int counter = 0;
+    while (!string.IsNullOrWhiteSpace(Request.QueryString["tags[" + counter + "]"]))
+    {
+        <input type="hidden" name="tags[@counter]" value="@Request.QueryString["tags[" + counter + "]"]" />
+    }
+}

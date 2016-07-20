@@ -197,6 +197,35 @@ namespace FoundryMissionsCom.Helpers
             return publishedSelectItems;
         }
 
+        public static List<SelectListItem> GetFactionSelectList()
+        {
+            return GetFactionSelectList(false);        
+        }
+
+        public static List<SelectListItem> GetFactionSelectList(bool includeBlank)
+        {
+            var factionSelectItems = new List<SelectListItem>();
+
+            if (includeBlank)
+            {
+                factionSelectItems.Add(new SelectListItem()
+                {
+                    Value = null,
+                    Text = null,
+                });
+            }
+
+            foreach (var name in Enum.GetNames(typeof(Faction)))
+            {
+                factionSelectItems.Add(new SelectListItem()
+                {
+                    Value = name,
+                    Text = name,
+                });
+            }
+            return factionSelectItems;
+        }
+
         public static List<SelectListItem> GetMinimumLevelSelectList()
         {
             return GetMinimumLevelSelectList(false);
