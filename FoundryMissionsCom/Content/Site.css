@@ -53,13 +53,20 @@ textarea {
     }
 }
 
-/* have to do this after
-@media (max-width: 768px) 
+
+.banner.jumbotron {
+    padding: 15px;
+}
+
+@media (min-width: 768px) 
 {
-    .jumbotron{
-        display: none;
+    .banner.jumbotron{
+        padding-right: 30px;
+        padding-left: 30px;
+        padding-top: 24px;
+        padding-bottom: 24px;
     }
-}*/
+}
 
 .bannerimage img{
     width: 100%
