@@ -442,6 +442,9 @@ namespace FoundryMissionsCom.Controllers
 
             //build the query
             var qry = db.Missions.AsQueryable();
+
+            qry = qry.Where(m => m.Status == MissionStatus.Published);
+
             if (!string.IsNullOrWhiteSpace(title))
             {
                 qry = qry.Where(m => m.Name.ToUpper().Contains(title.ToUpper()));
