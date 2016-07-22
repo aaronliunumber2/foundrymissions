@@ -11,6 +11,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using FoundryMissionsCom.Models;
+using System.Net.Mail;
+using System.Net.Mime;
+using System.Configuration;
 
 namespace FoundryMissionsCom
 {
@@ -19,7 +22,23 @@ namespace FoundryMissionsCom
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            return SendEmailAsync(message);
+        }
+
+        private Task SendEmailAsync(IdentityMessage message)
+        {
+
+            MailMessage msg = new MailMessage();
+            msg.From = new MailAddress(ConfigurationManager.AppSettings["mailAccount"]);
+            msg.To.Add(new MailAddress(message.Destination));
+            msg.Subject = message.Subject;
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(message.Body, null, MediaTypeNames.Text.Html));
+
+            SmtpClient smtpClient = new SmtpClient("mail.foundrymissions.com", 587);
+            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["mailAccount"], ConfigurationManager.AppSettings["mailPassword"]);
+            smtpClient.Credentials = credentials;
+            smtpClient.EnableSsl = false;
+            return smtpClient.SendMailAsync(msg);
         }
     }
 

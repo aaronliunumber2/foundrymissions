@@ -53,12 +53,16 @@ textarea {
     }
 }
 
-/* have to do this after*/
+/* have to do this after
 @media (max-width: 768px) 
 {
     .jumbotron{
         display: none;
     }
+}*/
+
+.bannerimage img{
+    width: 100%
 }
 
 body {

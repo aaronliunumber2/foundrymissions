@@ -13,7 +13,7 @@
 <div class="container">
     <div class="jumbotron">
         <figure class="bannerimage">
-            <img src="@Url.Content("~/Content/Images/logo4.png")" alt="Star Trek Online Foundry Mission Database">
+            <img src="@Url.Content("~/Content/Images/banner.png")" alt="Star Trek Online Foundry Mission Database">
         </figure>
     </div>
 
@@ -28,7 +28,7 @@
             </ul>
         </section><!-- Missions -->
         <section class="missions col-md-6">
-            <header><h2>Recently Updated</h2></header>
+            <header><h2>Recently Updated Missions</h2></header>
             <ul class="list-group">
                 @foreach (Mission mission in ViewBag.RecentlyUpdatedMissions)
                 {
