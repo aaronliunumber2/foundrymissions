@@ -49,7 +49,7 @@ namespace FoundryMissionsCom.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Username")]
+        [Display(Name = "Username/Email")]
         public string Username { get; set; }
 
         [Required]

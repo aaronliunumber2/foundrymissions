@@ -77,6 +77,18 @@ namespace FoundryMissionsCom.Controllers
 
             // Require the user to have a confirmed email before they can log on.
             var user = await UserManager.FindByNameAsync(model.Username);
+            var username = model.Username;
+
+            //in case they typed in their email address instead
+            if (user == null)
+            {
+                user = await UserManager.FindByEmailAsync(model.Username);
+                if (user != null)
+                {
+                    username = user.UserName;
+                }
+            }
+
             if (user != null)
             {
                 if (!await UserManager.IsEmailConfirmedAsync(user.Id))
@@ -88,7 +100,12 @@ namespace FoundryMissionsCom.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
+
+            SignInStatus result;
+
+
+            result = await SignInManager.PasswordSignInAsync(username, model.Password, model.RememberMe, shouldLockout: false);
+            
             switch (result)
             {
                 case SignInStatus.Success:
