@@ -43,6 +43,8 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
 
         public List<String> Tags { get; set; }
 
+        public List<HttpPostedFileBase> Images { get; set; }
+
         public SubmitMissionViewModel()
         {
         }

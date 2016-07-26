@@ -155,6 +155,11 @@ form.mission-data {
     max-width: 100%;
 }
 
+#submit-mission-image-list input{
+    
+    display: inline;
+}
+
 form.advanced-search input,
 form.advanced-search select
 {

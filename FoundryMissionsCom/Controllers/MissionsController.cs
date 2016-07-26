@@ -102,7 +102,7 @@ namespace FoundryMissionsCom.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Submit([Bind(Include = "CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags")] SubmitMissionViewModel missionViewModel, string submitButton)
+        public ActionResult Submit([Bind(Include = "CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags,Images")] SubmitMissionViewModel missionViewModel, string submitButton)
         {
             if (ModelState.IsValid)
             {
@@ -161,6 +161,13 @@ namespace FoundryMissionsCom.Controllers
 
                 db.Missions.Add(mission);
                 db.SaveChanges();
+
+                if(missionViewModel.Images.Count > 0)
+                {
+                    MissionImagesHelper.SaveImages(missionViewModel.Images, mission);
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("details", new { link = mission.MissionLink });
             }
 

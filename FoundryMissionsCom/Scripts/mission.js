@@ -18,7 +18,34 @@
         SetTags()
     });
 
+
+    $('#submit-mission-image-list').on('click', '.delete-image', function (event) {
+        event.preventDefault()
+        $(this).closest('.row').remove()
+        setImageListNumbers()
+    });
 })
+
+$('#add-new-image').click(function (event) {
+    event.preventDefault()
+
+    //check the last image file, if it is not blank allow a new line to be added
+    var lastImage = $('.submit-mission-image').last().val()
+    if (lastImage != '') {
+        $('#submit-mission-image-list').append('<div class="row"><div class="col-md-12"><input type="submit" class="delete-image" value="X"/><input type="file" class="submit-mission-image" accept="image/*" /></div></div>')
+        setImageListNumbers()
+    }
+});
+
+function setImageListNumbers() {
+    var counter = 0
+    $('.submit-mission-image').each(function () {
+        $(this).attr({
+            name: 'Images[' + counter + ']'
+        })
+        counter++
+    });
+}
 
 function SetTags() {
     var selectedTags = $('#selected-tags');
@@ -40,3 +67,4 @@ function SetTags() {
         counter++
     })
 }
+

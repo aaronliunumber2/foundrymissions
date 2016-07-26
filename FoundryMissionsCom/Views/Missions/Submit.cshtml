@@ -78,6 +78,23 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                 @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label" }) (Files must be 2 Mb or smaller)
+                <div id="submit-mission-image-list">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="submit" class="delete-image" value="X"/><input type="file" class="submit-mission-image" name="Images[0]" accept="image/*" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" id="add-new-image" value="Add another image" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
 
                 @Html.TextAreaFor(model => model.Description, htmlAttributes: new { @class = "form-control", rows = "5", id = "missiondescription" })
