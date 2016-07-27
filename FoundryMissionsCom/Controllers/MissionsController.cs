@@ -76,10 +76,10 @@ namespace FoundryMissionsCom.Controllers
                 DateLastUpdated = mission.DateLastUpdated,
                 Length = mission.Length,
                 Tags = mission.Tags.OrderBy(t => t.TagName).ToList(),
-                Videos = mission.Videos,
+                Videos = mission.Videos.Select(v => v.YoutubeVideoId).ToList(),
                 Status = mission.Status,
                 MissionLink = mission.MissionLink,
-                Images = new List<string>(),
+                Images = mission.Images.Select(i => i.Filename).ToList()
             };
 
             //It's okay to show the mission now
@@ -134,8 +134,14 @@ namespace FoundryMissionsCom.Controllers
 
                 #endregion
 
-                mission.Tags = db.MissionTagTypes.Where(t => missionViewModel.Tags.Contains(t.TagName)).ToList();
-                
+                if (missionViewModel.Tags != null && missionViewModel.Tags.Count > 0)
+                {
+                    mission.Tags = db.MissionTagTypes.Where(t => missionViewModel.Tags.Contains(t.TagName)).ToList();
+                }
+                else
+                {
+                    mission.Tags = new List<MissionTagType>();
+                }
                 mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
                 mission.Author = user;
                 mission.DateAdded = DateTime.Today;
@@ -164,8 +170,16 @@ namespace FoundryMissionsCom.Controllers
 
                 if(missionViewModel.Images.Count > 0)
                 {
-                    MissionImagesHelper.SaveImages(missionViewModel.Images, mission);
-                    db.SaveChanges();
+                    try
+                    {
+                        var images = MissionImagesHelper.ValidateImages(missionViewModel.Images);
+                        MissionImagesHelper.AddImages(images, mission);
+                        db.SaveChanges();
+                    }
+                    catch(Exception ex)
+                    {
+                        ViewBag.Message = "An error occured while adding the images.";
+                    }
                 }
 
                 return RedirectToAction("details", new { link = mission.MissionLink });

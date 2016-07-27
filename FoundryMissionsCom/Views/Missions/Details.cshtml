@@ -52,6 +52,10 @@
                 <h3>This mission has not been published and is only visible to you</h3>
                 break;
         }
+        @if (ViewBag.Message != null)
+        {
+            <h3>@ViewBag.Message</h3>
+        }
     </div>
 
     <article>
@@ -98,7 +102,24 @@
                         @Html.ActionLink("Edit", "edit", new { link = Model.MissionLink }, new { @class = "btn btn-default details-edit-mission" })
                     </div>
                 }
- 
+                
+                @if (Model.Images.Count > 0 || Model.Videos.Count > 0)
+                {
+                    <div class="row">		 
+                        <div class="col-md-12">		
+                            <div class="mission-images">
+                                @foreach(string image in Model.Images)
+                                { 
+                                    <figure class="mission-image">
+                                        <a href="@Url.Content(MissionImagesHelper.GetImageLink(image, Model.Id))" data-gallery>
+                                            <img src="@Url.Content(MissionImagesHelper.GetThumbnailLink(image, Model.Id))" />
+                                        </a>                                    
+                                    </figure>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
                 <section class="mission-description">
                     <div class="row">
                         <div class="col-md-12 ">

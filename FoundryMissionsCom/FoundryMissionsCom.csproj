@@ -234,9 +234,14 @@
     <Compile Include="Migrations\FoundryMissionsMigrations\201605100430465_MissionLink.Designer.cs">
       <DependentUpon>201605100430465_MissionLink.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\FoundryMissionsMigrations\201607270411181_MissionImages.cs" />
+    <Compile Include="Migrations\FoundryMissionsMigrations\201607270411181_MissionImages.Designer.cs">
+      <DependentUpon>201607270411181_MissionImages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\FoundryMissionsMigrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FoundryMissionModels\Enums\MissionStatus.cs" />
+    <Compile Include="Models\FoundryMissionModels\MissionImage.cs" />
     <Compile Include="Models\FoundryMissionsContext.cs" />
     <Compile Include="Models\FoundryMissionModels\Enums\Faction.cs" />
     <Compile Include="Models\FoundryMissionModels\Enums\MissionLength.cs" />
@@ -448,6 +453,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\FoundryMissionsMigrations\201605100430465_MissionLink.resx">
       <DependentUpon>201605100430465_MissionLink.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\FoundryMissionsMigrations\201607270411181_MissionImages.resx">
+      <DependentUpon>201607270411181_MissionImages.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -35,7 +35,7 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
 
         public List<MissionTagType> Tags { get; set; }
 
-        public List<YoutubeVideo> Videos { get; set; }
+        public List<string> Videos { get; set; }
 
         public List<string> Images { get; set; }
 
