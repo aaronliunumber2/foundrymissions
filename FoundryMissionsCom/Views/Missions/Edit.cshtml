@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Edit Mission";
     var counter = 0;
+    var OldImageCounter = 0;
 }
 
 @section opengraph{
@@ -86,20 +87,17 @@
                 <div id="submit-mission-image-list">
                     @if (Model.OldImages.Count > 0)
                     {
-                        <div class="row mission-images-row">
-                            <div class="col-md-12">
-                                <div class="mission-images">
-                                    @foreach (string image in Model.OldImages)
-                                    {
-                                        <figure class="mission-image">
-                                            <a href="@Url.Content(MissionImagesHelper.GetImageLink(image, Model.Id))">
-                                                <img src="@Url.Content(MissionImagesHelper.GetThumbnailLink(image, Model.Id))" />
-                                            </a>
-                                        </figure>
-                                    }
+
+                        @foreach (string image in Model.OldImages)
+                        {
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="submit" class="delete-old-image" value="X" />@image
+                                    <input type="hidden" name="OldImages[@OldImageCounter]"/>
+                                    @OldImageCounter++
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
                 </div>
                 <div class="row">
