@@ -43,6 +43,10 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
 
         public List<string> Tags { get; set; }
 
+        public List<string> OldImages { get; set; }
+
+        public List<HttpPostedFileBase> Images { get; set; }
+
         public ApplicationUser Author { get; set; }
         public bool AutoApprove { get; set; }
         public MissionStatus Status { get; set; }

@@ -1,4 +1,5 @@
-﻿@model FoundryMissionsCom.Models.FoundryMissionViewModels.EditMissionViewModel
+﻿@using FoundryMissionsCom.Helpers;
+@model FoundryMissionsCom.Models.FoundryMissionViewModels.EditMissionViewModel
 
 @{
     ViewBag.Title = "Edit Mission";
@@ -78,6 +79,37 @@
 *@
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label" }) (Files must be 2 Mb or smaller)
+                <div id="submit-mission-image-list">
+                    @if (Model.OldImages.Count > 0)
+                    {
+                        <div class="row mission-images-row">
+                            <div class="col-md-12">
+                                <div class="mission-images">
+                                    @foreach (string image in Model.OldImages)
+                                    {
+                                        <figure class="mission-image">
+                                            <a href="@Url.Content(MissionImagesHelper.GetImageLink(image, Model.Id))">
+                                                <img src="@Url.Content(MissionImagesHelper.GetThumbnailLink(image, Model.Id))" />
+                                            </a>
+                                        </figure>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" id="add-new-image" value="Add another image" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })

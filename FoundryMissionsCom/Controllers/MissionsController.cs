@@ -241,6 +241,7 @@ namespace FoundryMissionsCom.Controllers
             editModel.Author = mission.Author;
             editModel.AutoApprove = mission.Author.AutoApproval;
             editModel.Tags = mission.Tags.Select(t => t.TagName).ToList();
+            editModel.OldImages = mission.Images.Select(i => i.Filename).ToList();
             mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
 
             var unselectedTags = db.MissionTagTypes.Select(t => t.TagName).ToList();

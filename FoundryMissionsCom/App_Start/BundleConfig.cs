@@ -44,7 +44,7 @@ namespace FoundryMissionsCom
                 "~/Content/jquery.jscrollpane.css",
                 "~/Content/scrollpane-styles.css"));      
             bundles.Add(new ScriptBundle("~/bundles/missiondetails").Include(
-                "~/Scripts/jquery.jscrollpane.min.js",
+                "~/Scripts/jquery.jscrollpane.js",
                 "~/Scripts/mission-details.js"));
         }
     }

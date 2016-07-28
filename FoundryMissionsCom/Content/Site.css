@@ -246,6 +246,15 @@ input#lastupdate {
     white-space: nowrap;
 }
 
+.mission-images-row{
+    border-radius: 10px;
+    border: 1px solid #191928;
+    overflow: hidden;
+    background-color: #191928;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
 .mission-video, .mission-image{
     position: relative;
     display: inline-block;
