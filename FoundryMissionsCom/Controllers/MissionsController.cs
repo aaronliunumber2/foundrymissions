@@ -361,8 +361,8 @@ namespace FoundryMissionsCom.Controllers
                 db.SaveChanges();
 
                 //now do images
-                try
-                {
+                //try
+                //{
                     var changedImages = false;
                     //set some defaults in case its null
                     #region Defaults
@@ -400,11 +400,11 @@ namespace FoundryMissionsCom.Controllers
                         db.SaveChanges();
                     }
 
-                }
-                catch
-                {
-                    TempData["Message"] = "An error occured while editing images.";
-                }
+                //}
+                //catch
+                //{
+                //    TempData["Message"] = "An error occured while editing images.";
+                //}
 
 
                 return RedirectToAction("details", new { link = mission.MissionLink });
