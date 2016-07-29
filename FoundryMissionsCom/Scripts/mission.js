@@ -24,6 +24,12 @@
         $(this).closest('.row').remove()
         setImageListNumbers()
     });
+
+    $('#submit-mission-image-list').on('click', '.delete-old-image', function (event) {
+        event.preventDefault()
+        $(this).closest('.row').remove()
+        setOldImageListNumbers()
+    });
 })
 
 $('#add-new-image').click(function (event) {
@@ -42,6 +48,16 @@ function setImageListNumbers() {
     $('.submit-mission-image').each(function () {
         $(this).attr({
             name: 'Images[' + counter + ']'
+        })
+        counter++
+    });
+}
+
+function setOldImageListNumbers() {
+    var counter = 0
+    $('.old-image').each(function () {
+        $(this).attr({
+            name: 'OldImages[' + counter + ']'
         })
         counter++
     });

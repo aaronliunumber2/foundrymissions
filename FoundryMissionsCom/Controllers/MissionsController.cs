@@ -76,13 +76,18 @@ namespace FoundryMissionsCom.Controllers
                 DateLastUpdated = mission.DateLastUpdated,
                 Length = mission.Length,
                 Tags = mission.Tags.OrderBy(t => t.TagName).ToList(),
-                Videos = mission.Videos.Select(v => v.YoutubeVideoId).ToList(),
+                Videos = mission.Videos.OrderBy(v => v.Order).Select(v => v.YoutubeVideoId).ToList(),
                 Status = mission.Status,
                 MissionLink = mission.MissionLink,
-                Images = mission.Images.Select(i => i.Filename).ToList()
+                Images = mission.Images.OrderBy(i => i.Order).Select(i => i.Filename).ToList()
             };
 
             //It's okay to show the mission now
+
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
 
             return View(viewMission);
         }
@@ -166,7 +171,7 @@ namespace FoundryMissionsCom.Controllers
                 mission.Spotlit = false;                
 
                 db.Missions.Add(mission);
-                db.SaveChanges();
+                db.SaveChanges();                
 
                 if(missionViewModel.Images.Count > 0)
                 {
@@ -176,9 +181,9 @@ namespace FoundryMissionsCom.Controllers
                         MissionImagesHelper.AddImages(images, mission);
                         db.SaveChanges();
                     }
-                    catch(Exception ex)
+                    catch
                     {
-                        ViewBag.Message = "An error occured while adding the images.";
+                        TempData["Message"] = "An error occured while adding the images.";
                     }
                 }
 
@@ -241,7 +246,7 @@ namespace FoundryMissionsCom.Controllers
             editModel.Author = mission.Author;
             editModel.AutoApprove = mission.Author.AutoApproval;
             editModel.Tags = mission.Tags.Select(t => t.TagName).ToList();
-            editModel.OldImages = mission.Images.Select(i => i.Filename).ToList();
+            editModel.OldImages = mission.Images.OrderBy(i => i.Order).Select(i => i.Filename).ToList();
             mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
 
             var unselectedTags = db.MissionTagTypes.Select(t => t.TagName).ToList();
@@ -260,7 +265,7 @@ namespace FoundryMissionsCom.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         [MultipleButton(Name = "action", Argument = "publishmission")]
-        public ActionResult PublishMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published, Tags")] EditMissionViewModel missionViewModel)
+        public ActionResult PublishMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags,Images,OldImages")] EditMissionViewModel missionViewModel)
         {
             var mission = db.Missions.Find(missionViewModel.Id);
             var author = mission.Author;
@@ -281,7 +286,7 @@ namespace FoundryMissionsCom.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         [MultipleButton(Name = "action", Argument = "savemission")]
-        public ActionResult SaveMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published, Tags")] EditMissionViewModel missionViewModel)
+        public ActionResult SaveMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags,Images,OldImages")] EditMissionViewModel missionViewModel)
         {
             return Edit(missionViewModel);
         }
@@ -290,7 +295,7 @@ namespace FoundryMissionsCom.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         [MultipleButton(Name = "action", Argument = "withdrawmission")]
-        public ActionResult WithdrawMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published, Tags")] EditMissionViewModel missionViewModel)
+        public ActionResult WithdrawMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags,Images,OldImages")] EditMissionViewModel missionViewModel)
         {
             missionViewModel.Status = MissionStatus.Unpublished;
             return Edit(missionViewModel);
@@ -354,6 +359,53 @@ namespace FoundryMissionsCom.Controllers
                 }
 
                 db.SaveChanges();
+
+                //now do images
+                try
+                {
+                    var changedImages = false;
+                    //set some defaults in case its null
+                    #region Defaults
+                    if (missionViewModel.OldImages == null)
+                    {
+                        missionViewModel.OldImages = new List<string>();
+                    }
+                    if (missionViewModel.Images == null)
+                    {
+                        missionViewModel.Images = new List<HttpPostedFileBase>();
+                    }
+                    if (mission.Images == null)
+                    {
+                        mission.Images = new List<MissionImage>();
+                    }
+                    #endregion
+                    //check for removed images first
+                    //if its different then a change was made, need to remove the images
+                    if (missionViewModel.OldImages.Count != mission.Images.Count)
+                    {
+                        MissionImagesHelper.CheckForRemovedImages(db, mission, missionViewModel.OldImages);
+                        changedImages = true;
+                    }
+
+                    //add new images
+                    if (missionViewModel.Images.Count > 0)
+                    {
+                        var images = MissionImagesHelper.ValidateImages(missionViewModel.Images);
+                        MissionImagesHelper.AddImages(images, mission);
+                        changedImages = true;
+                    }
+
+                    if (changedImages)
+                    {
+                        db.SaveChanges();
+                    }
+
+                }
+                catch
+                {
+                    TempData["Message"] = "An error occured while editing images.";
+                }
+
 
                 return RedirectToAction("details", new { link = mission.MissionLink });
             }

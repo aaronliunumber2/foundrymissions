@@ -14,6 +14,8 @@ namespace FoundryMissionsCom.Models.FoundryMissionModels
         [Key, Column(Order = 1)]
         public string Filename { get; set; }
 
+        public int Order { get; set; }
+
         public virtual ICollection<Mission> Missions { get; set; }
     }
 }

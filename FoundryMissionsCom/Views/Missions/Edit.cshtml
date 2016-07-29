@@ -16,7 +16,7 @@
 
 
 
-@using (Html.BeginForm("edit", "missions", FormMethod.Post, new { @class = "content mission-data" }))
+@using (Html.BeginForm("edit", "missions", FormMethod.Post, new { @class = "content mission-data", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -88,13 +88,13 @@
                     @if (Model.OldImages.Count > 0)
                     {
 
-                        @foreach (string image in Model.OldImages)
+                        foreach (string image in Model.OldImages)
                         {
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input type="submit" class="delete-old-image" value="X" />@image
-                                    <input type="hidden" name="OldImages[@OldImageCounter]"/>
-                                    @OldImageCounter++
+                                    <input type="submit" class="delete-old-image" value="X" /> @image
+                                    <input type="hidden" name="OldImages[@OldImageCounter]" value="@image" class="old-image"/>
+                                    @{OldImageCounter++;}
                                 </div>
                             </div>
                         }
