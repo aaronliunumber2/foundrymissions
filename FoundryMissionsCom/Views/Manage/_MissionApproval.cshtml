@@ -19,7 +19,7 @@
     {
         <div class="row search-result">
             <div class="col-sm-3 col-xs-12">
-                @Html.ActionLink(item.Name, "details", new { link = item.MissionLink })
+                @Html.ActionLink(item.Name, "details", "missions", new { link = item.MissionLink }, new { })
             </div>
             <div class="col-sm-3 col-xs-12">
                 @Html.DisplayFor(modelItem => item.Author.CrypticTag)
