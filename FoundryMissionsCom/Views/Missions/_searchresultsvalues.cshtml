@@ -20,5 +20,6 @@
     while (!string.IsNullOrWhiteSpace(Request.QueryString["tags[" + counter + "]"]))
     {
         <input type="hidden" name="tags[@counter]" value="@Request.QueryString["tags[" + counter + "]"]" />
+        counter++;
     }
 }
