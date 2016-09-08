@@ -77,7 +77,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                  @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label" }) (Files must be 2 Mb or smaller)
                 <div id="submit-mission-image-list">
                     <div class="row">
@@ -89,6 +89,21 @@
                 <div class="row">
                     <div class="col-md-12">
                         <input type="submit" id="add-new-image" value="Add another image" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Videos, htmlAttributes: new { @class = "control-label" }) (Paste youtube link here ie www.youtube.com/watch?v=RIn3VhFcC3E6)
+                <div id="submit-mission-video-list">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="submit" class="delete-video" value="X" /><input type="text" class="submit-mission-video" name="Videos[0]"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" id="add-new-video" value="Add another video" />
                     </div>
                 </div>
             </div>

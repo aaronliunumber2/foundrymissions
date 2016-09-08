@@ -41,9 +41,11 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
         [Required]
         public bool Published { get; set; }
 
-        public List<String> Tags { get; set; }
+        public List<string> Tags { get; set; }
 
         public List<HttpPostedFileBase> Images { get; set; }
+
+        public List<string> Videos { get; set; }
 
         public SubmitMissionViewModel()
         {

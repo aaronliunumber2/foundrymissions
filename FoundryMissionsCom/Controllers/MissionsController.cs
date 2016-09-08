@@ -107,7 +107,7 @@ namespace FoundryMissionsCom.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Submit([Bind(Include = "CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags,Images")] SubmitMissionViewModel missionViewModel, string submitButton)
+        public ActionResult Submit([Bind(Include = "CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags,Images,Videos")] SubmitMissionViewModel missionViewModel, string submitButton)
         {
             if (ModelState.IsValid)
             {
@@ -171,10 +171,21 @@ namespace FoundryMissionsCom.Controllers
                 mission.Spotlit = false;                
 
                 db.Missions.Add(mission);
-                db.SaveChanges();                
+                db.SaveChanges();
+
+                //remove null if there is a null
+                if (missionViewModel.Images.Count > 0)
+                {
+                    if (missionViewModel.Images[missionViewModel.Images.Count - 1] == null)
+                    {
+                        missionViewModel.Images.RemoveAt(missionViewModel.Images.Count - 1);
+                    }
+                }
 
                 if(missionViewModel.Images.Count > 0)
                 {
+
+
                     try
                     {
                         var images = MissionImagesHelper.ValidateImages(missionViewModel.Images);
@@ -183,7 +194,38 @@ namespace FoundryMissionsCom.Controllers
                     }
                     catch
                     {
-                        TempData["Message"] = "An error occured while adding the images.";
+                        TempData["Message"] = "An error occured while adding images.";
+                    }
+                }
+
+                //remove null if there is a null
+                if (missionViewModel.Videos.Count > 0)
+                {
+                    if (missionViewModel.Videos[missionViewModel.Videos.Count - 1] == null)
+                    {
+                        missionViewModel.Videos.RemoveAt(missionViewModel.Videos.Count - 1);
+                    }
+                }
+
+                if (missionViewModel.Videos.Count > 0)
+                {
+                    try
+                    {
+                        var videos = MissionVideosHelper.GetVideoLinks(missionViewModel.Videos);
+                        MissionVideosHelper.AddVideos(videos, mission);
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+                        if (!string.IsNullOrEmpty(TempData[""] as string))
+                        {
+                            TempData["Message"] = "Errors when adding images and videos.";
+                        }
+                        else
+                        {
+                            TempData["Message"] = "An error occured while adding videos.";
+                        }
+
                     }
                 }
 
@@ -247,6 +289,7 @@ namespace FoundryMissionsCom.Controllers
             editModel.AutoApprove = mission.Author.AutoApproval;
             editModel.Tags = mission.Tags.Select(t => t.TagName).ToList();
             editModel.OldImages = mission.Images.OrderBy(i => i.Order).Select(i => i.Filename).ToList();
+            editModel.OldVideos = mission.Videos.OrderBy(v => v.Order).Select(v => v.YoutubeVideoId).ToList();
             mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
 
             var unselectedTags = db.MissionTagTypes.Select(t => t.TagName).ToList();

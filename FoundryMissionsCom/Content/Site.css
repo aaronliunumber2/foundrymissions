@@ -160,6 +160,16 @@ form.mission-data {
     display: inline;
 }
 
+#submit-mission-video-list input{
+    
+    display: inline;
+}
+
+.submit-mission-video{
+    width: 95%;
+}
+
+
 form.advanced-search input,
 form.advanced-search select
 {
@@ -203,6 +213,35 @@ input#lastupdate {
     text-align: center;
 }
 
+.mission-author { 
+    display: inline-block; 
+    margin-top:0px;
+    font-size: large;
+}
+
+.mission-header{
+    color: #E8E8E8;
+    position: relative;
+}
+
+.mission-header header{
+}
+
+.mission-restrictions {
+   padding-top: 1em;
+   padding-bottom: 1em;
+
+}
+
+@media (min-width: 768px) {
+    .mission-restrictions {
+        text-align: right;
+    }
+    .mission-restrictions img{
+        padding-bottom: 1em;
+    }
+}
+
 .missioninfo {
     padding-top : 20px;
     font-weight: bold;
@@ -214,25 +253,6 @@ input#lastupdate {
     }
 }
 
-.missioninfo > h3 { 
-    display: inline-block; 
-    margin-top:0px;
-}
-
-.mission-header{
-    color: #E8E8E8;
-    position: relative;
-}
-
-.mission-restrictions {
-    top: 1em;
-}
-
-@media (min-width: 768px) {
-    .mission-restrictions{
-        text-align: right;
-    }
-}
 
 .mission-images{
     margin-top: 1em;
@@ -270,7 +290,6 @@ input#lastupdate {
     color: #E8E8E8;
     border-radius: 10px;
     border: solid 1px;
-    margin-top: 1em;
     width: 100%;
     overflow: hidden;
 }

@@ -10,16 +10,6 @@
     {
         description = description.Substring(0, 100) + "...";
     }
-    var colsize = "";
-    if (Model.Tags.Count > 0)
-    {
-        colsize = "col-sm-10";
-    }
-    else
-    {
-        colsize = "col-sm-12";
-    }
-
     var editable = User.IsInRole(ConstantsHelper.AdminRole) || User.Identity.Name.Equals(Model.Author.UserName);
 }
 
@@ -60,54 +50,65 @@
 
     <article>
         <div class="row">
-            <div class="@colsize">
-                <div class="mission-header">
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <header>
-                                <h1>@Model.Name</h1>
-                            </header>
+            <div class="mission-header">
+                <div class="col-sm-10">
+                    <header>
+                        <h1>@Model.Name</h1>
+                    </header>
+                    <div class="missioninfo">
+                        <div>
+                            @Html.ActionLink(Model.Author.CrypticTag, "searchresults", "missions", new { Author = Model.Author.CrypticTag }, new { @class = "mission-author" })
                         </div>
-                        <div class="col-sm-6 mission-restrictions">
-                            <div>
-                                <img src="@Url.Content("~/Content/Images/"+Model.FactionImageUrl)" alt="@Model.Faction.ToString()"/> @Model.Faction.ToString()
-                                @if (@Model.MinimumLevel == 1)
-                                {
-                                    <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" alt="Any Level" /><text>Any Level</text>
-                                }
-                                else
-                                {
-                                    <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" alt="@Model.MinimumLevel+"/><text>Level @Model.MinimumLevel+</text>
-                                }
-                            </div>
+                        <div>
+                            ST-@Model.CrypticId
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="missioninfo">
-                                <h3>@Model.Author.CrypticTag</h3> ST-@Model.CrypticId
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
+                        <div>
                             @Model.Length.DisplayName()
                         </div>
+                        @if (editable)
+                        {
+                            <div>
+                                @Html.ActionLink("Edit", "edit", new { link = Model.MissionLink }, new { @class = "btn btn-default details-edit-mission" })
+                            </div>
+                        }
                     </div>
                 </div>
-
-                @if (editable)
-                {
-                    <div>
-                        @Html.ActionLink("Edit", "edit", new { link = Model.MissionLink }, new { @class = "btn btn-default details-edit-mission" })
+                <div class="col-sm-2">
+                    <div class="mission-restrictions">
+                        <img src="@Url.Content("~/Content/Images/"+Model.FactionImageUrl)" alt="@Model.Faction.ToString()" title="@Model.Faction.ToString()" />
+                        @if (@Model.MinimumLevel == 1)
+                        {
+                            <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" alt="Any Level" title="Any Level" />
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("~/Content/Images/"+Model.MinimumLevelImageUrl)" alt="Level @Model.MinimumLevel+" title="Level @Model.MinimumLevel+" />
+                        }
                     </div>
-                }
-                
+                </div>                         
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-sm-10">               
                 @if (Model.Images.Count > 0 || Model.Videos.Count > 0)
                 {
                     <div class="row mission-images-row">
                         <div class="col-md-12">		
                             <div class="mission-images">
+                                @*Youtube first*@
+                                @foreach (string video in Model.Videos)
+                                {
+                                    <figure class="mission-video">
+                                        <a href="http://www.youtube.com/watch?v=@video"
+                                           type="text/html"
+                                           data-youtube="@video"
+                                           data-gallery>
+                                            <img src="http://img.youtube.com/vi/@video/0.jpg"/>
+                                        </a>
+                                    </figure>
+                                }
                                 @foreach(string image in Model.Images)
                                 { 
                                     <figure class="mission-image">
@@ -137,14 +138,18 @@
             </div>
             @if (Model.Tags.Count > 0)
             {
-            <div class="col-sm-2 col-xs-12">
+            <div class="col-sm-2">
                 <div class="mission-tags">
                     <div><h4 class="mission-tag-header">Mission Tags</h4></div>
                     <div>
                         @foreach (var tag in Model.Tags)
                         {
                             <figure class="mission-tag-image">
-                                <div><img src="@Url.Content("~/Content/Images/Tags/" + MissionHelper.GetTagImageUrl(tag))" title="@tag.TagName" alt="@tag.TagName"/></div>
+                                <div>
+                                    <a href="/missions/searchresults?Tags[0]=@tag.TagName">
+                                        <img src="@Url.Content("~/Content/Images/Tags/" + MissionHelper.GetTagImageUrl(tag))" title="@tag.TagName" alt="@tag.TagName" />
+                                    </a>
+                                </div>
                             </figure>
                         }
                     </div>

@@ -212,6 +212,7 @@
     <Compile Include="Helpers\ConstantsHelper.cs" />
     <Compile Include="Helpers\MissionHelper.cs" />
     <Compile Include="Helpers\MissionImagesHelper.cs" />
+    <Compile Include="Helpers\MissionVideosHelper.cs" />
     <Compile Include="Helpers\MyExtensions.cs" />
     <Compile Include="Helpers\SeedDataHelper.cs" />
     <Compile Include="Migrations\FoundryMissionsMigrations\201604160604482_UserSetup.cs" />

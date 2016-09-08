@@ -86,6 +86,11 @@ namespace FoundryMissionsCom.Helpers
 
         public static void AddImages(Dictionary<string, Image> images, Mission mission)
         {
+            if (mission.Images == null)
+            {
+                mission.Images = new List<MissionImage>();
+            }
+
             //all the images should be verified now
             var counter = mission.Images.Count;
             foreach(var file in images.Keys)

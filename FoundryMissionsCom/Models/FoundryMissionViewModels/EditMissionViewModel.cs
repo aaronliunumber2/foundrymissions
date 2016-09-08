@@ -44,8 +44,10 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
         public List<string> Tags { get; set; }
 
         public List<string> OldImages { get; set; }
-
         public List<HttpPostedFileBase> Images { get; set; }
+
+        public List<string> OldVideos { get; set; }
+        public List<string> NewVideos { get; set; }
 
         public ApplicationUser Author { get; set; }
         public bool AutoApprove { get; set; }
