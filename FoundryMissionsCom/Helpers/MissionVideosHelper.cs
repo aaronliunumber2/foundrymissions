@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using FoundryMissionsCom.Models.FoundryMissionModels;
 using System.Text.RegularExpressions;
+using FoundryMissionsCom.Models;
 
 namespace FoundryMissionsCom.Helpers
 {
@@ -11,7 +12,7 @@ namespace FoundryMissionsCom.Helpers
     {
         private const string YoutubeRegex = @"(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?";
 
-        public static List<string> GetVideoLinks(List<string> videos)
+        public static List<string> GetVideoIds(List<string> videos)
         {
             var videoIds = new List<string>();
             foreach (var videolink in videos)
@@ -37,6 +38,24 @@ namespace FoundryMissionsCom.Helpers
             foreach (var videolink in videos)
             {
                 mission.Videos.Add(new YoutubeVideo() { MissionId = mission.Id, Order = mission.Videos.Count, YoutubeVideoId = videolink });
+            }
+        }
+
+        internal static void CheckForRemovedVideos(ApplicationDbContext db, Mission mission, List<string> oldVideos)
+        {
+            var removedVideos = new List<YoutubeVideo>();
+
+            foreach (var video in mission.Videos)
+            {
+                if (!oldVideos.Contains(video.YoutubeVideoId))
+                {
+                    removedVideos.Add(video);
+                }
+            }
+
+            foreach (var video in removedVideos)
+            {
+                mission.Videos.Remove(video);
             }
         }
     }

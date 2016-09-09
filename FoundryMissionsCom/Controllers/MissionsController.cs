@@ -211,7 +211,7 @@ namespace FoundryMissionsCom.Controllers
                 {
                     try
                     {
-                        var videos = MissionVideosHelper.GetVideoLinks(missionViewModel.Videos);
+                        var videos = MissionVideosHelper.GetVideoIds(missionViewModel.Videos);
                         MissionVideosHelper.AddVideos(videos, mission);
                         db.SaveChanges();
                     }
@@ -308,7 +308,7 @@ namespace FoundryMissionsCom.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         [MultipleButton(Name = "action", Argument = "publishmission")]
-        public ActionResult PublishMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags,Images,OldImages")] EditMissionViewModel missionViewModel)
+        public ActionResult PublishMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags,Images,OldImages,Videos,OldVideos")] EditMissionViewModel missionViewModel)
         {
             var mission = db.Missions.Find(missionViewModel.Id);
             var author = mission.Author;
@@ -329,7 +329,7 @@ namespace FoundryMissionsCom.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         [MultipleButton(Name = "action", Argument = "savemission")]
-        public ActionResult SaveMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags,Images,OldImages")] EditMissionViewModel missionViewModel)
+        public ActionResult SaveMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags,Images,OldImages,Videos,OldVideos")] EditMissionViewModel missionViewModel)
         {
             return Edit(missionViewModel);
         }
@@ -338,7 +338,7 @@ namespace FoundryMissionsCom.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         [MultipleButton(Name = "action", Argument = "withdrawmission")]
-        public ActionResult WithdrawMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags,Images,OldImages")] EditMissionViewModel missionViewModel)
+        public ActionResult WithdrawMission([Bind(Include = "Id,Author,CrypticId,Name,Description,Length,Faction,MinimumLevel,Spotlit,Published,Tags,Images,OldImages,Videos,OldVideos")] EditMissionViewModel missionViewModel)
         {
             missionViewModel.Status = MissionStatus.Unpublished;
             return Edit(missionViewModel);
@@ -449,6 +449,52 @@ namespace FoundryMissionsCom.Controllers
                     TempData["Message"] = "An error occured while editing images.";
                 }
 
+
+                //now do videos
+                try
+                {
+                    var changedVideos = false;
+                    //set some defaults in case its null
+                    #region Defaults
+                    if (missionViewModel.OldVideos == null)
+                    {
+                        missionViewModel.OldVideos = new List<string>();
+                    }
+                    if (missionViewModel.Videos == null)
+                    {
+                        missionViewModel.Videos = new List<string>();
+                    }
+                    if (mission.Videos == null)
+                    {
+                        mission.Videos = new List<YoutubeVideo>();
+                    }
+                    #endregion
+                    //check for removed videos first
+                    //if its different then a change was made, need to remove the videos
+                    if (missionViewModel.OldVideos.Count != mission.Videos.Count)
+                    {
+                        MissionVideosHelper.CheckForRemovedVideos(db, mission, missionViewModel.OldVideos);
+                        changedVideos = true;
+                    }
+
+                    //add new videos
+                    if (missionViewModel.Videos.Count > 0)
+                    {
+                        var videos = MissionVideosHelper.GetVideoIds(missionViewModel.Videos);
+                        MissionVideosHelper.AddVideos(videos, mission);
+                        changedVideos = true;
+                    }
+
+                    if (changedVideos)
+                    {
+                        db.SaveChanges();
+                    }
+
+                }
+                catch
+                {
+                    TempData["Message"] = "An error occured while editing images.";
+                }
 
                 return RedirectToAction("details", new { link = mission.MissionLink });
             }

@@ -34,7 +34,13 @@
     $('#submit-mission-video-list').on('click', '.delete-video', function (event) {
         event.preventDefault()
         $(this).closest('.row').remove()
-        setImageListNumbers()
+        setVideoListNumbers()
+    });
+
+    $('#submit-mission-video-list').on('click', '.delete-old-video', function (event) {
+        event.preventDefault()
+        $(this).closest('.row').remove()
+        setOldVideoListNumbers()
     });
 
 })
@@ -57,7 +63,7 @@ $('#add-new-video').click(function (event) {
     var lastImage = $('.submit-mission-video').last().val()
     if (lastImage != '') {
         $('#submit-mission-video-list').append('<div class="row"><div class="col-md-12"><input type="submit" class="delete-video" value="X"/><input type="text" class="submit-mission-video" /></div></div>')
-        setImageListNumbers()
+        setVideoListNumbers()
     }
 });
 

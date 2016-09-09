@@ -50,7 +50,7 @@ namespace FoundryMissionsCom.Models.FoundryMissionModels
         [ScaffoldColumn(false)]
         public DateTime DateAdded { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Display(Name="Last Updated")]
         [ScaffoldColumn(false)]
         public DateTime DateLastUpdated { get; set; }
