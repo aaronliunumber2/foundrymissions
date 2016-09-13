@@ -8,6 +8,9 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
     {
         public string Username { get; set; }
 
+        [Display(Name="Cryptic Tag")]
+        public string CrypticTag { get; set; }
+
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 

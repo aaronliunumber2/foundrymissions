@@ -24,6 +24,7 @@ namespace FoundryMissionsCom.Helpers
                     Admin = userManager.IsInRole(user.Id, ConstantsHelper.AdminRole),
                     AutoApprove = user.AutoApproval,
                     Username = user.UserName,
+                    CrypticTag = user.CrypticTag,
                     Lockedout = user.LockoutEnabled
                 };
 

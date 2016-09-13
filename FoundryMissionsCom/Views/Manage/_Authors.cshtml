@@ -5,13 +5,16 @@
         <div class="col-sm-2 col-xs-12">
             @Html.DisplayNameFor(model => model.Username)
         </div>
+        <div class="col-sm-2 col-xs-12">
+            @Html.DisplayNameFor(model => model.CrypticTag)
+        </div>
         <div class="col-sm-3 col-xs-12">
             @Html.DisplayNameFor(model => model.Email)
         </div>
-        <div class="col-sm-1 col-xs-12">
+        <div class="col-sm-2 col-xs-12">
             @Html.DisplayNameFor(model => model.DateRegistered)
         </div>
-        <div class="col-sm-6 col-xs-12">
+        <div class="col-sm-3 col-xs-12">
         </div>
     </div>
     @foreach (var item in Model)
@@ -20,20 +23,20 @@
             <div class="col-sm-2 username">
                 @Html.DisplayFor(modelItem => item.Username)
             </div>
+            <div class="col-sm-2 username">
+                @Html.DisplayFor(modelItem => item.CrypticTag)
+            </div>
             <div class="col-sm-3">
                 @Html.DisplayFor(modelItem => item.Email)
             </div>
-            <div class="col-sm-1">
+            <div class="col-sm-2">
                 @Html.DisplayFor(modelItem => item.DateRegistered)
             </div>
-            <div class="col-sm-2 admin-checkbox-container">
+            <div class="col-sm-1 admin-checkbox-container">
                 @Html.CheckBoxFor(modelItem => item.Admin, new { @class = "admin-checkbox" } ) @Html.DisplayNameFor(model => model.Admin)
             </div>
             <div class="col-sm-2 auto-approve-checkbox-container">
                 @Html.CheckBoxFor(modelItem => item.AutoApprove, new { @class = "auto-approve-checkbox" }) @Html.DisplayNameFor(model => model.AutoApprove)
-            </div>
-            <div class="col-sm-2 locked-out-checkbox-container">
-                @Html.CheckBoxFor(modelItem => item.Lockedout, new { @class = "locked-out-checkbox" }) @Html.DisplayNameFor(model => model.Lockedout)
             </div>
 
         </div>
