@@ -34,7 +34,7 @@
             <section class="col-md-6">
                 <header><h2>Random Mission Image</h2></header>
                 <div class="random-mission-image">
-                    <figure><a href="@Url.Content(randomMissionImage.ImageLink)" target="_blank"><img src="@Url.Content(randomMissionImage.ThumbnailLink)" /></a></figure>
+                    <figure><a href="/missions/@randomMissionImage.MissionLink"><img src="@Url.Content(randomMissionImage.ThumbnailLink)" /></a></figure>
                     <p>@Html.ActionLink(randomMissionImage.MissionName, "details", "missions", new { link = randomMissionImage.MissionLink }, new { }) - By: @Html.ActionLink(randomMissionImage.Author, "searchresults", "missions", new { Author = randomMissionImage.Author }, new { }) - @randomMissionImage.Faction</p>
                 </div>
             </section><!-- Random Mission Image -->

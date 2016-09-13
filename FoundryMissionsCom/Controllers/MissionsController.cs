@@ -149,8 +149,8 @@ namespace FoundryMissionsCom.Controllers
                 }
                 mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
                 mission.Author = user;
-                mission.DateAdded = DateTime.Today;
-                mission.DateLastUpdated = DateTime.Today;
+                mission.DateAdded = DateTime.Now;
+                mission.DateLastUpdated = DateTime.Now;
                 if (submitButton.Equals("Save and Publish"))
                 {
                     if (user.AutoApproval)
@@ -373,7 +373,7 @@ namespace FoundryMissionsCom.Controllers
                 mission.MinimumLevel = missionViewModel.MinimumLevel;
                 mission.Spotlit = missionViewModel.Spotlit;
                 mission.Status = missionViewModel.Status;
-                mission.DateLastUpdated = DateTime.Today;
+                mission.DateLastUpdated = DateTime.Now;
 
 
                 // in case the tags list is null create a blank one
