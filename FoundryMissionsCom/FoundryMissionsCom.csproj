@@ -210,6 +210,7 @@
     </Compile>
     <Compile Include="Helpers\AccountHelper.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
+    <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\MissionHelper.cs" />
     <Compile Include="Helpers\MissionImagesHelper.cs" />
     <Compile Include="Helpers\MissionVideosHelper.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Models\FoundryMissionViewModels\EditMissionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ListAuthorViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ListMissionViewModel.cs" />
+    <Compile Include="Models\FoundryMissionViewModels\RandomMissionImageViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\SubmitMissionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ViewMissionViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />

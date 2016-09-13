@@ -1,5 +1,7 @@
-﻿using FoundryMissionsCom.Models;
+﻿using FoundryMissionsCom.Helpers;
+using FoundryMissionsCom.Models;
 using FoundryMissionsCom.Models.FoundryMissionModels;
+using FoundryMissionsCom.Models.FoundryMissionViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,10 +26,26 @@ namespace FoundryMissionsCom.Controllers
 
             var qry = db.Missions.OrderByDescending(m => m.DateLastUpdated).Take(RandomUpdated);
 
-            List<Mission> recentlyUpdatedMissions = qry.Where(m => m.Status == Models.FoundryMissionModels.Enums.MissionStatus.Published).OrderBy(m => Guid.NewGuid()).Take(FrontPageMissions).ToList();            
+            List<Mission> recentlyUpdatedMissions = qry.Where(m => m.Status == Models.FoundryMissionModels.Enums.MissionStatus.Published).OrderBy(m => Guid.NewGuid()).Take(FrontPageMissions).ToList();
+
+            #region RandomMissionImageViewModel
+
+            var randomImage = MissionImagesHelper.GetRandomMissionImage(db);
+            var mission = db.Missions.Where(m => m.Id == randomImage.MissionId).FirstOrDefault();
+            var randomMissionImage = new RandomMissionImageViewModel();
+
+            randomMissionImage.Author = mission.Author.CrypticTag;
+            randomMissionImage.Faction = mission.Faction.ToString();        
+            randomMissionImage.ImageLink = MissionImagesHelper.GetImageLink(randomImage.Filename, mission.Id);
+            randomMissionImage.ThumbnailLink = MissionImagesHelper.GetThumbnailLink(randomImage.Filename, mission.Id);
+            randomMissionImage.MissionLink = mission.MissionLink;
+            randomMissionImage.MissionName = mission.Name;
+
+            #endregion
 
             ViewBag.RandomMissions = randomMissions;
             ViewBag.RecentlyUpdatedMissions = recentlyUpdatedMissions;
+            ViewBag.RandomImage = randomMissionImage;
 
             return View();
         }

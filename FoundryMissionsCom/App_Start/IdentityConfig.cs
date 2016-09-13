@@ -34,7 +34,7 @@ namespace FoundryMissionsCom
             msg.Subject = message.Subject;
             msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(message.Body, null, MediaTypeNames.Text.Html));
 
-            SmtpClient smtpClient = new SmtpClient("mail.foundrymissions.com", 587);
+            SmtpClient smtpClient = new SmtpClient(ConfigurationManager.AppSettings["smtpClient"], Convert.ToInt32(ConfigurationManager.AppSettings["smtpPort"]));
             System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["mailAccount"], ConfigurationManager.AppSettings["mailPassword"]);
             smtpClient.Credentials = credentials;
             smtpClient.EnableSsl = false;
@@ -80,7 +80,7 @@ namespace FoundryMissionsCom
             };
 
             // Configure user lockout defaults
-            manager.UserLockoutEnabledByDefault = true;
+            manager.UserLockoutEnabledByDefault = false;
             manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 

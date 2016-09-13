@@ -126,6 +126,20 @@ namespace FoundryMissionsCom.Helpers
             }
         }
 
+        public static MissionImage GetRandomMissionImage(ApplicationDbContext context)
+        {
+            MissionImage image = context.MissionImages.OrderBy(m => Guid.NewGuid()).Take(1).FirstOrDefault();
+            var mission = context.Missions.Where(m => m.Id == image.MissionId).FirstOrDefault();
+
+            //in case the mission is invalid
+            if (mission == null || mission.Status != Models.FoundryMissionModels.Enums.MissionStatus.Published)
+            {
+                image = GetRandomMissionImage(context);
+            }
+
+            return image;
+        }
+
         private static string GetFileName(int id, string file)
         {
             string path = Path.Combine(

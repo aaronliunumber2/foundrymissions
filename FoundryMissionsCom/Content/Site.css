@@ -69,7 +69,7 @@ textarea {
 }
 
 .bannerimage img{
-    width: 100%
+    width: 100%;
 }
 
 body {
@@ -96,18 +96,41 @@ body {
     background-color: black;
 }
 
-
 nav.navbar {
     text-transform: uppercase;
     font-weight: bold;
     background-color: #001;
 }
 
-li.list-group-item.mission, .search-result, .my-missions-result, .author{
+li.list-group-item.mission, .search-result, .my-missions-result, .author, li.list-group-item.update{
     border: none;
     border-top: 1px gray solid;
     background-color: #001;
 }
+
+.random-mission-image, .about{
+    background-color: #001;
+    padding: 1em;
+    border-radius: 4px;
+}
+
+ .about{
+     height: 121px;
+ }
+
+.random-mission-image figure img{
+    height: 93px;
+}
+
+.random-mission-image figure, .random-mission-image p{
+     display: inline-block;
+}
+
+.home-update-list{
+    max-height: 125px;
+    overflow-y: scroll;
+}
+
 
 footer#pagefooter {
     margin-top: 2em;
