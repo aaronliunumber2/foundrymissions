@@ -91,7 +91,7 @@
 
         </div>
         <div class="row">
-            <div class="col-sm-10">               
+            <div class="col-sm-10">
                 @if (Model.Images.Count > 0 || Model.Videos.Count > 0)
                 {
                     <div class="row mission-images-row">
@@ -105,7 +105,8 @@
                                            type="text/html"
                                            data-youtube="@video"
                                            data-gallery>
-                                            <img src="http://img.youtube.com/vi/@video/0.jpg"/>
+                                            <img class="youtube-video" src="http://img.youtube.com/vi/@video/0.jpg"/>
+                                            <img class="youtube-play-button" src="@Url.Content("~/Content/Images/YouTubePlayButton.png")"/>
                                         </a>
                                     </figure>
                                 }

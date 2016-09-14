@@ -304,6 +304,12 @@ input#lastupdate {
     margin-right: 1em;
 }
 
+.youtube-play-button{
+    position:absolute;
+    top: 0px;
+    left: 0px;
+}
+
 .mission-video img, .mission-image img {
     height: 100px;
 }

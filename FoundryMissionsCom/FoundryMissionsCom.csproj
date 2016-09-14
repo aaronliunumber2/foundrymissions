@@ -342,6 +342,7 @@
     <Content Include="Content\Images\Tags\undine.jpg" />
     <Content Include="Content\Images\Tags\voth.jpg" />
     <Content Include="Content\Images\ui-icons.png" />
+    <Content Include="Content\Images\YouTubePlayButton.png" />
     <Content Include="Content\jquery.jscrollpane.css" />
     <Content Include="Content\scrollpane-styles.css" />
     <Content Include="EF Package Manager.txt" />
