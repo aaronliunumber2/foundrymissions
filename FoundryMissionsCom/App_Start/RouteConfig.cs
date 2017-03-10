@@ -67,6 +67,18 @@ namespace FoundryMissionsCom
             );
 
             routes.MapRoute(
+                "MissionIndex",
+                "missions/",
+                new { controller = "Missions", action = "index" }
+            );
+
+            routes.MapRoute(
+                "CollectionIndex",
+                "collections",
+                new { controller = "collections", action = "index" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

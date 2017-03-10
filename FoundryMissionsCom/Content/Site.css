@@ -37,6 +37,23 @@ textarea {
         display: none;
     }
 
+.inverse-dropdown {
+    background-color: #222;
+    border-color: #080808;
+    }
+
+.inverse-dropdown > li > a {
+        color: #999;
+    }
+
+.inverse-dropdown >li > a:hover{
+    color: #fff;
+    background-color: #000;    
+    }
+
+.inverse-dropdown.divider {
+    background-color: #000; 
+}
 
 @media (min-width: 768px) 
 {   
@@ -94,12 +111,6 @@ body {
 
 .jumbotron {
     background-color: black;
-}
-
-nav.navbar {
-    text-transform: uppercase;
-    font-weight: bold;
-    background-color: #001;
 }
 
 li.list-group-item.mission, .search-result, .my-missions-result, .author, li.list-group-item.update{
@@ -404,4 +415,35 @@ form.paging-item input{
 
 .manage-account-tabs > li > a {
     color :#999999;
+}
+
+/* Collections */
+
+.collections-header{
+    position:relative;
+}
+
+.collections-sort{
+
+    position:absolute;
+    right:0;
+    top: 20px;
+}
+
+.collections-header h1, .collections-sort{
+    display: inline-block;    
+}
+
+figure.list-collection-image img{
+    max-width: 250px;
+    padding-right: 2em;
+    float: left;
+}
+
+.collections-search{
+    display: inline;
+}
+
+.collections-search input{
+    display: inline-block;
 }

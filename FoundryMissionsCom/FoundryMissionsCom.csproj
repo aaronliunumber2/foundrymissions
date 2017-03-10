@@ -202,6 +202,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Attributes\MultipleButtonAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CollectionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MissionsController.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Helpers\AccountHelper.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
+    <Compile Include="Helpers\MissionCollectionHelper.cs" />
     <Compile Include="Helpers\MissionHelper.cs" />
     <Compile Include="Helpers\MissionImagesHelper.cs" />
     <Compile Include="Helpers\MissionVideosHelper.cs" />
@@ -261,9 +263,11 @@
     <Compile Include="Models\FoundryMissionViewModels\AdvancedSearchViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\EditMissionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ListAuthorViewModel.cs" />
+    <Compile Include="Models\FoundryMissionViewModels\ListCollectionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ListMissionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\RandomMissionImageViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\SubmitMissionViewModel.cs" />
+    <Compile Include="Models\FoundryMissionViewModels\ViewCollectionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ViewMissionViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -424,6 +428,7 @@
     <Content Include="Views\Missions\SearchResults.cshtml" />
     <Content Include="Views\Missions\_searchresultsvalues.cshtml" />
     <Content Include="Views\Shared\PleaseConfirmEmail.cshtml" />
+    <Content Include="Views\Collections\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
