@@ -8,6 +8,8 @@ namespace FoundryMissionsCom.Helpers
 {
     public static class MissionCollectionHelper
     {
+        private static string[] RestrictedMissionNames = { "SUBMIT", "DETAILS", "RANDOM", "EDIT" };
+
         public static string GetImageLink(string image, int collectionid)
         {
             return Path.Combine(

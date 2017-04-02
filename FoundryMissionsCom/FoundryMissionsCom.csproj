@@ -429,6 +429,7 @@
     <Content Include="Views\Missions\_searchresultsvalues.cshtml" />
     <Content Include="Views\Shared\PleaseConfirmEmail.cshtml" />
     <Content Include="Views\Collections\Index.cshtml" />
+    <Content Include="Views\Collections\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

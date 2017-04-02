@@ -1,0 +1,75 @@
+﻿@model FoundryMissionsCom.Models.FoundryMissionViewModels.ViewCollectionViewModel
+
+@{
+    ViewBag.Title = Model.Name;
+    var description = Model.Description;
+    var descriptionCols = 12;
+    var descriptionColsClass = "";
+    if (description.Length > 100)
+    {
+        description = description.Substring(0, 100) + "...";
+    }
+}
+
+@section opengraph{
+    <meta property="og:title" content="@Model.Name" />
+    <meta property="og:description" content="@description" />
+}
+
+<div class="container">
+
+    <h2>@Model.Name</h2>
+    <div class="row">
+        @if (Model.ImageLink != null)
+        {
+            <figure class="col-sm-4"><img src="@Url.Content(Model.ImageLink)" /></figure>
+
+            descriptionCols = 8;
+
+        }
+
+        @descriptionColsClass = "col-sm-" + @descriptionCols
+        <section class="collection-description @descriptionColsClass">
+            <div class="row">
+                <div class="col-sm-12 ">
+                    <header class=""><h3 class="collection-description-header">Description</h3></header>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div>
+                        <p><span style="white-space: pre-line">@Model.Description</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="collection-mission-list">
+        <div class="row">
+             <div class="col-sm-12">
+                 <h3 class="collection-mission-list-header">Mission List</h3>
+             </div>
+        </div>
+        @foreach(var item in Model.Missions)
+        {
+            <div class="row collection-mission">
+                <div class="col-xs-2">@Html.ActionLink(item.Name, "details", "missions", new { link = item.MissionLink }, new { })</div>
+                <div class="col-xs-2">@item.CrypticId</div>
+                <div class="col-xs-2">@item.Author.CrypticTag</div>
+                <div class="col-xs-2">
+                    @if (item.MinimumLevel == 1)
+                    {
+                        <img src="@Url.Content("~/Content/Images/" + item.LevelImageUrl)" alt="Any Level" /> <text>Any</text>
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Content/Images/" + item.LevelImageUrl)" alt="@item.MinimumLevel+" />@Html.DisplayFor(modelItem => item.MinimumLevel)<text>+</text>;
+                    }
+                </div>
+                <div class="col-xs-2"><img src="@Url.Content("~/Content/Images/" + item.FactionImageUrl)" alt="@item.Faction" /> @Html.DisplayFor(modelItem => item.Faction)</div>
+                <div class="col-xs-2">@Html.DisplayFor(modelItem => item.DateLastUpdated)</div>
+            </div>
+        }
+    </section>
+</div>

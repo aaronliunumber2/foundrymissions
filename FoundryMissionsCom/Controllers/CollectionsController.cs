@@ -1,4 +1,6 @@
-﻿using FoundryMissionsCom.Models;
+﻿using FoundryMissionsCom.Helpers;
+using FoundryMissionsCom.Models;
+using FoundryMissionsCom.Models.FoundryMissionModels;
 using FoundryMissionsCom.Models.FoundryMissionViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,15 +17,16 @@ namespace FoundryMissionsCom.Controllers
         // GET: Collections
         public ActionResult Index()
         {
+            //temporary for testing
             var collections = new List<ListCollectionViewModel>();
 
             collections.Add(new ListCollectionViewModel()
             {
-                CollectionLink = "marvel",
+                CollectionLink = "superheroes-by-zorbane",
                 Description = "Missions by Zorbane that are inspired by the Marvel Cinematic Universe.  These missions can be played in any order except for the finale mission, UNKNOWN MISSION NAME.",
                 Id = 1,
                 ImageLink = "~/collections/1/pic.jpg",
-                Name = "Marvel",
+                Name = "Superheroes by Zorbane",
                 Owner = db.Users.FirstOrDefault(u => u.CrypticTag.Equals("Zorbane")),
             });
 
@@ -45,14 +48,28 @@ namespace FoundryMissionsCom.Controllers
             return View();
         }
 
-        public ActionResult Details()
-        {
-            return RedirectToAction("index");
-        }
-
         public ActionResult Details(string link)
         {
-            return View();
+            //temporary for testing
+            var collection = new ViewCollectionViewModel()
+            {
+                CollectionLink = "superheroes-by-zorbane",
+                Description = "Missions by Zorbane that are inspired by the Marvel Cinematic Universe.  These missions can be played in any order except for the finale mission, UNKNOWN MISSION NAME.",
+                Id = 1,
+                ImageLink = "~/collections/1/pic.jpg",
+                Name = "Superheroes by Zorbane",
+                Owner = db.Users.FirstOrDefault(u => u.CrypticTag.Equals("Zorbane")),
+                Missions = new List<ListMissionViewModel>(),
+            };
+
+            var missions = new List<Mission>();
+
+            missions.Add(db.Missions.Where(m => m.Name.Equals("The Improbable Bulk")).Single());
+            missions.Add(db.Missions.Where(m => m.Name.Equals("Duritanium Man")).Single());
+
+            collection.Missions = MissionHelper.GetListMissionViewModels(missions);
+
+            return View(collection);
         }
     }
 }

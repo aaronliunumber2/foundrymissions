@@ -18,6 +18,8 @@ namespace FoundryMissionsCom
                 "contact-us",
                 new { controller = "home", action = "contact-us" });
 
+            #region Missions
+
             routes.MapRoute(
                 "RandomMission",
                 "missions/random",
@@ -72,11 +74,23 @@ namespace FoundryMissionsCom
                 new { controller = "Missions", action = "index" }
             );
 
+            #endregion
+
+            #region Collections
+
             routes.MapRoute(
                 "CollectionIndex",
-                "collections",
+                "collections/",
                 new { controller = "collections", action = "index" }
             );
+
+            routes.MapRoute(
+                "CollectionLink",
+                "collections/{link}",
+                new { controller = "collections", action = "details" }
+            );
+
+            #endregion
 
             routes.MapRoute(
                 name: "Default",
