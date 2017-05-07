@@ -12,10 +12,10 @@ namespace FoundryMissionsCom.Helpers
 
         public static string GetImageLink(string image, int collectionid)
         {
-            return Path.Combine(
-                    "~/collections/images/",
-                    collectionid.ToString(),
-                    image);
+            return "~/content/collections/images/" + 
+                collectionid.ToString() +
+                "/" +                
+                image;
         }
     }
 }

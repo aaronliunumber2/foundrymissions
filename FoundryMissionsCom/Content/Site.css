@@ -57,7 +57,7 @@ textarea {
 
 @media (min-width: 768px) 
 {   
-    .search-results-header{
+    .search-results-header, .collections-list-header{
         display: block;
     }
 
@@ -113,7 +113,7 @@ body {
     background-color: black;
 }
 
-li.list-group-item.mission, .search-result, .my-missions-result, .author, li.list-group-item.update{
+li.list-group-item.mission, .search-result, .my-missions-result, .author, li.list-group-item.update, .collection-mission{
     border: none;
     border-top: 1px gray solid;
     background-color: #001;
@@ -353,7 +353,7 @@ input#lastupdate {
     margin-bottom: .5em;
 }
 
-.mission-description-header {
+.mission-description-header, .collection-description-header, .collection-mission-list-header {
     background-color: #1e2b37;
     margin: 0px;
     padding-top: 10px;
@@ -362,7 +362,7 @@ input#lastupdate {
 
 }
 
-.mission-description{
+.mission-description, .collection-description, .collection-mission-list{
     color: #E8E8E8;
     border-radius: 10px;
     border: solid 1px;
@@ -371,7 +371,10 @@ input#lastupdate {
     overflow: hidden;
 }
 
-.mission-description p{
+
+ 
+
+.mission-description p, .collection-description p{
     padding: .5em;
 }
 
@@ -382,11 +385,11 @@ input#lastupdate {
 
 /* Search Results */
 
-.search-result, .search-results-header, .my-missions-header, .my-missions-result, .authors-header, .author{
+.search-result, .search-results-header, .my-missions-header, .my-missions-result, .authors-header, .author, .collection-mission{
     padding: .5em;
 }
 
-.search-results-header, .my-missions-header, .authors-header{
+.search-results-header, .my-missions-header, .authors-header,   .collections-list-header{
     font-weight : bold;
 }
 
@@ -428,10 +431,7 @@ form.paging-item input{
     position:absolute;
     right:0;
     top: 20px;
-}
-
-.collections-header h1, .collections-sort{
-    display: inline-block;    
+    display: none;
 }
 
 figure.list-collection-image img{
@@ -447,3 +447,19 @@ figure.list-collection-image img{
 .collections-search input{
     display: inline-block;
 }
+
+.collection-image img{
+    float: left;
+    max-width: 300px;
+    margin : 1em;
+}
+
+
+ .collection-mission-list
+ {
+    background-color: #1e2b37;
+ }
+
+  .collections-list-header, .collection-mission{
+      color: #979797;
+  }

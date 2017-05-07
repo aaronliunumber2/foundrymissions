@@ -8,7 +8,7 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
     public class ViewCollectionViewModel
     {
         public int Id { get; set; }
-        public ApplicationUser Owner { get; set; }
+        public string AuthorTag { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public List<ListMissionViewModel> Missions { get; set; }

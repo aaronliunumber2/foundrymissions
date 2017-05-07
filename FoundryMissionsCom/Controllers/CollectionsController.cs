@@ -25,7 +25,7 @@ namespace FoundryMissionsCom.Controllers
                 CollectionLink = "superheroes-by-zorbane",
                 Description = "Missions by Zorbane that are inspired by the Marvel Cinematic Universe.  These missions can be played in any order except for the finale mission, UNKNOWN MISSION NAME.",
                 Id = 1,
-                ImageLink = "~/collections/1/pic.jpg",
+                ImageLink = MissionCollectionHelper.GetImageLink("pic.jpg", 1),
                 Name = "Superheroes by Zorbane",
                 Owner = db.Users.FirstOrDefault(u => u.CrypticTag.Equals("Zorbane")),
             });
@@ -35,7 +35,7 @@ namespace FoundryMissionsCom.Controllers
                 CollectionLink = "bad-missions",
                 Description = "These missions are not very good, they are by RogueEnterprise and should not be played.  THIS IS A WARNING.  Sometimes you will get stuck in tehe floor along with your boffs.  Also he doesn't need more dilithium.",
                 Id = 2,
-                ImageLink = "~/collections/2/pic.jpg",
+                ImageLink = MissionCollectionHelper.GetImageLink("pic.jpg", 2),
                 Name = "Bad Missions",
                 Owner = db.Users.FirstOrDefault(u => u.CrypticTag.Equals("Zorbane")),
             });
@@ -54,11 +54,11 @@ namespace FoundryMissionsCom.Controllers
             var collection = new ViewCollectionViewModel()
             {
                 CollectionLink = "superheroes-by-zorbane",
-                Description = "Missions by Zorbane that are inspired by the Marvel Cinematic Universe.  These missions can be played in any order except for the finale mission, UNKNOWN MISSION NAME.",
+                Description = "Missions by Zorbane that are inspired by the Marvel Cinematic Universe.  These missions can be played in any order except for the finale mission, UNKNOWN MISSION NAME. Missions by Zorbane that are inspired by the Marvel Cinematic Universe.These missions can be played in any order except for the finale mission, UNKNOWN MISSION NAME. Missions by Zorbane that are inspired by the Marvel Cinematic Universe.  These missions can be played in any order except for the finale mission, UNKNOWN MISSION NAME. Missions by Zorbane that are inspired by the Marvel Cinematic Universe.  These missions can be played in any order except for the finale mission, UNKNOWN MISSION NAME. Missions by Zorbane that are inspired by the Marvel Cinematic Universe.These missions can be played in any order except for the finale mission, UNKNOWN MISSION NAME. Missions by Zorbane that are inspired by the Marvel Cinematic Universe.  These missions can be played in any order except for the finale mission, UNKNOWN MISSION NAME.",
                 Id = 1,
-                ImageLink = "~/collections/1/pic.jpg",
+                ImageLink = MissionCollectionHelper.GetImageLink("pic.jpg", 1),
                 Name = "Superheroes by Zorbane",
-                Owner = db.Users.FirstOrDefault(u => u.CrypticTag.Equals("Zorbane")),
+                AuthorTag = db.Users.FirstOrDefault(u => u.CrypticTag.Equals("Zorbane")).CrypticTag,
                 Missions = new List<ListMissionViewModel>(),
             };
 

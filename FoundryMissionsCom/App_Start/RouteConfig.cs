@@ -79,8 +79,8 @@ namespace FoundryMissionsCom
             #region Collections
 
             routes.MapRoute(
-                "CollectionIndex",
-                "collections/",
+                "CollectionBlankIndex",
+                "Collections/",
                 new { controller = "collections", action = "index" }
             );
 

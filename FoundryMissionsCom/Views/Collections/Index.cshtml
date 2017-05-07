@@ -46,9 +46,9 @@
             <div class="col-xs-12">
                 @if (!string.IsNullOrWhiteSpace(item.ImageLink))
                 {
-                    <a href="@item.CollectionLink"><figure class="list-collection-image"><img src="@Url.Content(item.ImageLink)" /></figure></a>
+                    <a href="~/collections/@item.CollectionLink"><figure class="list-collection-image"><img src="@Url.Content(item.ImageLink)" /></figure></a>
                 }
-                <h2><a href="@item.CollectionLink">@item.Name</a></h2>
+                <h2>@Html.ActionLink(item.Name, item.CollectionLink)</h2>
                 <p>@item.Description</p>
                 <p>Collection by @item.Owner.CrypticTag</p>
             </div>
