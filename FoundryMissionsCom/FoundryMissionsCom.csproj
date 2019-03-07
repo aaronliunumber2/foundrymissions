@@ -253,6 +253,7 @@
     <Compile Include="Migrations\FoundryMissionsMigrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FoundryMissionModels\Enums\MissionStatus.cs" />
+    <Compile Include="Models\FoundryMissionModels\MissionCollection.cs" />
     <Compile Include="Models\FoundryMissionModels\MissionImage.cs" />
     <Compile Include="Models\FoundryMissionsContext.cs" />
     <Compile Include="Models\FoundryMissionModels\Enums\Faction.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="Models\FoundryMissionViewModels\ListCollectionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ListMissionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\RandomMissionImageViewModel.cs" />
+    <Compile Include="Models\FoundryMissionViewModels\SubmitCollectionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\SubmitMissionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ViewCollectionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ViewMissionViewModel.cs" />
@@ -385,14 +387,18 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

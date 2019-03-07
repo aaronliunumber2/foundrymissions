@@ -129,6 +129,12 @@ namespace FoundryMissionsCom.Helpers
         public static MissionImage GetRandomMissionImage(ApplicationDbContext context)
         {
             MissionImage image = context.MissionImages.OrderBy(m => Guid.NewGuid()).Take(1).FirstOrDefault();
+
+            //this only gets hit in testing 
+            if (image == null)
+            {
+                return null;
+            }
             var mission = context.Missions.Where(m => m.Id == image.MissionId).FirstOrDefault();
 
             //in case the mission is invalid

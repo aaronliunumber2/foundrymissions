@@ -31,21 +31,28 @@ namespace FoundryMissionsCom.Controllers
             #region RandomMissionImageViewModel
 
             var randomImage = MissionImagesHelper.GetRandomMissionImage(db);
-            var mission = db.Missions.Where(m => m.Id == randomImage.MissionId).FirstOrDefault();
-            var randomMissionImage = new RandomMissionImageViewModel();
+            RandomMissionImageViewModel randomMissionImage = null;
+            if (randomImage != null)
+            {
+                var mission = db.Missions.Where(m => m.Id == randomImage.MissionId).FirstOrDefault();
 
-            randomMissionImage.Author = mission.Author.CrypticTag;
-            randomMissionImage.Faction = mission.Faction.ToString();        
-            randomMissionImage.ImageLink = MissionImagesHelper.GetImageLink(randomImage.Filename, mission.Id);
-            randomMissionImage.ThumbnailLink = MissionImagesHelper.GetThumbnailLink(randomImage.Filename, mission.Id);
-            randomMissionImage.MissionLink = mission.MissionLink;
-            randomMissionImage.MissionName = mission.Name;
+                randomMissionImage = new RandomMissionImageViewModel();
+                randomMissionImage.Author = mission.Author.CrypticTag;
+                randomMissionImage.Faction = mission.Faction.ToString();
+                randomMissionImage.ImageLink = MissionImagesHelper.GetImageLink(randomImage.Filename, mission.Id);
+                randomMissionImage.ThumbnailLink = MissionImagesHelper.GetThumbnailLink(randomImage.Filename, mission.Id);
+                randomMissionImage.MissionLink = mission.MissionLink;
+                randomMissionImage.MissionName = mission.Name;
+            }
 
             #endregion
 
             ViewBag.RandomMissions = randomMissions;
             ViewBag.RecentlyUpdatedMissions = recentlyUpdatedMissions;
-            ViewBag.RandomImage = randomMissionImage;
+            if (randomMissionImage != null)
+            {
+                ViewBag.RandomImage = randomMissionImage;
+            }
 
             return View();
         }
