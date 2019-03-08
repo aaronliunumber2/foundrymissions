@@ -43,9 +43,12 @@
   <ItemGroup>
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\FoundryObjectFactory.cs" />
-    <Compile Include="Models\Component.cs" />
+    <Compile Include="Models\Components\Component.cs" />
+    <Compile Include="Models\Components\Spawn.cs" />
+    <Compile Include="Models\Components\Trigger.cs" />
     <Compile Include="Models\Costume.cs" />
     <Compile Include="Models\Dialog.cs" />
+    <Compile Include="Models\ExternalVariable.cs" />
     <Compile Include="Models\FoundryMission.cs" />
     <Compile Include="Models\FoundryObject.cs" />
     <Compile Include="Models\Map.cs" />

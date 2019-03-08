@@ -28,14 +28,6 @@ namespace StarbaseUGC.Foundry.Engine.Models
 
     public class Objective : FoundryObject
     {
-        internal override string Title
-        {
-            get
-            {
-                return Constants.Mission.Objective.Title;
-            }
-        }
-
         public int Number { get; private set; }
 
         public Objective(int objectiveNumber)

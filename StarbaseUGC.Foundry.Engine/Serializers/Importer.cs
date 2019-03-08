@@ -1,5 +1,6 @@
 ﻿using StarbaseUGC.Foundry.Engine.Helpers;
 using StarbaseUGC.Foundry.Engine.Models;
+using StarbaseUGC.Foundry.Engine.Models.Components;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,9 +27,9 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
             mission.Namespace = importLines.Find(s => s.StartsWith(Constants.FoundryMission.NameSpace)).Replace(Constants.FoundryMission.NameSpace, string.Empty);
             mission.Project = GetProject(importLines);
             mission.Mission = GetMission(importLines);
-            //maps
             mission.Maps = GetMaps(importLines);
-            //components
+            mission.Components = GetComponents(importLines);
+            //costumes
 
             return mission;
         }
@@ -59,7 +60,37 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
 
         private static List<Component> GetComponents(List<string> importLines)
         {
-            var components = new List<Component>();
+
+            var objects = new List<FoundryObject>();
+
+            //find all the lines that match component, but only like.  include tab at the beginning and  space at the end
+            var matchIndexs = importLines.Select((text, index) => text.Contains($"\t{Constants.Component.Title} ") ? index : -1).Where(index => index != -1).ToArray();
+
+            foreach (var matchIndex in matchIndexs)
+            {
+                var index = matchIndex;
+                var text = importLines[index];
+
+                //make sure its actually a component line, the first word must be component
+                var split = text.Split(new char[] { ' ' });
+
+                if (split.Length < 1)
+                {
+                    continue;
+                }
+
+                if (!split[0].Trim().Equals(Constants.Component.Title))
+                {
+                    continue;
+                }
+
+
+                var foundryObject = GetFoundryObjectByIndex(importLines, ref index);
+
+                objects.Add(foundryObject);
+            }
+
+            var components = objects.Cast<Component>().ToList();
             return components;
         }
 
@@ -87,30 +118,67 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
         /// <param name="importLines"></param>
         /// <param name="index">by reference because other foundry objects may be found inside and the index must keep going</param>
         /// <returns></returns>
-        private static FoundryObject GetFoundryObjectByIndex(List<string> importLines, ref int currentIndex)
+        private static FoundryObject GetFoundryObjectByIndex(List<string> importLines, ref int currentIndex, string enforcedTitle = "")
         {
-            var title = importLines[currentIndex].Trim(); //this is the name of the object
-            var foundryObject = FoundryObjectFactory.CreateFoundryObject(title);
+            var title = enforcedTitle; //allow us to set a title
+            if (string.IsNullOrWhiteSpace(enforcedTitle))
+            {
+                title = importLines[currentIndex].Trim(); //this is the name of the object
+            }
+
+            var foundryObject = FoundryObjectFactory.CreateFoundryObject(title, importLines, currentIndex);
+
+            //sometimes the title has extra data in it, the first word is always the title.  need to check for this
+            var split = title.Split(Constants.SplitSpace);
+            if (split.Length > 1)
+            {
+                title = split[0];
+            }
+
             foundryObject.Title = title;
             var openText = importLines[currentIndex + 1]; //this represents the { 
             var closeText = openText.Replace(Constants.FoundryObjectStartCharacter, Constants.FoundryObjectEndCharacter); //this represents the } but keeps the indentation so we can find the correct "end"
             currentIndex = currentIndex + 2;          //this represents the first text that is actually a field
+
             for (; currentIndex < importLines.Count; currentIndex++)
             {
                 var text = importLines[currentIndex];
 
+                //first check for reserved words
+
+                #region Empty Lines
                 //skip empty lines
                 if (string.IsNullOrEmpty(text.Trim()))
                 {
                     continue;
                 }
+                #endregion
 
-                //go until it reaches the close text and then break
+                #region Hit Close Text
+                //go until it reaches the close text and then break                
                 if (text.Equals(closeText))
                 {
                     break;
                 }
+                #endregion
 
+                #region Whens
+                if (text.Trim().Equals(Constants.Component.When.Title) ||
+                    text.Trim().Equals(Constants.Component.HideWhen.Title))
+                {
+                    HandleWhen(foundryObject, importLines, ref currentIndex);
+                    continue;
+                }
+                #endregion
+
+                #region External Variable
+                if (text.Trim().Equals(Constants.Component.ExternalVar.Title))
+                {
+
+                }
+                #endregion
+
+                #region New Foundry Object
                 //if it is not then next check if it is a new foundry object
                 var foundryObjectCheckIndex = currentIndex + 1;
                 //but first make sure we don't go over the text size, may be impossible to happen but should check anyways
@@ -125,22 +193,64 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
 
                     foundryObject.FoundryObjects.Add(newFoundryObject);
                 }
+                #endregion
+                #region Add new Field
                 else //it is neither the end or a new foundry object that means we have a new field!
                 {
                     //trim the text, the first word is the field name, everything after that is the data
                     text = text.Trim();
-                    var split = text.Split(' ');
+                    split = text.Split(' ');
                     var fieldName = split[0];
                     var fieldValue = string.Empty;
                     if (split.Length > 1)
                     {
                         fieldValue = text.Substring(fieldName.Length + 1);
                     }
-                    foundryObject.Fields.Add(fieldName, fieldValue);
+                    if (!foundryObject.Fields.ContainsKey(fieldName)) // some can be in ther emultiple times like "END"
+                    {
+                        foundryObject.Fields.Add(fieldName, fieldValue);
+                    }
                 }
+                #endregion
             }
 
             return foundryObject;
+        }
+
+        private static void HandleWhen(FoundryObject foundryObject, List<string> importLines, ref int currentIndex)
+        {
+            //there are two types of Whens and those can be two types too
+            //they are When and HideWhen
+            //they are with parameters (MAP_START, MANUAL) or with parameters (everything else)
+
+            FoundryObject whenObject = null;
+            var split = importLines[currentIndex].Split(new char[] { ' ' });
+
+            var whenType = split[0];
+            var triggerType = Constants.Trigger.ObjectiveComplete.Title; //default is objective complete
+            if (split.Length > 1)
+            {
+                triggerType = split[1];
+            }
+            
+            whenObject = GetFoundryObjectByIndex(importLines, ref currentIndex, triggerType);
+
+            //got the object now set it in the proper spot
+            if (whenType.Equals(Constants.Trigger.When))
+            {
+                foundryObject.When = (Trigger)whenObject;
+            }
+            else //if (whenType.Equals(Constants.Trigger.HideWhen))
+            {
+                foundryObject.HideWhen = (Trigger)whenObject;
+            }
+        }
+        
+        //private static void HandleAction(FoundryObject foundryObject, List<string> importLines, ref int currentIndex)
+
+        private static void HandleExternVar(FoundryObject foundryObject, List<string> importLines, ref int currentIndex)
+        {
+            
         }
     }
 }

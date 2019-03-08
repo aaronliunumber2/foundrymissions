@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace StarbaseUGC.Foundry.Engine.Models
 {
-    public abstract class Component : FoundryObject
+    public class ExternalVariable
     {
+        public string Name { get; set; }
+        public Dictionary<string, string> Variables { get; set; }
     }
 }

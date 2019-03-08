@@ -1,4 +1,5 @@
 ﻿using StarbaseUGC.Foundry.Engine.Helpers;
+using StarbaseUGC.Foundry.Engine.Models.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,10 @@ namespace StarbaseUGC.Foundry.Engine.Models
         internal virtual string Title { get; set; } = string.Empty;
         internal Dictionary<string, object> Fields { get; } = new Dictionary<string, object>();
         internal List<FoundryObject> FoundryObjects { get; } = new List<FoundryObject>();
+        internal Dictionary<string, ExternalVariable> ExternalVariables { get; } = new Dictionary<string, ExternalVariable>();
+
+        public Trigger When { get; internal set; }
+        public Trigger HideWhen { get; internal set; }
 
         protected string GetFieldValue(string fieldValue)
         {
