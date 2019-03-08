@@ -100,11 +100,12 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
         {
             public const string Title = "Component";
             public const string VisibleName = "VisibleName";
-            public const string Type = "TYPE";
+            public const string Type = "Type";
             public const string MapType = "MapType";            
             public const string DisplayNameWasFixed = "DisplayNameWasFixed";
-            
+            public const string RoomDoor = "RoomDoor";
 
+            #region Component Types
             /*
             Component Types
 
@@ -116,8 +117,7 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
             CONTACT
             PATROL_POINT
             ROOM_MARKER
-
-
+            EXTERNAL_DOOR
 
             Also a unnamed one which I believe is a spawn point
             */
@@ -130,6 +130,65 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
             public class WholeMap
             {
                 public const string Title = "WHOLE_MAP";
+            }
+
+            public class ExternalDoor
+            {
+                public const string Title = "EXTERNAL_DOOR";
+            }
+
+            public class RoomMarker
+            {
+                public const string Title = "ROOM_MARKER";
+                public const string VolumeRadius = "VolumeRadius";               
+            }
+
+            public class Contact
+            {
+                public const string Title = "CONTACT";
+                public const string CostumeName = "CostumeName";
+                public const string FSMRef = "FSMRef";
+
+            }
+
+            public class Actor
+            {
+                public const string Title = "Actor";
+                public const string CostumeName = "CostumeName";
+            }
+
+            public class Object
+            {
+                public const string Title = "OBJECT";
+                public const string ObjectID = "ObjectID";
+            }
+
+            public class Kill
+            {
+                public const string Title = "KILL";
+
+                public const string ChildIDs = "ChildIDs";
+                public const string FSMRef = "FSMRef";
+            }
+
+            public class DialogTree
+            {
+                public const string Title = "DIALOG_TREE";
+                
+                public class Prompt
+                {
+                    public const string Title = "Prompt";
+                }
+            }
+
+            #endregion
+
+            public class InteractTriggerGroup
+            {
+                public const string Title = "InteractTriggerGroup";
+                public const string InteractText = "InteractText";
+                public const string InteractAnim = "InteractAnim";
+                public const string InteractDuration = "InteractDuration";
             }
 
             public class Placement
@@ -147,7 +206,12 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
             {
                 public const string Title = "When";
             }
-            
+
+            public class ShowWhen
+            {
+                public const string Title = "ShowWhen";
+            }
+
             public class HideWhen
             {
                 public const string Title = "HideWhen";
@@ -165,6 +229,12 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
             public const string PromptBody = "PromptBody";
             public const string PromptPetCostume = "PromptPetCostume";
             public const string PromptStyle = "PromptStyle";
+
+            public class Action
+            {
+                public const string Title = "Action";
+                public const string NextPromptID = "NextPromptID";
+            }
         }
 
         public class Trigger

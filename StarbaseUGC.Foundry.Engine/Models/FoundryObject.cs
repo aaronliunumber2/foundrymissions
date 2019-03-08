@@ -15,9 +15,6 @@ namespace StarbaseUGC.Foundry.Engine.Models
         internal List<FoundryObject> FoundryObjects { get; } = new List<FoundryObject>();
         internal Dictionary<string, ExternalVariable> ExternalVariables { get; } = new Dictionary<string, ExternalVariable>();
 
-        public Trigger When { get; internal set; }
-        public Trigger HideWhen { get; internal set; }
-
         protected string GetFieldValue(string fieldValue)
         {
             if (Fields.ContainsKey(fieldValue))

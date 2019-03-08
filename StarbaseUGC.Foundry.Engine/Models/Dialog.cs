@@ -1,4 +1,5 @@
 ﻿using StarbaseUGC.Foundry.Engine.Helpers;
+using StarbaseUGC.Foundry.Engine.Models.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,16 @@ namespace StarbaseUGC.Foundry.Engine.Models
         public string PromptBody {  get { return GetFieldValue(Constants.Dialog.PromptBody); } }
         public string PromptPetCostume { get { return GetFieldValue(Constants.Dialog.PromptPetCostume); } }
         public string PromptStyle { get { return GetFieldValue(Constants.Dialog.PromptStyle); } }
+
+        public List<Action> Action { get { return GetFoundryObjectsByTitle(Constants.Dialog.Action.Title).Cast<Action>().ToList(); } }
+    }
+
+    public class Action : FoundryObject
+    {
+        public string ActionName { get; internal set; }
+        public Trigger ShowWhen { get; internal set; }
+        public Trigger HideWhen { get; internal set; }
+
+        public string NextPromptID { get { return GetFieldValue(Constants.Dialog.Action.NextPromptID); } }
     }
 }

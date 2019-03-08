@@ -43,8 +43,12 @@
   <ItemGroup>
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\FoundryObjectFactory.cs" />
+    <Compile Include="Models\Components\Actor.cs" />
     <Compile Include="Models\Components\Component.cs" />
+    <Compile Include="Models\Components\ComponentObject.cs" />
     <Compile Include="Models\Components\Contact.cs" />
+    <Compile Include="Models\Components\DialogTree.cs" />
+    <Compile Include="Models\Components\Kill.cs" />
     <Compile Include="Models\Components\RoomMarker.cs" />
     <Compile Include="Models\Components\Trigger.cs" />
     <Compile Include="Models\Costume.cs" />

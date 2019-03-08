@@ -87,10 +87,20 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
 
             switch (componentType)
             {
-                case Constants.Component.Spawn.Title:
-                    return new Spawn(number);                
+                case Constants.Component.RoomMarker.Title:
+                    return new RoomMarker(number);
+                case Constants.Component.Contact.Title:
+                    return new Contact(number);
+                case Constants.Component.Object.Title:
+                    return new ComponentObject(number);
+                case Constants.Component.Actor.Title:
+                    return new Actor(number);
+                case Constants.Component.Kill.Title:
+                    return new Kill(number);
+                default:
+                    return new Component(number);
             }
-            return new Component(number);
+
         }
 
         private static string GetComponentType(List<string> importLines, int currentIndex)
@@ -104,6 +114,10 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
                     var split = text.Split(new char[] { ' ' });
                     var type = split[1];
                     return type;
+                }
+                else if (text.Contains(Constants.FoundryObjectEndCharacter))
+                {
+                    break;
                 }
             }
 

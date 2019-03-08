@@ -247,19 +247,31 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
             //got the object now set it in the proper spot
             if (whenType.Equals(Constants.Trigger.When))
             {
-                foundryObject.When = (Trigger)whenObject;
+                foundryObject.When = whenObject;
             }
             else //if (whenType.Equals(Constants.Trigger.HideWhen))
             {
-                foundryObject.HideWhen = (Trigger)whenObject;
+                foundryObject.HideWhen = whenObject;
             }
         }
-        
+
         //private static void HandleAction(FoundryObject foundryObject, List<string> importLines, ref int currentIndex)
 
+        //for now if its external var then try to find the end and skip to it
         private static void HandleExternVar(FoundryObject foundryObject, List<string> importLines, ref int currentIndex)
         {
-            
+            var text = importLines[currentIndex];
+            var endText = text.Replace(Constants.Component.ExternalVar.Title, Constants.Component.ExternalVar.End);
+            //go until it finds the end
+            for(; currentIndex < importLines.Count - 1; currentIndex++)
+            {
+                var currentText = importLines[currentIndex];
+                if (currentText.Equals(endText))
+                {
+                    currentIndex++;
+                    return;
+                }
+            }
         }
     }
 }
