@@ -44,7 +44,8 @@
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\FoundryObjectFactory.cs" />
     <Compile Include="Models\Components\Component.cs" />
-    <Compile Include="Models\Components\Spawn.cs" />
+    <Compile Include="Models\Components\Contact.cs" />
+    <Compile Include="Models\Components\RoomMarker.cs" />
     <Compile Include="Models\Components\Trigger.cs" />
     <Compile Include="Models\Costume.cs" />
     <Compile Include="Models\Dialog.cs" />
@@ -55,8 +56,7 @@
     <Compile Include="Models\Mission.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serializers\Exporter.cs" />
-    <Compile Include="Serializers\Importer.cs" />
+    <Compile Include="Serializers\FoundryMissionSerializer.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

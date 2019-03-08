@@ -7,15 +7,23 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace StarbaseUGC.Foundry.Engine.Serializers
 {
-    public static class Importer
+    public static class FoundryMissionSerializer
     {
         public static FoundryMission ImportMission(string fileName)
         {
             var txt = File.ReadAllText(fileName);
             return ParseMissionText(txt);
+        }
+
+        public static string ExportMissionToJson(FoundryMission mission)
+        {
+            var json = new JavaScriptSerializer().Serialize(mission);
+
+            return json;
         }
 
         private static FoundryMission ParseMissionText(string txt)
@@ -166,7 +174,8 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
                 if (text.Trim().Equals(Constants.Component.When.Title) ||
                     text.Trim().Equals(Constants.Component.HideWhen.Title))
                 {
-                    HandleWhen(foundryObject, importLines, ref currentIndex);
+                    //if it has a when taht means its a component
+                    HandleWhen((Component)foundryObject, importLines, ref currentIndex);
                     continue;
                 }
                 #endregion
@@ -217,13 +226,13 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
             return foundryObject;
         }
 
-        private static void HandleWhen(FoundryObject foundryObject, List<string> importLines, ref int currentIndex)
+        private static void HandleWhen(Component foundryObject, List<string> importLines, ref int currentIndex)
         {
             //there are two types of Whens and those can be two types too
             //they are When and HideWhen
             //they are with parameters (MAP_START, MANUAL) or with parameters (everything else)
 
-            FoundryObject whenObject = null;
+            Trigger whenObject = null;
             var split = importLines[currentIndex].Split(new char[] { ' ' });
 
             var whenType = split[0];
@@ -233,7 +242,7 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
                 triggerType = split[1];
             }
             
-            whenObject = GetFoundryObjectByIndex(importLines, ref currentIndex, triggerType);
+            whenObject = (Trigger)GetFoundryObjectByIndex(importLines, ref currentIndex, triggerType);
 
             //got the object now set it in the proper spot
             if (whenType.Equals(Constants.Trigger.When))
