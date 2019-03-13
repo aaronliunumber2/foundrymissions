@@ -226,7 +226,7 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
             return foundryObject;
         }
 
-        private static void HandleWhen(Component foundryObject, List<string> importLines, ref int currentIndex)
+        private static void HandleWhen(FoundryObject foundryObject, List<string> importLines, ref int currentIndex)
         {
             //there are two types of Whens and those can be two types too
             //they are When and HideWhen
@@ -243,15 +243,30 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
             }
             
             whenObject = (Trigger)GetFoundryObjectByIndex(importLines, ref currentIndex, triggerType);
-
-            //got the object now set it in the proper spot
-            if (whenType.Equals(Constants.Trigger.When))
+            if (foundryObject.Title.Equals(Constants.Component.Title))
             {
-                foundryObject.When = whenObject;
+                var component = (Component)foundryObject;
+                //got the object now set it in the proper spot
+                if (whenType.Equals(Constants.Trigger.When))
+                {
+                    component.When = whenObject;
+                }
+                else //if (whenType.Equals(Constants.Trigger.HideWhen))
+                {
+                    component.HideWhen = whenObject;
+                }
             }
-            else //if (whenType.Equals(Constants.Trigger.HideWhen))
+            else //if (foundryObject.Title.Equals(Constants.Dialog.Action.Title))
             {
-                foundryObject.HideWhen = whenObject;
+                var action = (DialogAction)foundryObject;
+                if (whenType.Equals(Constants.Trigger.When))
+                {
+                    action.ShowWhen = whenObject;
+                }
+                else //if (whenType.Equals(Constants.Trigger.HideWhen))
+                {
+                    action.HideWhen = whenObject;
+                }
             }
         }
 

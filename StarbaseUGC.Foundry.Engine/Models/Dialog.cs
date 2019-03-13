@@ -14,12 +14,13 @@ namespace StarbaseUGC.Foundry.Engine.Models
         public string PromptPetCostume { get { return GetFieldValue(Constants.Dialog.PromptPetCostume); } }
         public string PromptStyle { get { return GetFieldValue(Constants.Dialog.PromptStyle); } }
 
-        public List<Action> Action { get { return GetFoundryObjectsByTitle(Constants.Dialog.Action.Title).Cast<Action>().ToList(); } }
+        public List<DialogAction> Action { get { return GetFoundryObjectsByTitle(Constants.Dialog.Action.Title).Cast<DialogAction>().ToList(); } }
     }
 
-    public class Action : FoundryObject
+    public class DialogAction : FoundryObject
     {
         public string ActionName { get; internal set; }
+
         public Trigger ShowWhen { get; internal set; }
         public Trigger HideWhen { get; internal set; }
 

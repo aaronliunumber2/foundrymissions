@@ -41,6 +41,8 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
                 #region Component
                 case Constants.Component.Placement.Title:
                     return new Placement();
+                case Constants.Component.InteractTriggerGroup.Title:
+                    return new InteractTriggerGroup();
                 #endregion
                 #region Triggers
                 case Constants.Trigger.Component.ComponentCompleteTitle:

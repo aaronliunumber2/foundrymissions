@@ -224,6 +224,41 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
             }
         }
 
+        public class Costume
+        {
+            public const string Title = "Costume";
+            public const string Description = "Description";
+            public const string DisplayName = "DisplayName";
+
+            public class CachedPlayerCostume
+            {
+                public const string Skeleton = "Skeleton";
+                public const string Species = "Species";
+                public const string CostumeType = "CostumeType";
+                public const string DefaultColorLinkAll = "DefaultColorLinkAll";
+                public const string Height = "Height";
+                public const string ColorSkin = "ColorSkin";
+                public const string ReegionCategory = "RegionCategory";
+                public const string RegionCategoryAll = "RegionCategory All";
+                public const string RegionCategoryHidden = "RegionCategory Hidden";
+            }
+                
+            public class Part
+            {
+                public class Movable
+                {
+
+
+                }
+
+                public class CustomeColors
+                {
+
+                }
+            }
+
+        }
+
         public class Dialog
         {
             public const string PromptBody = "PromptBody";
