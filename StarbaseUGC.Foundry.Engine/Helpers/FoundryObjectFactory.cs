@@ -67,10 +67,27 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
                         return new Objective(number);
                     }
                     #endregion
+                    #region Prompt
+                    else if (title.Contains(Constants.Component.DialogTree.Prompt.Title))
+                    {
+                        var split = title.Split(new char[] { ' ' });
+                        var strnumber = split[1];
+                        var number = Convert.ToInt32(strnumber);
+                        return new Prompt(number);
+                    }
+                    #endregion
                     #region Component
                     else if (title.Contains(Constants.Component.Title))
                     {
                         return GetComponent(title, importLines, currentIndex);
+                    }
+                    #endregion
+                    #region Dialog                
+                    else if (title.Contains(Constants.Dialog.Action.Title))
+                    {
+                        //get the action name
+                        var name = title.Trim().Replace(Constants.Dialog.Action.Title, "");
+                        return new DialogAction(name);
                     }
                     #endregion
                     return new FoundryObject();
@@ -99,6 +116,8 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
                     return new Actor(number);
                 case Constants.Component.Kill.Title:
                     return new Kill(number);
+                case Constants.Component.DialogTree.Title:
+                    return new DialogTree(number);
                 default:
                     return new Component(number);
             }

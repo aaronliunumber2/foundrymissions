@@ -1,4 +1,5 @@
-﻿using StarbaseUGC.Foundry.Engine.Helpers;
+﻿using Newtonsoft.Json;
+using StarbaseUGC.Foundry.Engine.Helpers;
 using StarbaseUGC.Foundry.Engine.Models;
 using StarbaseUGC.Foundry.Engine.Models.Components;
 using System;
@@ -21,7 +22,10 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
 
         public static string ExportMissionToJson(FoundryMission mission)
         {
-            var json = new JavaScriptSerializer().Serialize(mission);
+            var json = JsonConvert.SerializeObject(mission, Formatting.None, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
 
             return json;
         }
@@ -171,12 +175,16 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
                 #endregion
 
                 #region Whens
-                if (text.Trim().Equals(Constants.Component.When.Title) ||
-                    text.Trim().Equals(Constants.Component.HideWhen.Title))
+                if (text.Contains(Constants.Component.When.Title))
                 {
-                    //if it has a when taht means its a component
-                    HandleWhen((Component)foundryObject, importLines, ref currentIndex);
-                    continue;
+                    //if it has a when then it might be a trigger, trim and then split by space
+                    //if it has 1 or 2 strings in the array then its a when, otherwise it was just some text that said When
+                    split = text.Trim().Split(new char[] { ' ' });
+                    if (split.Length <= 2)
+                    {
+                        HandleWhen(foundryObject, importLines, ref currentIndex);
+                        continue;
+                    }
                 }
                 #endregion
 
@@ -235,14 +243,26 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
             Trigger whenObject = null;
             var split = importLines[currentIndex].Split(new char[] { ' ' });
 
-            var whenType = split[0];
+            var whenType = split[0].Trim();
             var triggerType = Constants.Trigger.ObjectiveComplete.Title; //default is objective complete
             if (split.Length > 1)
             {
                 triggerType = split[1];
             }
-            
-            whenObject = (Trigger)GetFoundryObjectByIndex(importLines, ref currentIndex, triggerType);
+
+            //these triggers have no stats 
+            if (triggerType.Equals(Constants.Trigger.MapStart) || 
+                triggerType.Equals(Constants.Trigger.Manual) ||
+                triggerType.Equals(Constants.Trigger.Component.CurrentComponentComplete) ||
+                triggerType.Equals(Constants.Trigger.ObjectiveStart) ||
+                triggerType.Equals(Constants.Trigger.MissionStart))
+            {
+                whenObject = new Trigger(triggerType);
+            }
+            else
+            {
+                whenObject = (Trigger)GetFoundryObjectByIndex(importLines, ref currentIndex, triggerType);
+            }
             if (foundryObject.Title.Equals(Constants.Component.Title))
             {
                 var component = (Component)foundryObject;
@@ -259,7 +279,7 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
             else //if (foundryObject.Title.Equals(Constants.Dialog.Action.Title))
             {
                 var action = (DialogAction)foundryObject;
-                if (whenType.Equals(Constants.Trigger.When))
+                if (whenType.Equals(Constants.Component.ShowWhen.Title))
                 {
                     action.ShowWhen = whenObject;
                 }
@@ -270,11 +290,9 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
             }
         }
 
-        //private static void HandleAction(FoundryObject foundryObject, List<string> importLines, ref int currentIndex)
-
-        //for now if its external var then try to find the end and skip to it
         private static void HandleExternVar(FoundryObject foundryObject, List<string> importLines, ref int currentIndex)
         {
+            var externVar = new ExternalVariable();
             var text = importLines[currentIndex];
             var endText = text.Replace(Constants.Component.ExternalVar.Title, Constants.Component.ExternalVar.End);
             //go until it finds the end
@@ -286,7 +304,61 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
                     currentIndex++;
                     return;
                 }
+
+                //it's either going to be ExternVar Type or Specific Value.  if it isn't then oops I didn't handle it and it will be ignored
+                if (currentText.Contains(Constants.Component.ExternalVar.Title))
+                {
+                    var name = currentText.Trim().Replace(Constants.Component.ExternalVar.Title, "");
+                    externVar.Name = name;
+                }
+                else if (currentText.Contains(Constants.Component.ExternalVar.Type))
+                {
+                    var type = currentText.Trim().Replace(Constants.Component.ExternalVar.Type, "");
+                    externVar.Type = type;
+                }
+                else if (currentText.Contains(Constants.Component.ExternalVar.SpecificValue.Title))
+                {
+                    HandleSpecificValue(externVar, importLines, ref currentIndex);
+                }
             }
+
+            foundryObject.ExternalVariables.Add(externVar.Name, externVar);
+        }
+
+        private static void HandleSpecificValue(ExternalVariable externVar, List<string> importLines, ref int currentIndex)
+        {
+            var specificValue = new SpecificValue();
+            var text = importLines[currentIndex];
+            var endText = text.Replace(Constants.Component.ExternalVar.SpecificValue.Title, Constants.Component.ExternalVar.SpecificValue.End);
+            //go until it finds the end
+            for (; currentIndex < importLines.Count - 1; currentIndex++)
+            {
+                var currentText = importLines[currentIndex];
+                if (currentText.Equals(endText))
+                {
+                    currentIndex++;
+                    return;
+                }
+
+                //it's either going to be  Type SpecificValue (ignored) StringVal or FloatVal
+                if (currentText.Contains(Constants.Component.ExternalVar.SpecificValue.Type))
+                {
+                    var type = currentText.Trim().Replace(Constants.Component.ExternalVar.SpecificValue.Title, "");
+                    specificValue.Type = type;
+                }
+                else if (currentText.Contains(Constants.Component.ExternalVar.SpecificValue.FloatVal))
+                {
+                    var floatVal = currentText.Trim().Replace(Constants.Component.ExternalVar.SpecificValue.FloatVal, "");
+                    specificValue.FloatVal = floatVal;
+                }
+                else if (currentText.Contains(Constants.Component.ExternalVar.SpecificValue.StringVal))
+                {
+                    var stringVal = currentText.Trim().Replace(Constants.Component.ExternalVar.SpecificValue.StringVal, "");
+                    specificValue.StringVal = stringVal;
+                }
+            }
+
+            externVar.SpecificValue = specificValue;
         }
     }
 }

@@ -19,7 +19,15 @@ namespace StarbaseUGC.Foundry.Engine.Models
 
     public class DialogAction : FoundryObject
     {
-        public string ActionName { get; internal set; }
+        public DialogAction(string name)
+        {
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                ActionName = name;
+            }
+        }
+
+        public string ActionName { get; internal set; } = "Continue";
 
         public Trigger ShowWhen { get; internal set; }
         public Trigger HideWhen { get; internal set; }

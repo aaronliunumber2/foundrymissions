@@ -221,6 +221,17 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
             {
                 public const string Title = "ExternalVar";
                 public const string End = "End";
+                public const string Type = "Type";
+
+                public class SpecificValue
+                {
+                    public const string Title = "SpecificValue";
+                    public const string End = "End";
+
+                    public const string Type = "Type";
+                    public const string FloatVal = "FloatVal";
+                    public const string StringVal = "StringVal";
+                }
             }
         }
 
@@ -279,11 +290,15 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
 
             public const string MapStart = "MAP_START";
             public const string Manual = "MANUAL";
-           
+            public const string ObjectiveStart = "OBJECTIVE_START";
+            public const string MissionStart = "MISSION_START";
+
+
             public class Component
             {
                 public const string ComponentReachedTitle = "COMPONENT_REACHED";
                 public const string ComponentCompleteTitle = "COMPONENT_COMPLETE";
+                public const string CurrentComponentComplete = "CURRENT_COMPONENT_COMPLETE";
                 public const string ComponentID = "ComponentID";
             }
 
