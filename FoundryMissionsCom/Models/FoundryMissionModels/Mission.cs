@@ -67,6 +67,9 @@ namespace FoundryMissionsCom.Models.FoundryMissionModels
         [ScaffoldColumn(false)]
         public string MissionLink { get; set; }
 
+        [ScaffoldColumn(false)]
+        public string MissionExportText { get; set; }
+
         public virtual List<MissionImage> Images { get; set; }
         public virtual List<MissionTagType> Tags { get; set; }
         public virtual List<YoutubeVideo> Videos { get; set; }

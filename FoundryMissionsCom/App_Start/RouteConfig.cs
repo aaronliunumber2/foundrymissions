@@ -51,6 +51,12 @@ namespace FoundryMissionsCom
             );
 
             routes.MapRoute(
+                "UploadExport",
+                "missions/uploadexport",
+                new { controller = "Missions", action = "UploadExport" }
+            );
+
+            routes.MapRoute(
                 "AuthorPage",
                 "missions/author",
                 new { controller = "Missions", action = "author", author= "{author}" }

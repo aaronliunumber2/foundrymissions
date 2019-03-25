@@ -43,12 +43,13 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*<li>@Html.ActionLink("Random", "random", "missions")</li>*@
-                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Submit <span class="caret"></span></a>
+                    <li>@Html.ActionLink("Submit Mission", "submit", "missions")</li>
+                    @*<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Submit <span class="caret"></span></a>
                         <ul class="dropdown-menu inverse-dropdown">
                             <li>@Html.ActionLink("Mission", "submit", "missions")</li>
-                            @*<li>@Html.ActionLink("Collection", "submit", "collections")</li>*@
+                            <li>@Html.ActionLink("Collection", "submit", "collections")</li>
                         </ul>
-                    </li>
+                    </li>*@
                     <li>@Html.ActionLink("Advanced Search", "advanced-search", "missions")</li>
                     @*<li>@Html.ActionLink("Collections", "index", "collections")</li>*@
                     <li><a href="/contact-us/">Contact Us</a></li>

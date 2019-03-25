@@ -15,6 +15,7 @@ using FoundryMissionsCom.Attributes;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Linq.Expressions;
+using System.IO;
 
 namespace FoundryMissionsCom.Controllers
 {
@@ -234,6 +235,66 @@ namespace FoundryMissionsCom.Controllers
             }
 
             return View(missionViewModel);
+        }
+
+        public ActionResult UploadExport(HttpPostedFileBase exportFile)
+        {
+            if (exportFile == null)
+            {
+                return RedirectToAction("submit");
+            }
+            //first read the file
+            var b = new BinaryReader(exportFile.InputStream);
+            var binData = b.ReadBytes(exportFile.ContentLength);
+            var text = System.Text.Encoding.UTF8.GetString(binData);
+            var missionlink = "";
+
+            //Get the mission object 
+            var mission = MissionExportHelper.ParseExportToMission(db, text);
+
+            //now that we have the mission we need to first check if it exists or not.  
+            var samemissions = db.Missions.Where(m => m.Name.Equals(mission.Name)).ToList();
+            if (samemissions.Count > 0)
+            {
+                foreach (var samemission in samemissions)
+                {
+                    //We check with name check.then author check
+                    //if the author is null we cannot add it as we can't make sure it is the same
+                    if (samemission.Author == null)
+                    {
+                        ViewBag.errorMessage = "Another mission with the same name and ambiguous author already exists.  Please add your mission manually.  If you believe that mission belongs to you please contact us at foundrymissions@gmail.com so we can link it to your account.";
+                        return View("Error");
+                    }
+
+                    //now check author
+                    if (mission.AuthorUserId.Equals(samemission.Author.UserName))
+                    {
+                        //if it is the same this is the exact same mission so we are going to update it's export file
+                        samemission.MissionExportText = text;
+                        missionlink = samemission.MissionLink;
+                        db.SaveChanges();
+                        break;
+                    }
+                }
+            }
+
+            //if mission link is still empty means we haven't found the same mission so lets add it
+            if (string.IsNullOrWhiteSpace(missionlink))
+            {
+                mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
+                mission.DateLastUpdated = DateTime.Now;
+                mission.DateAdded = DateTime.Now;
+                mission.CrypticId = MissionExportHelper.GenerateRandomID();
+                mission.Length = MissionLength.FifteenToThirtyMinutes;
+                mission.Published = false;
+                mission.Spotlit = false;
+                mission.Status = MissionStatus.Unpublished;
+                db.Missions.Add(mission);
+                db.SaveChanges();
+            }
+
+            //if it doesn't exist we add the mission and go to edit  
+            return RedirectToAction("edit", new { link = missionlink });
         }
 
         public ActionResult Edit(string link)

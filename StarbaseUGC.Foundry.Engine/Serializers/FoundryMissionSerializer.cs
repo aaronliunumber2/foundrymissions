@@ -30,7 +30,7 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
             return json;
         }
 
-        private static FoundryMission ParseMissionText(string txt)
+        public static FoundryMission ParseMissionText(string txt)
         {
             var importLines = new List<string>(txt.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
 

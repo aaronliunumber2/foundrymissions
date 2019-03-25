@@ -179,6 +179,15 @@ form.mission-data textarea
     max-width: 100%;
 }
 
+.body-content .content {
+    display :inline;
+
+}
+
+input.upload-export{
+    padding-bottom: 1em;
+}
+
 input.crypticid{
     text-transform: uppercase;
 }
@@ -187,6 +196,10 @@ form.mission-data {
     /*background-color: #F0F0F0;*/
     padding: 1em;
     max-width: 100%;
+}
+
+.mission-data {
+   padding: 1em;
 }
 
 #submit-mission-image-list input{
