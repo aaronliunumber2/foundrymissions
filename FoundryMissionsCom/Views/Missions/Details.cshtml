@@ -65,12 +65,20 @@
                         <div>
                             @Model.Length.DisplayName()
                         </div>
-                        @if (editable)
+                        @if(editable)
                         {
                             <div>
                                 @Html.ActionLink("Edit", "edit", new { link = Model.MissionLink }, new { @class = "btn btn-default details-edit-mission" })
+
+                                @if (@Model.HasExport)
+                                {
+                                    @Html.ActionLink("Download Foundry Export", "export", new { link = Model.MissionLink }, new { @class = "btn btn-default details-edit-mission" })
+
+                                    @Html.ActionLink("Download Export as Json", "json", new { link = Model.MissionLink }, new { @class = "btn btn-default details-edit-mission" })
+                                }
                             </div>
                         }
+
                     </div>
                 </div>
                 <div class="col-sm-2">

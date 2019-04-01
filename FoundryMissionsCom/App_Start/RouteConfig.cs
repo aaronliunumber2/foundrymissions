@@ -27,6 +27,18 @@ namespace FoundryMissionsCom
             );
 
             routes.MapRoute(
+                "Export",
+                "missions/export",
+                new { controller = "Missions", action = "Export" }
+            );
+
+            routes.MapRoute(
+                "Json",
+                "missions/json",
+                new { controller = "Missions", action = "json" }
+            );
+
+            routes.MapRoute(
                 "SubmitMission",
                 "missions/submit",
                 new { controller = "Missions", action = "Submit" }

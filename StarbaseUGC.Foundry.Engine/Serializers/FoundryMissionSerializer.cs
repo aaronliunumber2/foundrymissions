@@ -22,7 +22,7 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
 
         public static string ExportMissionToJson(FoundryMission mission)
         {
-            var json = JsonConvert.SerializeObject(mission, Formatting.None, new JsonSerializerSettings
+            var json = JsonConvert.SerializeObject(mission, Formatting.Indented, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             });

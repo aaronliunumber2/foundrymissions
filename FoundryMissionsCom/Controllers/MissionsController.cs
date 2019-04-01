@@ -565,6 +565,65 @@ namespace FoundryMissionsCom.Controllers
             return View("edit", missionViewModel);
         }
 
+        public ActionResult Export(string link)
+        {
+            var mission = db.Missions.Where(m => m.MissionLink.Equals(link)).FirstOrDefault();
+            if (!DownloadCheck(mission))
+            {
+                return RedirectToAction("Home");
+            }
+
+            var fileName = $"{link}.txt";
+            var bytes = System.Text.Encoding.UTF8.GetBytes(mission.MissionExportText);
+            var stream = new MemoryStream(bytes);
+
+            return File(stream, "text/plan", fileName);
+        }
+
+        public ActionResult Json(string link)
+        {
+            var mission = db.Missions.Where(m => m.MissionLink.Equals(link)).FirstOrDefault();
+            if (!DownloadCheck(mission))
+            {
+                return RedirectToAction("Home");
+            }
+
+            var fileName = $"{link}.txt";
+            var fMission = StarbaseUGC.Foundry.Engine.Serializers.FoundryMissionSerializer.ParseMissionText(mission.MissionExportText);
+            var text = StarbaseUGC.Foundry.Engine.Serializers.FoundryMissionSerializer.ExportMissionToJson(fMission);
+            var bytes = System.Text.Encoding.UTF8.GetBytes(text);
+            var stream = new MemoryStream(bytes);
+
+            return File(stream, "text/plan", fileName);
+        }
+
+        /// <summary>
+        /// Check if this user can download this mission info
+        /// </summary>
+        /// <param name="mission"></param>
+        /// <returns></returns>
+        private bool DownloadCheck(Mission mission)
+        {
+            //first does it exist
+            if (mission == null)
+            {
+                return false;
+            }
+            
+            //next if it has an export file
+            if (mission.MissionExportText == null || string.IsNullOrWhiteSpace(mission.MissionExportText))
+            {
+                return false;
+            }
+
+            //next if the user has access to the file (admin or same user)
+            if (User.IsInRole(ConstantsHelper.AdminRole) || User.Identity.Name.Equals(mission.Author.UserName))
+            {
+                return true;
+            }
+            return false;
+        }
+
         public ActionResult Random()
         {
             var missionLink = db.Missions.OrderBy(m => Guid.NewGuid()).Where(m=> m.Status == MissionStatus.Published).Select(m => m.MissionLink).FirstOrDefault();
