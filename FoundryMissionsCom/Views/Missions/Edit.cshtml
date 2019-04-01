@@ -14,188 +14,202 @@
 
     }
 
+<div class="content">
+
+    <h2 class="tab-header">Editing @Model.Name</h2>
+
+    <ul id="tabs" class="nav nav-tabs manage-account-tabs">
+        <li class="active"><a data-toggle="tab" href="#manual">Input Mission</a></li>
+        <li><a data-toggle="tab" href="#upload">Upload Export File</a></li>
+    </ul>
+
+    <div class="tab-content content">
+        <div id="manual" class="tab-pane active control-panel-pane">
+            @using (Html.BeginForm("edit", "missions", FormMethod.Post, new { @class = "mission-data", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
 
 
+                <div class="form-vertical">
 
-@using (Html.BeginForm("edit", "missions", FormMethod.Post, new { @class = "content mission-data", enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
 
-    <h2>Editing @Model.Name</h2>
-    <hr />
-    <div class="form-vertical">
-
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">                    
-                    @Html.LabelFor(model => model.CrypticId, htmlAttributes: new { @class = "control-label" })
-                    <div class="input-group">
-                        <span class="input-group-addon">ST-</span>
-                        @Html.EditorFor(model => model.CrypticId, new { htmlAttributes = new { @class = "form-control crypticid", @onkeyup = "InputToUpper(this);" } })
-                    </div>
-                    @Html.ValidationMessageFor(model => model.CrypticId, "", new { @class = "text-danger" })
-                    </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Faction, htmlAttributes: new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(model => model.Faction, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Faction, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.MinimumLevel, htmlAttributes: new { @class = "control-label" })
-
-                    @*Html.EditorFor(model => model.MinimumLevel, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.DropDownListFor(model => model.MinimumLevel, (SelectList)ViewBag.MinimumLevelSelectList, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.MinimumLevel, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Length, htmlAttributes: new { @class = "control-label" })
-
-                    @Html.EnumDropDownListFor(model => model.Length, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Length, "", new { @class = "text-danger" })
-                </div>
-
-@*
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Published, htmlAttributes: new { @class = "control-label" })
-
-                    @Html.DropDownListFor(model => model.Published, (SelectList)ViewBag.PublishedSelectList, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Spotlit, htmlAttributes: new { @class = "control-label" })
-
-                    @Html.DropDownListFor(model => model.Spotlit, (SelectList)ViewBag.PublishedSelectList, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Spotlit, "", new { @class = "text-danger" })
-                </div>
-*@
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label" }) (Files must be 2 Mb or smaller)
-                <div id="submit-mission-image-list">
-                    @if (Model.OldImages.Count > 0)
-                    {
-
-                        foreach (string image in Model.OldImages)
-                        {
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input type="submit" class="delete-old-image" value="X" /> @image
-                                    <input type="hidden" name="OldImages[@OldImageCounter]" value="@image" class="old-image"/>
-                                    @{OldImageCounter++;}
-                                </div>
-                            </div>
-                        }
-                    }
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <input type="submit" id="add-new-image" value="Add another image" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                @Html.LabelFor(model => model.Videos, htmlAttributes: new { @class = "control-label" }) (Paste youtube link here ie www.youtube.com/watch?v=RIn3VhFcC3E6)
-                <div id="submit-mission-video-list">
-                    @foreach (string video in Model.OldVideos)
-                    {
                     <div class="row">
-                        <div class="col-md-12">
-                            <input type="submit" class="delete-old-video" value="X" /> <a href="https://www.youtube.com/watch?v=@video">https://www.youtube.com/watch?v=@video</a>
-                            <input type="hidden" name="OldVideos[@OldVideoCounter]" value="@video" class="old-image" />
-                            @{OldVideoCounter++;}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CrypticId, htmlAttributes: new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">ST-</span>
+                                    @Html.EditorFor(model => model.CrypticId, new { htmlAttributes = new { @class = "form-control crypticid", @onkeyup = "InputToUpper(this);" } })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.CrypticId, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Faction, htmlAttributes: new { @class = "control-label" })
+                                @Html.EnumDropDownListFor(model => model.Faction, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Faction, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MinimumLevel, htmlAttributes: new { @class = "control-label" })
+
+                                @*Html.EditorFor(model => model.MinimumLevel, new { htmlAttributes = new { @class = "form-control" } })*@
+                                @Html.DropDownListFor(model => model.MinimumLevel, (SelectList)ViewBag.MinimumLevelSelectList, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.MinimumLevel, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Length, htmlAttributes: new { @class = "control-label" })
+
+                                @Html.EnumDropDownListFor(model => model.Length, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Length, "", new { @class = "text-danger" })
+                            </div>
+
+                            @*
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.Published, htmlAttributes: new { @class = "control-label" })
+
+                                    @Html.DropDownListFor(model => model.Published, (SelectList)ViewBag.PublishedSelectList, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.Spotlit, htmlAttributes: new { @class = "control-label" })
+
+                                    @Html.DropDownListFor(model => model.Spotlit, (SelectList)ViewBag.PublishedSelectList, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Spotlit, "", new { @class = "text-danger" })
+                                </div>
+                            *@
                         </div>
                     </div>
-                    }
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <input type="submit" id="add-new-video" value="Add another video" />
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label" }) (Files must be 2 Mb or smaller)
+                            <div id="submit-mission-image-list">
+                                @if (Model.OldImages.Count > 0)
+                                {
+
+                                    foreach (string image in Model.OldImages)
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <input type="submit" class="delete-old-image" value="X" /> @image
+                                                <input type="hidden" name="OldImages[@OldImageCounter]" value="@image" class="old-image" />
+                                                @{OldImageCounter++;}
+                                            </div>
+                                        </div>
+                                                        }
+                                                    }
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="submit" id="add-new-image" value="Add another image" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.Videos, htmlAttributes: new { @class = "control-label" }) (Paste youtube link here ie www.youtube.com/watch?v=RIn3VhFcC3E6)
+                            <div id="submit-mission-video-list">
+                                @foreach (string video in Model.OldVideos)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="submit" class="delete-old-video" value="X" /> <a href="https://www.youtube.com/watch?v=@video">https://www.youtube.com/watch?v=@video</a>
+                                            <input type="hidden" name="OldVideos[@OldVideoCounter]" value="@video" class="old-image" />
+                                            @{OldVideoCounter++;}
+                                        </div>
+                                    </div>
+                                                }
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="submit" id="add-new-video" value="Add another video" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.Description, htmlAttributes: new { @class = "form-control", rows = "5", id = "missiondescription" })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Gameplay Tags</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Selected:
+                            <div class="list-group gameplay-tags" id="selected-tags">
+                                @foreach (var tag in Model.Tags)
+                                {
+                                    <a href="#" class="list-group-item gameplay-tag" value="@tag">@tag</a>
+                                    <input type="hidden" name="Tags[@counter]" value="@tag" class="tag-input" />
+                                    counter++;
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            Available:
+                            <div class="list-group gameplay-tags" id="available-tags">
+                                @foreach (var tag in ViewBag.AvailableTags)
+                                {
+                                    <a href="#" class="list-group-item gameplay-tag" value="@tag">@tag</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="container row">
+                        <div class="form-group">
+                            @*Set the buttons*@
+                            @{
+                                if (Model.Status == FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.Unpublished)
+                                {
+                                    <input type="submit" value="Submit" name="action:publishmission" class="btn btn-default" />
+                                    <input type="submit" value="Save" name="action:savemission" class="btn btn-default" />
+                                }
+                                else if (Model.Status != FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.Removed)
+                                {
+                                    @* this is published/inreview *@
+                                    <input type="submit" value="Submit" name="action:publishmission" class="btn btn-default" />
+                                    <input type="submit" value="Withdraw" name="action:withdrawmission" class="btn btn-default" />
+                                    if (!Model.AutoApprove && !User.IsInRole(FoundryMissionsCom.Helpers.ConstantsHelper.AdminRole))
+                                    {
+                                        <text>Resubmitting this mission will require a review by an Admin before being published.</text>
+                                    }
+                                }
+                                else
+                                {
+                                    @* this is removed - only admins can see this.  Use the withdraw action to return it to unpublish *@
+                                    <input type="submit" value="Recover Mission" name="action:withdrawmission" class="btn btn-default" />
+                                }
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
-                @Html.TextAreaFor(model => model.Description, htmlAttributes: new { @class = "form-control", rows = "5", id = "missiondescription" })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <h4>Gameplay Tags</h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                Selected:
-                <div class="list-group gameplay-tags" id="selected-tags">
-                    @foreach (var tag in Model.Tags)
-                    {
-                        <a href="#" class="list-group-item gameplay-tag" value="@tag">@tag</a>
-                        <input type="hidden" name="Tags[@counter]" value="@tag" class="tag-input"/> 
-                        counter++;
-                    }
-                </div>
-            </div>
-            <div class="col-md-6">
-                Available:
-                <div class="list-group gameplay-tags" id="available-tags">
-                    @foreach (var tag in ViewBag.AvailableTags)
-                    {
-                        <a href="#" class="list-group-item gameplay-tag" value="@tag">@tag</a>
-                    }
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="container row">
-            <div class="form-group">
-                @*Set the buttons*@
-                @{
-                    if (Model.Status == FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.Unpublished)
-                    {
-                        <input type="submit" value="Submit" name="action:publishmission" class="btn btn-default" />
-                        <input type="submit" value="Save" name="action:savemission"  class="btn btn-default"/>
-                    }
-                    else if (Model.Status != FoundryMissionsCom.Models.FoundryMissionModels.Enums.MissionStatus.Removed)
-                    {
-                        @* this is published/inreview *@
-                        <input type="submit" value="Submit" name="action:publishmission"  class="btn btn-default"/>
-                        <input type="submit" value="Withdraw" name="action:withdrawmission" class="btn btn-default"/>
-                        if (!Model.AutoApprove && !User.IsInRole(FoundryMissionsCom.Helpers.ConstantsHelper.AdminRole))
-                        {
-                             <text>Resubmitting this mission will require a review by an Admin before being published.</text>
-                        }
-                    }
-                    else
-                    {
-                        @* this is removed - only admins can see this.  Use the withdraw action to return it to unpublish *@
-                        <input type="submit" value="Recover Mission" name="action:withdrawmission" class="btn btn-default"/>
-                    }
-                }
-            </div>
+        <div id="upload" class="tab-pane control-panel-pane">
+            @Html.Partial("_UploadExport")
         </div>
     </div>
-}
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

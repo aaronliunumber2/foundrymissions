@@ -1,0 +1,8 @@
+﻿
+@using (Html.BeginForm("UploadExport", "missions", FormMethod.Post, new { @class = "mission-data", enctype = "multipart/form-data" }))
+            {
+    <div>
+        <input name="exportFile" type="file" accept=".txt" class="upload-export" />
+        <input name="submit" type="submit" value="Upload file" class="btn btn-default" />
+    </div>
+}

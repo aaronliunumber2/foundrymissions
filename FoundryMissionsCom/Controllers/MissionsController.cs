@@ -80,7 +80,8 @@ namespace FoundryMissionsCom.Controllers
                 Videos = mission.Videos.OrderBy(v => v.Order).Select(v => v.YoutubeVideoId).ToList(),
                 Status = mission.Status,
                 MissionLink = mission.MissionLink,
-                Images = mission.Images.OrderBy(i => i.Order).Select(i => i.Filename).ToList()
+                Images = mission.Images.OrderBy(i => i.Order).Select(i => i.Filename).ToList(),
+                HasExport = mission.MissionExportText != null,
             };
 
             //It's okay to show the mission now
@@ -262,7 +263,7 @@ namespace FoundryMissionsCom.Controllers
                     //if the author is null we cannot add it as we can't make sure it is the same
                     if (samemission.Author == null)
                     {
-                        ViewBag.errorMessage = "Another mission with the same name and ambiguous author already exists.  Please add your mission manually.  If you believe that mission belongs to you please contact us at foundrymissions@gmail.com so we can link it to your account.";
+                        ViewBag.errorMessage = "Another mission with the same name and ambiguous author already exists.  Please add your mission manually.  If you believe that mission belongs to you please contact us at mail@foundrymissions.com so we can link it to your account.";
                         return View("Error");
                     }
 

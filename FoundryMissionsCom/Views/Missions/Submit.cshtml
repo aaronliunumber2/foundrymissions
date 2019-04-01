@@ -12,7 +12,7 @@
 
 <div class="content">
 
-    <h2>Submit a Foundry Mission</h2>
+    <h2 class="tab-header">Submit a Foundry Mission</h2>
 
     <ul id="tabs" class="nav nav-tabs manage-account-tabs">
         <li class="active"><a data-toggle="tab" href="#manual">Input Mission</a></li>
@@ -151,13 +151,7 @@
         </div>
 
         <div id="upload" class="tab-pane control-panel-pane">
-            @using (Html.BeginForm("UploadExport", "missions", FormMethod.Post, new { @class = "mission-data", enctype = "multipart/form-data" }))
-            {
-                <div>
-                    <input name="exportFile" type="file" accept=".txt" class="upload-export" />
-                    <input name="submit" type="submit" value="Upload file" class="btn btn-default" />
-                </div>
-            }
+            @Html.Partial("_UploadExport")
         </div>
     </div>
 </div>

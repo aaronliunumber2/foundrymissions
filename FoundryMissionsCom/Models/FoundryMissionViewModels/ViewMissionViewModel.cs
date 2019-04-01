@@ -40,5 +40,7 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
         public List<string> Images { get; set; }
 
         public string MissionLink { get; set; }
+
+        public bool HasExport { get; set; }
     }
 }
