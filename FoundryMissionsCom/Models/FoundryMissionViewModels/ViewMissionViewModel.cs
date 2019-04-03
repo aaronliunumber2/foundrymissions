@@ -13,6 +13,8 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
 
         public ApplicationUser Author { get; set; }
 
+        public string  AuthorCrypticTag { get; set;}
+
         public string CrypticId { get; set; }
 
         public string Name { get; set; }

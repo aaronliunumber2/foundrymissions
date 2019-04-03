@@ -67,6 +67,7 @@ namespace FoundryMissionsCom.Controllers
             {
                 Id = mission.Id,
                 Author = mission.Author,
+                AuthorCrypticTag = mission.AuthorUserId,
                 CrypticId = mission.CrypticId.ToUpper(),
                 Name = mission.Name,
                 Description = mission.Description,
@@ -275,10 +276,11 @@ namespace FoundryMissionsCom.Controllers
                     }
 
                     //now check author
-                    if (mission.AuthorUserId.Equals(samemission.Author.UserName))
+                    if (mission.AuthorUserId.Equals(samemission.Author.CrypticTag))
                     {
                         //if it is the same this is the exact same mission so we are going to update it's export file
                         samemission.MissionExportText = text;
+                        samemission.DateLastUpdated = DateTime.Now;
                         missionlink = samemission.MissionLink;
                         db.SaveChanges();
                         break;
@@ -302,7 +304,7 @@ namespace FoundryMissionsCom.Controllers
             }
 
             //if it doesn't exist we add the mission and go to edit  
-            return RedirectToAction("edit", new { link = missionlink });
+            return RedirectToAction("details", new { link = missionlink });
         }
 
         public ActionResult Edit(string link)

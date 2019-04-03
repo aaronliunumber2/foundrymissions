@@ -11,6 +11,8 @@
         description = description.Substring(0, 100) + "...";
     }
     var editable = User.IsInRole(ConstantsHelper.AdminRole) || User.Identity.Name.Equals(Model.Author.UserName);
+
+    var crypticTag = Model.Author != null ? Model.Author.CrypticTag : Model.AuthorCrypticTag;
 }
 
 @section opengraph{
@@ -57,7 +59,7 @@
                     </header>
                     <div class="missioninfo">
                         <div>
-                            @Html.ActionLink(Model.Author.CrypticTag, "searchresults", "missions", new { Author = Model.Author.CrypticTag }, new { @class = "mission-author" })
+                            @Html.ActionLink(crypticTag, "searchresults", "missions", new { Author = crypticTag }, new { @class = "mission-author" })
                         </div>
                         <div>
                             ST-@Model.CrypticId
