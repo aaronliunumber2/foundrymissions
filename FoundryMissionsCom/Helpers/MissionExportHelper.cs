@@ -27,7 +27,7 @@ namespace FoundryMissionsCom.Helpers
             mission.Name = GetMissionName(exportmission.Project.PublicName);
 
             //try and match the userid to an actual user, if it exists use that
-            var user = context.Users.Where(u => u.UserName.Equals(exportmission.Project.AccountName)).FirstOrDefault();
+            var user = context.Users.Where(u => u.CrypticTag.Equals(exportmission.Project.AccountName)).FirstOrDefault();
 
             if (user != null)
             {
