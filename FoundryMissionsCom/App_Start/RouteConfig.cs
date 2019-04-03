@@ -18,6 +18,11 @@ namespace FoundryMissionsCom
                 "contact-us",
                 new { controller = "home", action = "contact-us" });
 
+            routes.MapRoute(
+                "Test Email",
+                "test-email",
+                new { controller = "home", action = "test-email" });
+
             #region Missions
 
             routes.MapRoute(

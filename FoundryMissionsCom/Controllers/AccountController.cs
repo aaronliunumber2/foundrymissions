@@ -209,8 +209,15 @@ namespace FoundryMissionsCom.Controllers
                 {
                     //commented out so they have to confirm their email
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    try
+                    {
+                        EmailHelper.ReportNewUser(user);
+                    }
+                    catch
+                    {
 
-                    EmailHelper.ReportNewUser(user);
+                    }
+                    
 
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

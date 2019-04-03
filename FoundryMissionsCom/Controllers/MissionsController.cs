@@ -163,7 +163,14 @@ namespace FoundryMissionsCom.Controllers
                     {
                         mission.Status = Models.FoundryMissionModels.Enums.MissionStatus.InReview;
                         //mission.Status = Models.FoundryMissionModels.Enums.MissionStatus.Published;
-                        EmailHelper.ReportMissionNeedsApproval(mission);
+                        try
+                        {
+                            EmailHelper.ReportMissionNeedsApproval(mission);
+                        }
+                        catch
+                        {
+
+                        }
                     }
                 }
                 else //if (submitButton.Equals("Save"))
@@ -383,7 +390,14 @@ namespace FoundryMissionsCom.Controllers
             else
             {
                 missionViewModel.Status = MissionStatus.InReview;
-                EmailHelper.ReportMissionNeedsApproval(mission);
+                try
+                {
+                    EmailHelper.ReportMissionNeedsApproval(mission);
+                }
+                catch
+                {
+
+                }
             }
 
             return Edit(missionViewModel);

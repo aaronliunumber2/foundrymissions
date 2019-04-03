@@ -62,5 +62,13 @@ namespace FoundryMissionsCom.Controllers
         {
             return View();
         }
+        
+        [ActionName("test-email")]
+        public ActionResult TestEmail()
+        {
+            EmailHelper.SendTestEmail();
+            ViewBag.errorMessage = "Email sent successfully.";
+            return View("Error");
+        }
     }
 }

@@ -30,6 +30,11 @@ namespace FoundryMissionsCom.Helpers
         {
         }
 
+        public static void SendTestEmail()
+        {
+            SendEmail("aaron.liu.bc@gmail.com", "test", "this is a test email");
+        }
+
         private static List<ApplicationUser> GetAdminEmails()
         {
             var ctx = new ApplicationDbContext();
@@ -41,21 +46,33 @@ namespace FoundryMissionsCom.Helpers
 
         private static void SendEmail(List<ApplicationUser> recipients, string subject, string body)
         {
-
-
             foreach (var recipient in recipients)
             {
                 var fullBody = "<p>Hello " + recipient.UserName + ",</p>" + body;
                 var message = new MailMessage();
                 message.To.Add(recipient.Email);
                 message.Subject = subject;
-                message.Body = body;
+                message.Body = fullBody;
                 message.IsBodyHtml = true;
 
                 using (var smtp = new SmtpClient())
                 {
                     smtp.Send(message);
                 }
+            }
+        }
+
+        private static void SendEmail(string email, string subject, string body)
+        {
+            var message = new MailMessage();
+            message.To.Add(email);
+            message.Subject = subject;
+            message.Body = body;
+            message.IsBodyHtml = true;
+
+            using (var smtp = new SmtpClient())
+            {
+                smtp.Send(message);
             }
         }
     }
