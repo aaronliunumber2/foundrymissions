@@ -602,7 +602,7 @@ namespace FoundryMissionsCom.Controllers
                 return RedirectToAction("Home");
             }
 
-            var fileName = $"{link}.txt";
+            var fileName = $"{link}-json.txt";
             var fMission = StarbaseUGC.Foundry.Engine.Serializers.FoundryMissionSerializer.ParseMissionText(mission.MissionExportText);
             var text = StarbaseUGC.Foundry.Engine.Serializers.FoundryMissionSerializer.ExportMissionToJson(fMission);
             var bytes = System.Text.Encoding.UTF8.GetBytes(text);
