@@ -46,7 +46,17 @@ namespace StarbaseUGC.Foundry.Engine.Models
 
         public string LifetimeTipsReceived
         {
-            get { return Fields[Constants.Project.LifetimeTipsReceived] as string; }
+            get
+            {
+                if (Fields.ContainsKey(Constants.Project.LifetimeTipsReceived))
+                {
+                    return Fields[Constants.Project.LifetimeTipsReceived] as string;
+                }
+                else
+                {
+                    return "0";
+                }            
+            }
         }
 
         public string AverageRating
