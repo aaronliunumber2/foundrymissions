@@ -29,8 +29,8 @@ namespace StarbaseUGC.Foundry.Engine.Models
 
         public string ActionName { get; internal set; } = "Continue";
 
-        public Trigger ShowWhen { get; internal set; }
-        public Trigger HideWhen { get; internal set; }
+        public List<Trigger> ShowWhen { get; } = new List<Trigger>();
+        public List<Trigger> HideWhen { get; } = new List<Trigger>();
 
         public string NextPromptID { get { return GetFieldValue(Constants.Dialog.Action.NextPromptID); } }
     }

@@ -96,7 +96,6 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
                     continue;
                 }
 
-
                 var foundryObject = GetFoundryObjectByIndex(importLines, ref index);
 
                 objects.Add(foundryObject);
@@ -240,7 +239,7 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
             //they are When and HideWhen
             //they are with parameters (MAP_START, MANUAL) or with parameters (everything else)
 
-            Trigger whenObject = null;
+            List<Trigger> whenObjects = new List<Trigger>();
             var split = importLines[currentIndex].Split(new char[] { ' ' });
 
             var whenType = split[0].Trim();
@@ -257,11 +256,53 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
                 triggerType.Equals(Constants.Trigger.ObjectiveStart) ||
                 triggerType.Equals(Constants.Trigger.MissionStart))
             {
-                whenObject = new Trigger(triggerType);
+                whenObjects.Add(new Trigger(triggerType));
             }
             else
             {
-                whenObject = (Trigger)GetFoundryObjectByIndex(importLines, ref currentIndex, triggerType);
+                var obj = GetFoundryObjectByIndex(importLines, ref currentIndex, triggerType);
+                //check the COMPONENT_ID and OBJECTIVE_ID fields.  need to see if there are multiple components or objectives (not sure if objective is possible)
+                if (obj.Fields.ContainsKey(Constants.Trigger.Component.ComponentID))
+                {
+                    var fieldValue = obj.Fields[Constants.Trigger.Component.ComponentID].ToString();
+                    if (fieldValue.Contains(","))
+                    {
+                        var ids = fieldValue.Split(new char[] { ',' });
+                        foreach (var id in ids)
+                        {
+                            var trig = new ComponentTrigger(triggerType);
+                            trig.Fields[Constants.Trigger.Component.ComponentID] = id;
+                            whenObjects.Add(trig);
+                        }
+                    }
+                    else
+                    {
+                        whenObjects.Add((Trigger)obj);
+                    }
+                }
+                else if (obj.Fields.ContainsKey(Constants.Trigger.ObjectiveComplete.ObjectiveID))
+                {
+                    var fieldValue = obj.Fields[Constants.Trigger.ObjectiveComplete.ObjectiveID].ToString();
+                    if (fieldValue.Contains(","))
+                    {
+                        var ids = fieldValue.Split(new char[] { ',' });
+                        foreach (var id in ids)
+                        {
+                            var trig = new ComponentTrigger(triggerType);
+                            trig.Fields[Constants.Trigger.ObjectiveComplete.ObjectiveID] = id;
+                            whenObjects.Add(trig);
+                        }
+                    }
+                    else
+                    {
+                        whenObjects.Add((Trigger)obj);
+                    }
+                }
+                else
+                {
+                    //if it doesn't have any of them just add the trigger
+                    whenObjects.Add((Trigger)obj);
+                }
             }
             if (foundryObject.Title.Equals(Constants.Component.Title))
             {
@@ -269,11 +310,11 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
                 //got the object now set it in the proper spot
                 if (whenType.Equals(Constants.Trigger.When))
                 {
-                    component.When = whenObject;
+                    component.When.AddRange(whenObjects);
                 }
                 else //if (whenType.Equals(Constants.Trigger.HideWhen))
                 {
-                    component.HideWhen = whenObject;
+                    component.HideWhen.AddRange(whenObjects);
                 }
             }
             else //if (foundryObject.Title.Equals(Constants.Dialog.Action.Title))
@@ -281,11 +322,11 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
                 var action = (DialogAction)foundryObject;
                 if (whenType.Equals(Constants.Component.ShowWhen.Title))
                 {
-                    action.ShowWhen = whenObject;
+                    action.ShowWhen.AddRange(whenObjects);
                 }
                 else //if (whenType.Equals(Constants.Trigger.HideWhen))
                 {
-                    action.HideWhen = whenObject;
+                    action.HideWhen.AddRange(whenObjects);
                 }
             }
         }

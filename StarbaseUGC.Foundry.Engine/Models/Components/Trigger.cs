@@ -20,7 +20,13 @@ namespace StarbaseUGC.Foundry.Engine.Models.Components
 
     public class ComponentTrigger : Trigger
     {
-        public int ComponentId { get { return Convert.ToInt32(GetFieldValue(Constants.Trigger.Component.ComponentID)); } }
+        public int ComponentId
+        {
+            get
+            {
+                return Convert.ToInt32(GetFieldValue(Constants.Trigger.Component.ComponentID));
+            }
+        }
 
         public ComponentTrigger(string trigType) :  base(trigType)
         {

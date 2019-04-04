@@ -16,8 +16,8 @@ namespace StarbaseUGC.Foundry.Engine.Models.Components
         public string VisibleName { get { return GetFieldValue(Constants.Component.VisibleName); } }
         public string RoomDoor { get { return GetFieldValue(Constants.Component.RoomDoor); } }
 
-        public Trigger When { get; internal set; }
-        public Trigger HideWhen { get; internal set; }
+        public List<Trigger> When { get; } = new List<Trigger>();
+        public List<Trigger> HideWhen { get; } = new List<Trigger>();
 
         public Placement Placement { get { return (Placement)GetFoundryObjectByTitle(Constants.Component.Placement.Title); } }
         public InteractTriggerGroup InteractTriggerGroup { get { return (InteractTriggerGroup)GetFoundryObjectByTitle(Constants.Component.InteractTriggerGroup.Title); } }
