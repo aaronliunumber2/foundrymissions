@@ -47,7 +47,7 @@ namespace FoundryMissionsCom.Controllers
             if (mission.Status == Models.FoundryMissionModels.Enums.MissionStatus.InReview ||
                 mission.Status == Models.FoundryMissionModels.Enums.MissionStatus.Unpublished)
             {
-                if (!mission.Author.UserName.Equals(User.Identity.Name) &&
+                if ((mission.Author != null && !mission.Author.UserName.Equals(User.Identity.Name)) &&
                    (!User.IsInRole("Administrator")))
                 {
                     return HttpNotFound();
@@ -291,7 +291,8 @@ namespace FoundryMissionsCom.Controllers
             //if mission link is still empty means we haven't found the same mission so lets add it
             if (string.IsNullOrWhiteSpace(missionlink))
             {
-                mission.MissionLink = MissionHelper.GetMissionLink(db, mission);
+                missionlink = MissionHelper.GetMissionLink(db, mission);
+                mission.MissionLink = missionlink;
                 mission.DateLastUpdated = DateTime.Now;
                 mission.DateAdded = DateTime.Now;
                 mission.CrypticId = MissionExportHelper.GenerateRandomID();
