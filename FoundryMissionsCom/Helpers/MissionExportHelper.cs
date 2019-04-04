@@ -3,6 +3,8 @@ using FoundryMissionsCom.Models.FoundryMissionModels;
 using FoundryMissionsCom.Models.FoundryMissionModels.Enums;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Web;
 
@@ -12,6 +14,9 @@ namespace FoundryMissionsCom.Helpers
     {
         private const string ExportKlingon = "Allegiance_Klingon";
         private const string ExportFederation = "Allegiance_Starfleet";
+
+        private const string ExportFileName = "export.txt";
+        private const string ExportZipName = "export.zip";
 
         public static Mission ParseExportToMission(ApplicationDbContext context, string exportText)
         {
@@ -67,6 +72,44 @@ namespace FoundryMissionsCom.Helpers
                     return Faction.Federation;
 
             }
+        }
+
+        public static bool ExportExists(int missionId)
+        {
+            var path = GetExportFileFolder(missionId);
+
+            return File.Exists(Path.Combine(path, ExportZipName));
+        }
+
+        public static string GetExportFileFolder(int missionId)
+        {
+            return Path.Combine(
+                    "~/Content/missions/exports/",
+                    missionId.ToString());
+        }
+
+        public static void SaveExportFile(string exportData, int missionId)
+        {
+            var path = GetExportFileFolder(missionId);
+            var filePath = Path.Combine(path, ExportFileName);
+            var zipPath = Path.Combine(path, ExportZipName);
+            File.WriteAllText(filePath, exportData); //create the export text file
+            ZipFile.CreateFromDirectory(path, zipPath); //zip the export text file
+            File.Delete(filePath);  //delete the export text file
+        }
+
+        public static string GetExportText(int missionId)
+        {
+            var path = GetExportFileFolder(missionId);
+            var filePath = Path.Combine(path, ExportFileName);
+            var zipPath = Path.Combine(path, ExportZipName);
+            var exportText = string.Empty;
+
+            ZipFile.ExtractToDirectory(zipPath, path);
+            exportText = File.ReadAllText(exportText);
+            File.Delete(filePath);
+
+            return exportText;
         }
     }
 }
