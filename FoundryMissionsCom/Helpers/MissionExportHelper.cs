@@ -7,6 +7,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 
 namespace FoundryMissionsCom.Helpers
 {
@@ -28,7 +29,7 @@ namespace FoundryMissionsCom.Helpers
             mission.Description = exportmission.Project.Description;
             mission.Faction = GetFactionFromExportFaction(exportmission.Project.RestrictionProperties.Faction);
             mission.MinimumLevel = string.IsNullOrWhiteSpace(exportmission.Project.RestrictionProperties.MinLevel) ? 1 : Convert.ToInt32(exportmission.Project.RestrictionProperties.MinLevel);
-            mission.MissionExportText = exportText;
+            //mission.MissionExportText = exportText;
             mission.Name = GetMissionName(exportmission.Project.PublicName);
 
             //try and match the userid to an actual user, if it exists use that
@@ -74,7 +75,7 @@ namespace FoundryMissionsCom.Helpers
             }
         }
 
-        public static bool ExportExists(int missionId)
+        public static bool HasExport(int missionId)
         {
             var path = GetExportFileFolder(missionId);
 
@@ -84,17 +85,30 @@ namespace FoundryMissionsCom.Helpers
         public static string GetExportFileFolder(int missionId)
         {
             return Path.Combine(
-                    "~/Content/missions/exports/",
-                    missionId.ToString());
+                    HostingEnvironment.MapPath("~/Content/missions/"),
+                    missionId.ToString(),
+                    "exports");
         }
 
         public static void SaveExportFile(string exportData, int missionId)
         {
             var path = GetExportFileFolder(missionId);
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
             var filePath = Path.Combine(path, ExportFileName);
-            var zipPath = Path.Combine(path, ExportZipName);
-            File.WriteAllText(filePath, exportData); //create the export text file
-            ZipFile.CreateFromDirectory(path, zipPath); //zip the export text file
+            var firstzipPath = Path.Combine(path, ExportZipName).Replace("exports", "");
+            var finalzipPath = Path.Combine(path, ExportZipName);
+            File.WriteAllText(filePath, exportData); //create the export text file in the exports folder
+            //check if hte file exists, if it does get rid of it
+            if (File.Exists(firstzipPath))
+            {
+                File.Delete(firstzipPath);
+            }
+            ZipFile.CreateFromDirectory(path, firstzipPath); //zip the exports folder
+            //move the zip file to the exports folder
+            File.Move(firstzipPath, finalzipPath);
             File.Delete(filePath);  //delete the export text file
         }
 
@@ -105,8 +119,14 @@ namespace FoundryMissionsCom.Helpers
             var zipPath = Path.Combine(path, ExportZipName);
             var exportText = string.Empty;
 
+            //if the file already exists delete it
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
             ZipFile.ExtractToDirectory(zipPath, path);
-            exportText = File.ReadAllText(exportText);
+            exportText = File.ReadAllText(filePath);
             File.Delete(filePath);
 
             return exportText;

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarbaseUGC.Foundry.Winforms", "StarbaseUGC.Foundry.Winforms\StarbaseUGC.Foundry.Winforms.csproj", "{01369FC8-66AE-4A10-B390-F7451B6011D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarbaseUGC.Foundry.Engine", "H:\Star Trek Online\Website\V1\FoundryMissionsCom\StarbaseUGC.Foundry.Engine\StarbaseUGC.Foundry.Engine.csproj", "{A2A37B7F-1799-404E-8BC9-FC70F34F8C0A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01369FC8-66AE-4A10-B390-F7451B6011D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01369FC8-66AE-4A10-B390-F7451B6011D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01369FC8-66AE-4A10-B390-F7451B6011D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01369FC8-66AE-4A10-B390-F7451B6011D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2A37B7F-1799-404E-8BC9-FC70F34F8C0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2A37B7F-1799-404E-8BC9-FC70F34F8C0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2A37B7F-1799-404E-8BC9-FC70F34F8C0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2A37B7F-1799-404E-8BC9-FC70F34F8C0A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

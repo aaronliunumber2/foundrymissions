@@ -259,6 +259,10 @@
     <Compile Include="Migrations\FoundryMissionsMigrations\201903250302311_UploadExport.Designer.cs">
       <DependentUpon>201903250302311_UploadExport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\FoundryMissionsMigrations\201904050414396_Remove Mission Export Text.cs" />
+    <Compile Include="Migrations\FoundryMissionsMigrations\201904050414396_Remove Mission Export Text.Designer.cs">
+      <DependentUpon>201904050414396_Remove Mission Export Text.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\FoundryMissionsMigrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FoundryMissionModels\Enums\MissionStatus.cs" />
@@ -279,6 +283,7 @@
     <Compile Include="Models\FoundryMissionViewModels\SubmitCollectionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\SubmitMissionViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ViewCollectionViewModel.cs" />
+    <Compile Include="Models\FoundryMissionViewModels\ViewMissionDataViewModel.cs" />
     <Compile Include="Models\FoundryMissionViewModels\ViewMissionViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -446,6 +451,7 @@
     <Content Include="Views\Collections\Index.cshtml" />
     <Content Include="Views\Collections\Details.cshtml" />
     <Content Include="Views\Missions\_UploadExport.cshtml" />
+    <Content Include="Views\Missions\ViewData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StarbaseUGC.Foundry.Engine\StarbaseUGC.Foundry.Engine.csproj">
@@ -488,6 +494,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\FoundryMissionsMigrations\201903250302311_UploadExport.resx">
       <DependentUpon>201903250302311_UploadExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\FoundryMissionsMigrations\201904050414396_Remove Mission Export Text.resx">
+      <DependentUpon>201904050414396_Remove Mission Export Text.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
