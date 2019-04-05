@@ -44,6 +44,13 @@ namespace FoundryMissionsCom
             );
 
             routes.MapRoute(
+                "View",
+                "missions/{link}/View",
+                new { controller = "Missions", action = "ViewData" }
+            );
+
+
+            routes.MapRoute(
                 "SubmitMission",
                 "missions/submit",
                 new { controller = "Missions", action = "Submit" }

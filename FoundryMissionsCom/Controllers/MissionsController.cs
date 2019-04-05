@@ -841,6 +841,25 @@ namespace FoundryMissionsCom.Controllers
             return RedirectToAction("index", "home");
         }
 
+        public ActionResult ViewData(string link)
+        {
+            var mission = db.Missions.Where(m => m.MissionLink.Equals(link)).FirstOrDefault();
+
+            if (mission == null)
+            {
+                return HttpNotFound();
+            }
+
+            var viewModel = new ViewMissionDataViewModel()
+            {
+                Id = mission.Id,
+                Name = mission.Name,
+                MissionExportText = MissionExportHelper.GetExportText(mission.Id),
+            };
+
+            return View(viewModel);
+        }
+
         #region  Auto generated
 
         // GET: Missions/Delete/5
