@@ -82,7 +82,7 @@ namespace FoundryMissionsCom.Controllers
                 Status = mission.Status,
                 MissionLink = mission.MissionLink,
                 Images = mission.Images.OrderBy(i => i.Order).Select(i => i.Filename).ToList(),
-                HasExport = mission.MissionExportText != null,
+                HasExport = MissionExportHelper.HasExport(mission.Id),
             };
 
             //It's okay to show the mission now
@@ -278,12 +278,20 @@ namespace FoundryMissionsCom.Controllers
                     //now check author
                     if (mission.AuthorUserId.Equals(samemission.Author.CrypticTag))
                     {
-                        //if it is the same this is the exact same mission so we are going to update it's export file
-                        samemission.MissionExportText = text;
-                        samemission.DateLastUpdated = DateTime.Now;
                         missionlink = samemission.MissionLink;
-                        db.SaveChanges();
-                        break;
+                        //if it is the same this is the exact same mission now make sure that the person uploading it is the author, or an admit
+                        if (User.Identity.Name.Equals(samemission.Author.UserName) || User.IsInRole(ConstantsHelper.AdminRole))
+                        {
+                            samemission.DateLastUpdated = DateTime.Now;                            
+                            db.SaveChanges();
+                            break;
+                        }
+                        else
+                        {
+                            //if it is not the same user name they are not allowed to update it.
+                            //just go to the mission
+                            return RedirectToAction("details", new { link = missionlink });
+                        }
                     }
                 }
             }
@@ -304,7 +312,14 @@ namespace FoundryMissionsCom.Controllers
                 db.SaveChanges();
             }
 
-            //if it doesn't exist we add the mission and go to edit  
+            //get the mission's id
+            var id = db.Missions.Where(m => m.MissionLink.Equals(missionlink)).FirstOrDefault().Id;
+            //set the export file
+            MissionExportHelper.SaveExportFile(text, id);
+
+
+
+            //go to details
             return RedirectToAction("details", new { link = missionlink });
         }
 
@@ -628,7 +643,7 @@ namespace FoundryMissionsCom.Controllers
             }
             
             //next if it has an export file
-            if (mission.MissionExportText == null || string.IsNullOrWhiteSpace(mission.MissionExportText))
+            if (MissionExportHelper.HasExport(mission.Id))
             {
                 return false;
             }
