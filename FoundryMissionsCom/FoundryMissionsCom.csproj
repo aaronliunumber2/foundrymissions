@@ -259,6 +259,10 @@
     <Compile Include="Migrations\FoundryMissionsMigrations\201903250302311_UploadExport.Designer.cs">
       <DependentUpon>201903250302311_UploadExport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\FoundryMissionsMigrations\201904050414396_Remove Mission Export Text.cs" />
+    <Compile Include="Migrations\FoundryMissionsMigrations\201904050414396_Remove Mission Export Text.Designer.cs">
+      <DependentUpon>201904050414396_Remove Mission Export Text.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\FoundryMissionsMigrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FoundryMissionModels\Enums\MissionStatus.cs" />
@@ -488,6 +492,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\FoundryMissionsMigrations\201903250302311_UploadExport.resx">
       <DependentUpon>201903250302311_UploadExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\FoundryMissionsMigrations\201904050414396_Remove Mission Export Text.resx">
+      <DependentUpon>201904050414396_Remove Mission Export Text.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
