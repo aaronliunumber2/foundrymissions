@@ -119,8 +119,14 @@ namespace FoundryMissionsCom.Helpers
             var zipPath = Path.Combine(path, ExportZipName);
             var exportText = string.Empty;
 
+            //if the file already exists delete it
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
             ZipFile.ExtractToDirectory(zipPath, path);
-            exportText = File.ReadAllText(exportText);
+            exportText = File.ReadAllText(filePath);
             File.Delete(filePath);
 
             return exportText;

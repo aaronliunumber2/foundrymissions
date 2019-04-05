@@ -606,7 +606,8 @@ namespace FoundryMissionsCom.Controllers
             }
 
             var fileName = $"{link}.txt";
-            var bytes = System.Text.Encoding.UTF8.GetBytes(mission.MissionExportText);
+            var text = MissionExportHelper.GetExportText(mission.Id);
+            var bytes = System.Text.Encoding.UTF8.GetBytes(text);
             var stream = new MemoryStream(bytes);
 
             return File(stream, "text/plan", fileName);
@@ -621,7 +622,8 @@ namespace FoundryMissionsCom.Controllers
             }
 
             var fileName = $"{link}-json.txt";
-            var fMission = StarbaseUGC.Foundry.Engine.Serializers.FoundryMissionSerializer.ParseMissionText(mission.MissionExportText);
+            var exportText = MissionExportHelper.GetExportText(mission.Id);
+            var fMission = StarbaseUGC.Foundry.Engine.Serializers.FoundryMissionSerializer.ParseMissionText(exportText);
             var text = StarbaseUGC.Foundry.Engine.Serializers.FoundryMissionSerializer.ExportMissionToJson(fMission);
             var bytes = System.Text.Encoding.UTF8.GetBytes(text);
             var stream = new MemoryStream(bytes);
@@ -643,7 +645,7 @@ namespace FoundryMissionsCom.Controllers
             }
             
             //next if it has an export file
-            if (MissionExportHelper.HasExport(mission.Id))
+            if (!MissionExportHelper.HasExport(mission.Id))
             {
                 return false;
             }
