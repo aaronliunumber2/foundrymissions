@@ -46,7 +46,7 @@ namespace FoundryMissionsCom
             routes.MapRoute(
                 "View",
                 "missions/{link}/View",
-                new { controller = "Missions", action = "ViewData" }
+                new { controller = "Missions", action = "ViewMissionData" }
             );
 
 
@@ -78,6 +78,12 @@ namespace FoundryMissionsCom
                 "UploadExport",
                 "missions/uploadexport",
                 new { controller = "Missions", action = "UploadExport" }
+            );
+
+            routes.MapRoute(
+                "UploadExportAsync",
+                "missions/uploadexportasync",
+                new { controller = "Missions", action = "UploadExportAsync" }
             );
 
             routes.MapRoute(

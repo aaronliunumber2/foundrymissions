@@ -151,11 +151,15 @@
         </div>
 
         <div id="upload" class="tab-pane control-panel-pane">
-            @Html.Partial("_UploadExport")
+            <div>
+                <input name="exportFile" type="file" accept=".txt" class="upload-export" id="exportfiles" multiple/>
+                <input name="submit" type="submit" value="Upload files" class="btn btn-default" id="submitbutton" />
+                <div id="uploadresults"></div>
+            </div>
         </div>
     </div>
 </div>
         @section Scripts {
             @Scripts.Render("~/bundles/jqueryval")           
-            @Scripts.Render("~/bundles/editmission")
+            @Scripts.Render("~/bundles/submitmission")
         }

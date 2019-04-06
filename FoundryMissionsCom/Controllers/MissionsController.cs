@@ -246,20 +246,68 @@ namespace FoundryMissionsCom.Controllers
             return View(missionViewModel);
         }
 
+        #region Uploading Exports
+
         public ActionResult UploadExport(HttpPostedFileBase exportFile)
         {
             if (exportFile == null)
             {
                 return RedirectToAction("submit");
             }
+
+            try
+            {
+                var missionlink = UploadExportFile(exportFile);
+
+
+                //go to details
+                return RedirectToAction("details", new { link = missionlink });
+            }
+            catch(Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View("Error");
+            }
+
+
+            
+        }
+
+        public ActionResult UploadExportAsync(HttpPostedFileBase exportFile)
+        {
+            if (exportFile == null)
+            {
+                return Json(new { Status = false });
+            }
+            try
+            {
+                var missionlink = UploadExportFile(exportFile);
+                return Json(new { Status = true, missionLink = missionlink});
+            }
+            catch
+            {
+                return Json(new { Status = false });
+            }
+        }
+
+        private string UploadExportFile(HttpPostedFileBase exportFile)
+        {
             //first read the file
             var b = new BinaryReader(exportFile.InputStream);
             var binData = b.ReadBytes(exportFile.ContentLength);
             var text = System.Text.Encoding.UTF8.GetString(binData);
             var missionlink = "";
+            Mission mission = null;
 
             //Get the mission object 
-            var mission = MissionExportHelper.ParseExportToMission(db, text);
+            try
+            {
+                mission = MissionExportHelper.ParseExportToMission(db, text);
+            }
+            catch
+            {
+                throw new Exception("Error parsing upload file.  Please contact us at mail@foundrymissions.com or @STOMissions on twitter so we can determine what is wrong.");
+            }
 
             //now that we have the mission we need to first check if it exists or not.  
             var samemissions = db.Missions.Where(m => m.Name.Equals(mission.Name)).ToList();
@@ -271,8 +319,7 @@ namespace FoundryMissionsCom.Controllers
                     //if the author is null we cannot add it as we can't make sure it is the same
                     if (samemission.Author == null)
                     {
-                        ViewBag.errorMessage = "Another mission with the same name and ambiguous author already exists.  Please add your mission manually.  If you believe that mission belongs to you please contact us at mail@foundrymissions.com so we can link it to your account.";
-                        return View("Error");
+                        throw new Exception("Another mission with the same name and ambiguous author already exists.  Please add your mission manually.  If you believe that mission belongs to you please contact us at mail@foundrymissions.com or @STOMissions on twitter so we can link it to your account.");
                     }
 
                     //now check author
@@ -282,7 +329,7 @@ namespace FoundryMissionsCom.Controllers
                         //if it is the same this is the exact same mission now make sure that the person uploading it is the author, or an admit
                         if (User.Identity.Name.Equals(samemission.Author.UserName) || User.IsInRole(ConstantsHelper.AdminRole))
                         {
-                            samemission.DateLastUpdated = DateTime.Now;                            
+                            samemission.DateLastUpdated = DateTime.Now;
                             db.SaveChanges();
                             break;
                         }
@@ -290,7 +337,7 @@ namespace FoundryMissionsCom.Controllers
                         {
                             //if it is not the same user name they are not allowed to update it.
                             //just go to the mission
-                            return RedirectToAction("details", new { link = missionlink });
+                            return missionlink;
                         }
                     }
                 }
@@ -317,11 +364,10 @@ namespace FoundryMissionsCom.Controllers
             //set the export file
             MissionExportHelper.SaveExportFile(text, id);
 
-
-
-            //go to details
-            return RedirectToAction("details", new { link = missionlink });
+            return missionlink;
         }
+
+        #endregion
 
         public ActionResult Edit(string link)
         {
@@ -841,7 +887,7 @@ namespace FoundryMissionsCom.Controllers
             return RedirectToAction("index", "home");
         }
 
-        public ActionResult ViewData(string link)
+        public ActionResult ViewMissionData(string link)
         {
             var mission = db.Missions.Where(m => m.MissionLink.Equals(link)).FirstOrDefault();
 

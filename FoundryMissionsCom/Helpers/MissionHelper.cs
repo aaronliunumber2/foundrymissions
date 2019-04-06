@@ -13,7 +13,7 @@ namespace FoundryMissionsCom.Helpers
 {
     public static class MissionHelper
     {
-        private static string[] RestrictedMissionNames = { "SUBMIT", "DETAILS", "RANDOM", "EDIT", "SEARCH", "ADVANCED-SEARCH", "SEARCHRESULTS", "UPLOADEXPORT", "VIEW" };
+        private static string[] RestrictedMissionNames = { "SUBMIT", "DETAILS", "RANDOM", "EDIT", "SEARCH", "ADVANCED-SEARCH", "SEARCHRESULTS", "UPLOADEXPORT", "VIEWMISSIONDATA", "UPLOADEXPORTASYNC" };
         private static int[] MinimumLevelSelectors = { 16, 21, 31, 35, 41, 46, 50, 51, 57 };
 
         /// <summary>

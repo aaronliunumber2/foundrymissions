@@ -32,6 +32,9 @@ namespace FoundryMissionsCom
             bundles.Add(new ScriptBundle("~/bundles/editmission").Include(
                       "~/Scripts/mission.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/submitmission").Include(
+                      "~/Scripts/submit.js"));
+
             bundles.Add(new StyleBundle("~/Content/lightbox").Include(
                       "~/Content/blueimp-gallery.min.css",
                       "~/Content/bootstrap-image-gallery.min.css"

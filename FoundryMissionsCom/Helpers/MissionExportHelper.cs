@@ -108,6 +108,11 @@ namespace FoundryMissionsCom.Helpers
             }
             ZipFile.CreateFromDirectory(path, firstzipPath); //zip the exports folder
             //move the zip file to the exports folder
+            //check if the final zip file path exists, if it does delete it
+            if (File.Exists(finalzipPath))
+            {
+                File.Delete(finalzipPath);
+            }
             File.Move(firstzipPath, finalzipPath);
             File.Delete(filePath);  //delete the export text file
         }

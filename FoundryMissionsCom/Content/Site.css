@@ -179,6 +179,11 @@ form.mission-data textarea
     max-width: 100%;
 }
 
+#uploadresults
+{
+   padding-top: 1em;
+}
+
 .body-content {
     /*background-color: #000001;*/
     /*display :inline;*/
