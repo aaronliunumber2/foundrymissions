@@ -20,11 +20,12 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
             return ParseMissionText(txt);
         }
 
-        public static string ExportMissionToJson(FoundryMission mission)
+        public static string ExportMissionToJson(FoundryMission mission, Formatting = Formatting.Indented)
         {
             var json = JsonConvert.SerializeObject(mission, Formatting.Indented, new JsonSerializerSettings
             {
-                NullValueHandling = NullValueHandling.Ignore
+                NullValueHandling = NullValueHandling.Ignore,
+                 
             });
 
             return json;

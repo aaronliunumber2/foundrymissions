@@ -900,10 +900,25 @@ namespace FoundryMissionsCom.Controllers
             {
                 Id = mission.Id,
                 Name = mission.Name,
-                MissionExportText = MissionExportHelper.GetExportText(mission.Id),
             };
 
             return View(viewModel);
+        }
+
+        public ActionResult JsonAsync(string link)
+        {
+            var mission = db.Missions.Where(m => m.MissionLink.Equals(link)).FirstOrDefault();
+
+            if (!DownloadCheck(mission))
+            {
+                return HttpNotFound();
+            }
+            var exportText = MissionExportHelper.GetExportText(mission.Id);
+            var fMission = StarbaseUGC.Foundry.Engine.Serializers.FoundryMissionSerializer.ParseMissionText(exportText);
+            var text = StarbaseUGC.Foundry.Engine.Serializers.FoundryMissionSerializer.ExportMissionToJson(fMission, Newtonsoft.Json.Formatting.None);
+
+            //ok lets get the json
+            return Json(new { json = text }, JsonRequestBehavior.AllowGet);
         }
 
         #region  Auto generated

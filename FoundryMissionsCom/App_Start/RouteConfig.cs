@@ -44,6 +44,12 @@ namespace FoundryMissionsCom
             );
 
             routes.MapRoute(
+                "JsonAsync",
+                "missions/jsonasync",
+                new { controller = "Missions", action = "jsonasync" }
+            );
+
+            routes.MapRoute(
                 "View",
                 "missions/{link}/View",
                 new { controller = "Missions", action = "ViewMissionData" }

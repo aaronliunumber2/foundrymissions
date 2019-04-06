@@ -9,6 +9,5 @@ namespace FoundryMissionsCom.Models.FoundryMissionViewModels
     {
         public string  Name { get; set; }
         public int Id { get; set; }
-        public string MissionExportText { get; set; }
     }
 }
