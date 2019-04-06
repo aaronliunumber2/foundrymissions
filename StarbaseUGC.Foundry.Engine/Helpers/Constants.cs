@@ -262,7 +262,7 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
 
                 }
 
-                public class CustomeColors
+                public class CustumeColors
                 {
 
                 }
@@ -275,6 +275,8 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
             public const string PromptBody = "PromptBody";
             public const string PromptPetCostume = "PromptPetCostume";
             public const string PromptStyle = "PromptStyle";
+            public const string PromptTitle = "PromptTitle";
+            public const string PromptCostume = "PromptCostume";
 
             public class Action
             {

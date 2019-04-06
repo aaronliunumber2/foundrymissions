@@ -203,7 +203,7 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
                     break;
                 }
                 var foundryObjectCheckText = importLines[foundryObjectCheckIndex];
-                if (foundryObjectCheckText.Contains(Constants.FoundryObjectStartCharacter))
+                if (foundryObjectCheckText.Trim().StartsWith(Constants.FoundryObjectStartCharacter))
                 {
                     var newFoundryObject = GetFoundryObjectByIndex(importLines, ref currentIndex);
 

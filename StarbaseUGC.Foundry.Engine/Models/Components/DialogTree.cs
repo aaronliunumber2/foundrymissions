@@ -13,6 +13,8 @@ namespace StarbaseUGC.Foundry.Engine.Models.Components
         public string PromptBody { get { return GetFieldValue(Constants.Dialog.PromptBody); } }
         public string PromptPetCostume { get { return GetFieldValue(Constants.Dialog.PromptPetCostume); } }
         public string PromptStyle { get { return GetFieldValue(Constants.Dialog.PromptStyle); } }
+        public string PromptTitle { get { return GetFieldValue(Constants.Dialog.PromptTitle); } }
+        public string PromptCostume { get { return GetFieldValue(Constants.Dialog.PromptCostume); } }
         public List<DialogAction> Action { get { return GetFoundryObjectsByTitle(Constants.Dialog.Action.Title).Cast<DialogAction>().ToList(); } }
 
         public List<Prompt> DialogPrompts { get { return GetFoundryObjectsByTitle(Constants.Component.DialogTree.Prompt.Title).Cast<Prompt>().OrderBy(p => p.Number).ToList(); } }
