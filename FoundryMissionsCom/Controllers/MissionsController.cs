@@ -696,8 +696,8 @@ namespace FoundryMissionsCom.Controllers
                 return false;
             }
 
-            //next if the user has access to the file (admin or same user)
-            if (User.IsInRole(ConstantsHelper.AdminRole) || User.Identity.Name.Equals(mission.Author.UserName))
+            //next if the user has access to the file (admin or same user) also expose those belonging to Zorbane
+            if (User.IsInRole(ConstantsHelper.AdminRole) || User.Identity.Name.Equals(mission.Author.UserName) || mission.Author.UserName.Equals("Zorbane"))
             {
                 return true;
             }

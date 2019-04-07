@@ -97,6 +97,12 @@ namespace FoundryMissionsCom.Helpers
             {
                 Directory.CreateDirectory(path);
             }
+            else
+            {
+                //empty the directory out and recreate it
+                DeleteDirectory(path);
+                Directory.CreateDirectory(path);
+            }
             var filePath = Path.Combine(path, ExportFileName);
             var firstzipPath = Path.Combine(path, ExportZipName).Replace("exports", "");
             var finalzipPath = Path.Combine(path, ExportZipName);
@@ -135,6 +141,25 @@ namespace FoundryMissionsCom.Helpers
             File.Delete(filePath);
 
             return exportText;
+        }
+
+        public static void DeleteDirectory(string path)
+        {
+            string[] files = Directory.GetFiles(path);
+            string[] dirs = Directory.GetDirectories(path);
+
+            foreach (string file in files)
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+
+            foreach (string dir in dirs)
+            {
+                DeleteDirectory(dir);
+            }
+
+            Directory.Delete(path, false);
         }
     }
 }
