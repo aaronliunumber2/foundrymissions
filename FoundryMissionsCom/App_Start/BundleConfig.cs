@@ -29,6 +29,9 @@ namespace FoundryMissionsCom
 
             //my bundles
 
+            bundles.Add(new ScriptBundle("~/bundles/viewdata").Include(
+          "~/Scripts/viewdata.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/editmission").Include(
                       "~/Scripts/mission.js"));
 

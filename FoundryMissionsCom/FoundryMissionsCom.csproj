@@ -365,6 +365,7 @@
     <Content Include="Content\Images\YouTubePlayButton.png" />
     <Content Include="Content\jquery.jscrollpane.css" />
     <Content Include="Content\scrollpane-styles.css" />
+    <Content Include="Content\viewdata.css" />
     <Content Include="EF Package Manager.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -401,6 +402,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\submit.js" />
+    <Content Include="Scripts\viewdata.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

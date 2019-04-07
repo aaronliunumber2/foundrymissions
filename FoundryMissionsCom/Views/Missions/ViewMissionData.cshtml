@@ -9,6 +9,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" href="@Url.Content("~/content/images/favicon.ico")" />
+    @Styles.Render("~/Content/css")
     @if (string.IsNullOrWhiteSpace(ViewBag.Title))
     {
         <title>View @Model.Name - Star Trek Online Foundry Mission Database</title>
@@ -17,10 +18,16 @@
     <meta property="og:site_name" content="foundrymissions.com" />
 </head>
 <body>
-    <div> 
-        Cool
+    <div class="container">
+        <div id="tabmenu">
+
+        </div>
+        <div id="missiondata" class="row">
+
+        </div>
     </div>
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/viewdata")
     @Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>
