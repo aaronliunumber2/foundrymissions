@@ -9,21 +9,43 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" href="@Url.Content("~/content/images/favicon.ico")" />
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/viewdata")
     @if (string.IsNullOrWhiteSpace(ViewBag.Title))
     {
-        <title>View @Model.Name - Star Trek Online Foundry Mission Database</title>
+        <title>@Model.Name - View Mission Details - Star Trek Online Foundry Mission Database</title>
     }
     @Scripts.Render("~/bundles/modernizr")
     <meta property="og:site_name" content="foundrymissions.com" />
 </head>
 <body>
-    <div class="container">
-        <div id="tabmenu">
-
+    <h2>@Model.Name Mission Details</h2>
+    <div class="row">
+        <div class="col-md-2" id="tabColumn">
+            <div class="tabbable tabs-left">
+                <ul class="nav nav-tabs">
+                    <li class="active notDialogButton"><a data-toggle="tab" href="#project">Project</a></li>
+                    <li class="notDialogButton"><a data-toggle="tab" href="#story">Story</a></li>
+                    <li class="notDialogButton"><a data-toggle="tab" href="#maps">Maps</a></li>
+                    <li id="dialogsTabButton"><a data-toggle="tab" href="#dialogs">Dialogs</a></li>
+                    <li class="notDialogButton" id="costumesTabButton"><a data-toggle="tab" href="#costumes">Costumes</a></li>
+                </ul>
+            </div>
         </div>
-        <div id="missiondata" class="row">
+        <div class="col-md-10">
+            <div class="tab-content content">
+                <div id="project" class="tab-pane active">
+                    <h4>@Model.Name</h4>
+                </div>
+                <div id="story" class="tab-pane">
 
+                </div>
+                <div id="maps" class="tab-pane">
+
+                </div>
+                <div id="costumes" class="tab-pane">
+                    Costumes are currently not implemented
+                </div>
+            </div>
         </div>
     </div>
     @Scripts.Render("~/bundles/jquery")

@@ -365,6 +365,7 @@
     <Content Include="Content\Images\YouTubePlayButton.png" />
     <Content Include="Content\jquery.jscrollpane.css" />
     <Content Include="Content\scrollpane-styles.css" />
+    <Content Include="Content\verticaltabs.css" />
     <Content Include="Content\viewdata.css" />
     <Content Include="EF Package Manager.txt" />
     <Content Include="favicon.ico" />
@@ -516,7 +517,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52673</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

@@ -23,11 +23,20 @@ namespace FoundryMissionsCom
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+
 
             //my bundles
+
+            //main css 
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+          "~/Content/bootstrap.css",
+          "~/Content/site.css"));
+
+            //view css
+            bundles.Add(new StyleBundle("~/Content/viewdata").Include(
+          "~/Content/bootstrap.css",
+          "~/Content/viewdata.css",
+          "~/Content/verticaltabs.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/viewdata").Include(
           "~/Scripts/viewdata.js"));
@@ -48,7 +57,7 @@ namespace FoundryMissionsCom
 
             bundles.Add(new StyleBundle("~/Content/missiondetails").Include(
                 "~/Content/jquery.jscrollpane.css",
-                "~/Content/scrollpane-styles.css"));      
+                "~/Content/scrollpane-styles.css"));
             bundles.Add(new ScriptBundle("~/bundles/missiondetails").Include(
                 "~/Scripts/jquery.jscrollpane.js",
                 "~/Scripts/mission-details.js"));
