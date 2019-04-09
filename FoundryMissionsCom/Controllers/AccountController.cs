@@ -204,11 +204,12 @@ namespace FoundryMissionsCom.Controllers
                     AutoApproval = false,
                     LockoutEnabled = false,
                 };
+                user.EmailConfirmed = true;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     //commented out so they have to confirm their email
-                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     try
                     {
                         EmailHelper.ReportNewUser(user);
@@ -220,6 +221,7 @@ namespace FoundryMissionsCom.Controllers
                     
 
                     // Send an email with this link
+                    /*
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
@@ -227,9 +229,9 @@ namespace FoundryMissionsCom.Controllers
                     ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
                                      + "before you can log in.";
 
-                    return View("PleaseConfirmEmail");
+                    return View("PleaseConfirmEmail");*/
 
-                    //return RedirectToAction("index", "home");
+                    return RedirectToAction("index", "home");
                 }
                 AddErrors(result);
             }
