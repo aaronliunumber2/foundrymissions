@@ -277,6 +277,7 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
             public const string PromptStyle = "PromptStyle";
             public const string PromptTitle = "PromptTitle";
             public const string PromptCostume = "PromptCostume";
+            public const string ActorID = "ActorID";
 
             public class Action
             {

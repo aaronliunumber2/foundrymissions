@@ -72,7 +72,7 @@ function getDialogTabPageHtml(dialog) {
     for (j = 0; j < prompts.length; j++) {
 
         var prompt = prompts[j];
-        html += getDialogPromptDiv(prompt);
+        html += getDialogPromptDiv(prompt, dialog);
     }
 
 
@@ -80,7 +80,7 @@ function getDialogTabPageHtml(dialog) {
     return html;
 }
 
-function getDialogPromptDiv(prompt) {
+function getDialogPromptDiv(prompt, parent) {
     /*prompt contains these things
       1. Costume
       2. Animation
@@ -89,7 +89,7 @@ function getDialogPromptDiv(prompt) {
       5. Actions (buttons)
     */
 
-    var costume = prompt.PromptCostume;
+    var costume = getCostume(prompt, parent);
     var animation = formatPromptStyle(prompt.PromptStyle);
     var title = formatPromptTitle(prompt.PromptTitle);
     var text = formatPromptBody(prompt.PromptBody);
@@ -107,6 +107,21 @@ function getDialogPromptDiv(prompt) {
 
 
     return promptHtml;
+}
+
+function getCostume(prompt, parent) {
+    //get the costume, or pet costume or parent costume
+    var costume = prompt.PromptCostume;
+    if (costume == "") {
+        costume = prompt.PromptPetCostume;
+    }
+
+    if (costume == "" && parent) {
+        costume = getCostume(parent);
+    }
+
+    return costume;
+
 }
 
 function getActionHtml(actions) {
