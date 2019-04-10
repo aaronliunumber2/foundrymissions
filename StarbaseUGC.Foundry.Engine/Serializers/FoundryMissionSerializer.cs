@@ -290,7 +290,7 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
                         var ids = fieldValue.Split(new char[] { ',' });
                         foreach (var id in ids)
                         {
-                            var trig = new ComponentTrigger(triggerType);
+                            var trig = new ObjectiveCompleteTrigger();
                             trig.Fields[Constants.Trigger.ObjectiveComplete.ObjectiveID] = id;
                             whenObjects.Add(trig);
                         }
