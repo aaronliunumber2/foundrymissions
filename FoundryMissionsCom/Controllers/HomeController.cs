@@ -24,7 +24,7 @@ namespace FoundryMissionsCom.Controllers
 
             List<Mission> randomMissions = db.Missions.Where(m => m.Status == Models.FoundryMissionModels.Enums.MissionStatus.Published).OrderBy(m => Guid.NewGuid()).Take(FrontPageMissions).ToList();
 
-            var qry = db.Missions.OrderByDescending(m => m.DateLastUpdated).Take(RandomUpdated);
+            var qry = db.Missions.Where(m => m.Status == Models.FoundryMissionModels.Enums.MissionStatus.Published).OrderByDescending(m => m.DateLastUpdated).Take(RandomUpdated);
 
             List<Mission> recentlyUpdatedMissions = qry.Where(m => m.Status == Models.FoundryMissionModels.Enums.MissionStatus.Published).OrderBy(m => Guid.NewGuid()).Take(FrontPageMissions).ToList();
 
