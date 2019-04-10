@@ -646,7 +646,7 @@ namespace FoundryMissionsCom.Controllers
         public ActionResult Export(string link)
         {
             var mission = db.Missions.Where(m => m.MissionLink.Equals(link)).FirstOrDefault();
-            if (!DownloadCheck(mission))
+            if (!JsonAuthCheck(mission))
             {
                 return RedirectToAction("index", "Home");
             }
@@ -662,7 +662,7 @@ namespace FoundryMissionsCom.Controllers
         public ActionResult Json(string link)
         {
             var mission = db.Missions.Where(m => m.MissionLink.Equals(link)).FirstOrDefault();
-            if (!DownloadCheck(mission))
+            if (!JsonAuthCheck(mission))
             {
                 return RedirectToAction("Home");
             }
@@ -682,7 +682,7 @@ namespace FoundryMissionsCom.Controllers
         /// </summary>
         /// <param name="mission"></param>
         /// <returns></returns>
-        private bool DownloadCheck(Mission mission)
+        private bool JsonAuthCheck(Mission mission)
         {
             //first does it exist
             if (mission == null)
@@ -888,7 +888,8 @@ namespace FoundryMissionsCom.Controllers
         }
 
         public ActionResult ViewMissionData(string link)
-        {
+        {            
+
             var mission = db.Missions.Where(m => m.MissionLink.Equals(link)).FirstOrDefault();
 
             if (mission == null)
@@ -896,6 +897,11 @@ namespace FoundryMissionsCom.Controllers
                 return HttpNotFound();
             }
 
+            if (!JsonAuthCheck(mission))
+            {
+                return HttpNotFound();
+            }
+            
             var viewModel = new ViewMissionDataViewModel()
             {
                 Id = mission.Id,
@@ -909,7 +915,7 @@ namespace FoundryMissionsCom.Controllers
         {
             var mission = db.Missions.Where(m => m.MissionLink.Equals(link)).FirstOrDefault();
 
-            if (!DownloadCheck(mission))
+            if (!JsonAuthCheck(mission))
             {
                 return HttpNotFound();
             }
