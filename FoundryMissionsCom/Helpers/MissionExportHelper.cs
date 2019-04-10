@@ -78,8 +78,12 @@ namespace FoundryMissionsCom.Helpers
         private static string GetMissionName(string exportMissionName)
         {
             //remove the first and last character because they are "asdfasdr"
-            var name = exportMissionName.Substring(1);
-            name = name.Substring(0, name.Length - 1);
+            var name = exportMissionName;
+            if (name.StartsWith("\"") && name.StartsWith("\""))
+            {
+                name = name.Substring(1);
+                name = name.Substring(0, name.Length - 1);
+            }
             return name;
 
         }
