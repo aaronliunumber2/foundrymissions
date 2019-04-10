@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarbaseUGC.Foundry.Winforms", "StarbaseUGC.Foundry.Winforms\StarbaseUGC.Foundry.Winforms.csproj", "{01369FC8-66AE-4A10-B390-F7451B6011D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarbaseUGC.Foundry.Engine", "H:\Star Trek Online\Website\V1\FoundryMissionsCom\StarbaseUGC.Foundry.Engine\StarbaseUGC.Foundry.Engine.csproj", "{A2A37B7F-1799-404E-8BC9-FC70F34F8C0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarbaseUGC.Foundry.Engine", "..\StarbaseUGC.Foundry.Engine\StarbaseUGC.Foundry.Engine.csproj", "{A2A37B7F-1799-404E-8BC9-FC70F34F8C0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -63,6 +63,12 @@
     </Compile>
     <Compile Include="Models\Action.cs" />
     <Compile Include="Models\Dialogue.cs" />
+    <Compile Include="ErrorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorForm.Designer.cs">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Objective.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,17 +80,19 @@
     <EmbeddedResource Include="MissionInfoForm.resx">
       <DependentUpon>MissionInfoForm.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="H:\Star Trek Online\Website\V1\FoundryMissionsCom\StarbaseUGC.Foundry.Engine\StarbaseUGC.Foundry.Engine.csproj">
-      <Project>{a2a37b7f-1799-404e-8bc9-fc70f34f8c0a}</Project>
-      <Name>StarbaseUGC.Foundry.Engine</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="ErrorForm.resx">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\StarbaseUGC.Foundry.Engine\StarbaseUGC.Foundry.Engine.csproj">
+      <Project>{a2a37b7f-1799-404e-8bc9-fc70f34f8c0a}</Project>
+      <Name>StarbaseUGC.Foundry.Engine</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

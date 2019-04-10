@@ -32,7 +32,9 @@ namespace StarbaseUGC.Foundry.Winforms
             }
             catch(Exception ex)
             {
-                OutputTextBox.Text = ex.ToString();
+                var frmError = new ErrorForm();
+                frmError.ErrorMessage = ex.ToString();
+                frmError.Show();
             }
         }
 
