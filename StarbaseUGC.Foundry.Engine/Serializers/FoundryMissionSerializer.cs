@@ -25,7 +25,7 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
             var json = JsonConvert.SerializeObject(mission, formatting, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
-                DefaultValueHandling = DefaultValueHandling.Ignore,
+                //DefaultValueHandling = DefaultValueHandling.Ignore,
                  
             });
 
