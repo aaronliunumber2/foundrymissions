@@ -26,7 +26,7 @@ namespace FoundryMissionsCom.Helpers
             var mission = new Mission();
 
             mission.AuthorUserId = exportmission.Project.AccountName; //we don't actually use this field but can use it to find user match
-            mission.Description = exportmission.Project.Description;
+            mission.Description = FormatDescription(exportmission.Project.Description);
             mission.Faction = GetFactionFromExportFaction(exportmission.Project.RestrictionProperties.Faction);
             mission.MinimumLevel = string.IsNullOrWhiteSpace(exportmission.Project.RestrictionProperties.MinLevel) ? 1 : Convert.ToInt32(exportmission.Project.RestrictionProperties.MinLevel);
             //mission.MissionExportText = exportText;
@@ -42,6 +42,29 @@ namespace FoundryMissionsCom.Helpers
             
             return mission;
 
+        }
+
+        private const string StartChars = "<&";
+        private const string EndChars = "&>";
+        private static string FormatDescription(string description)
+        {
+            /*formatting 
+              1. gets rid of <& and &> from the beginnings
+              2. gets rid of " from the beginning and ending
+              3. replaces \n with new line
+            */
+            if (description.StartsWith(StartChars) && description.EndsWith(EndChars))
+            {
+                description = description.Substring(2, description.Length - 4);
+            }
+            else if (description.StartsWith("\"") && description.EndsWith("\""))
+            {
+                description = description.Substring(1, description.Length - 1);
+            }
+
+            description = description.Replace("\\n", Environment.NewLine);
+
+            return description;
         }
 
         private static Random random = new Random();
