@@ -648,7 +648,7 @@ namespace FoundryMissionsCom.Controllers
             var mission = db.Missions.Where(m => m.MissionLink.Equals(link)).FirstOrDefault();
             if (!DownloadCheck(mission))
             {
-                return RedirectToAction("Home");
+                return RedirectToAction("index", "Home");
             }
 
             var fileName = $"{link}.txt";
