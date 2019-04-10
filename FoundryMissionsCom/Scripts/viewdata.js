@@ -6,6 +6,7 @@ var missionlink = sections[viewIndex - 1];
 
 var projectId = "project";
 var objectivesId = "story";
+var mapsId = "maps";
 var dialogMenuId = "dialogsTabButton";
 var costumeMenuId = "costumesTabButton";
 var costumeId = "costumes";
@@ -26,10 +27,10 @@ $(document).ready(function () {
             var project = json.Project;
             //get the stuff
             var mission = json.Mission;
-
             var objectives = mission.Objectives;
             var components = json.Components;
             var dialogs = getDialogs(components);
+            var maps = json.Maps;
 
             //project
             var projectDiv = getProjectsDivHtml(project);
@@ -44,6 +45,9 @@ $(document).ready(function () {
             //var dialogsDiv = getDialogsDivHtml(dialogs);
             //$("#" + missionDataId).append(dialogsDiv);
 
+            //maps
+            var mapsDiv = getMapsDivHtml(maps);
+            $("#" + mapsId).append(mapsDiv);
         },
         error: function (error) {
             //var errorMessage = "Error loading mission data.";
@@ -52,7 +56,8 @@ $(document).ready(function () {
         }
     });
 });
-//load functions
+
+//load function
 function getViewIndex(sections) {
     for (viewIndex = 0; viewIndex < sections.length; viewIndex++) {
         if (sections[viewIndex] == "view") {
@@ -61,59 +66,7 @@ function getViewIndex(sections) {
     }
 }
 
-//get project functions
-function getProjectsDivHtml(project) {
-    var div = "";
-    div += "<div class='row'><div class='col-md-2'>Name</div><div class='col-md-10'>" + formatPublicName(project.PublicName) + "</div></div>";
-    div += "<div class='row'><div class='col-md-2'>Author</div><div class='col-md-10'>" + project.AccountName + "</div></div>";
-    div += "<div class='row'><div class='col-md-2'>Language</div><div class='col-md-10'>" + project.Language + "</div></div>";
-    div += "<div class='row'><div class='col-md-2'>Allegiance</div><div class='col-md-10'>" + formatFaction(project.RestrictionProperties.Faction) + "</div></div>";
-    div += "<div class='row'><div class='col-md-2'>Level</div><div class='col-md-10'>" + formatMinLevel(project.RestrictionProperties.MinLevel) + "</div></div>";
-    return div;
-}
-
-function formatPublicName(name) {
-    //just get rid of the first and last character
-    return name.substring(0, name.length - 1).substring(1);
-}
-
-function formatFaction(faction) {
-    if (faction == "Allegiance_Starfleet") {
-        return "Starfleet";
-    }
-    else {
-        return "Klingon";
-    }
-}
-
-function formatMinLevel(level) {
-    if (level == "") {
-        return "Any";
-    }
-    else {
-        return level + "+";
-    }
-}
-
-//get objective functions
-function getObjectivesDivHtml(objectives) {
-    var div = "<div id='objectives'><h3>Objectives</h3>";
-
-    for (i = 0; i < objectives.length; i++) {
-        var objective = objectives[i];
-        var objectiveName = objective.UIString.substring(1, objective.UIString.length - 1);
-        div += "<div class='objectiveName '>" + objectiveName + "</div>";
-    }
-
-    div += "</div>";
-    return div;
-}
-
-//get dialog functions
-var defaultDialogName = "Dialog Tree";
-var dialogStartChars = "<&";
-var dialogEndChars = "&>"
-
+//ui events
 $("#" + dialogMenuId).click(function () {
     $(".dialog-list-item").show();
 })
@@ -121,150 +74,3 @@ $("#" + dialogMenuId).click(function () {
 $(".notDialogButton").click(function () {
     $(".dialog-list-item").hide();
 })
-
-function getDialogs(components) {
-    return components.filter(function (component) {
-        return component.Type == "DIALOG_TREE";
-    });
-}
-
-function doDialogs(dialogs) {
-    
-    for (i = 0; i < dialogs.length; i++) {
-        var dialog = dialogs[i];
-        var name = getDialogDisplayName(dialog);
-        var id = getDialogId(dialog);
-        //create the listitem (li) html and add it to the menu
-        var html = '<li class="dialog-list-item"><a data-toggle="tab" href="#' + id + '">' + name + '</a></li>';
-        //add it before the costumes button
-        $("#" + costumeMenuId).before(html);
-
-        //create the tab and data and add it to the tab panes
-        html = getDialogTabPageHtml(dialog);
-        $("#" + costumeId).before(html);
-    }
-}
-
-var displayNameLength = 30;
-function getDialogDisplayName(dialog) {
-    var dialogName = dialog.VisibleName;
-
-    //if its the default name or empty grab the first 10 characters from the prompt body
-    if (dialogName.includes(defaultDialogName) || !dialogName) {
-        var promptBody = dialog.PromptBody;
-        if (promptBody.startsWith(dialogStartChars)) {
-            //get rid of the first <& 
-            promptBody = promptBody.substring(2);
-        }
-        //replace new lines with space
-        promptBody = promptBody.replace(/\\n/g, " ");
-
-        //show the first 20 characters
-        dialogName = promptBody.substring(0, displayNameLength);
-
-        //if it ends with &> remove it
-        if (dialogName.endsWith(dialogEndChars)) {
-            dialogName = dialogName.substring(0, dialogName.length - 2);
-        }
-    }
-    else {
-        //get rid of the quotation marks
-        if (dialogName.startsWith('"') && dialogName.endsWith('"')) {
-            dialogName = dialogName.substring(1, dialogName.length - 1);
-        }
-    }
-    return dialogName;
-}
-
-function getDialogId(dialog) {
-    return "dialog" + dialog.Number;
-}
-
-function getDialogTabPageHtml(dialog) {
-    var id = getDialogId(dialog);
-    var html = "<div id='"+ id +"' class='tab-pane'>";
-    //do its own dialog
-    html += getDialogPromptDiv(dialog);
-
-    //now add all the next prompts (if there are any)
-    var prompts = dialog.DialogPrompts;
-
-    for (j = 0; j < prompts.length; j++) {
-
-        var prompt = prompts[j];
-        html += getDialogPromptDiv(prompt);
-    }
-    
-
-    html += "</div>";
-    return html;
-}
-
-function getDialogPromptDiv(prompt) {
-    /*prompt contains these things
-      1. Costume
-      2. Animation
-      3. Title
-      4. Text
-      5. Actions (buttons)
-    */
-
-    var costume = prompt.PromptCostume;
-    var animation = formatPromptStyle(prompt.PromptStyle);
-    var title = formatPromptTitle(prompt.PromptTitle);
-    var text = formatPromptBody(prompt.PromptBody);
-    var actions = prompt.Action;
-
-    var promptHtml = "<div class='prompt'>";
-    promptHtml += "<div class='promptBody'>";
-    promptHtml += "<div>Costume: " + costume + "</div>";
-    promptHtml += "<div>Title: " + title + "</div>";
-    promptHtml += "<div>Text</div>";
-    promptHtml += "<div class='promptText'>" + text + "</div>";
-    promptHtml += "</div>"; //promptbody
-    promptHtml += getActionHtml(actions);
-    promptHtml += "</div>"; //prompt
-
-
-    return promptHtml;
-}
-
-function getActionHtml(actions) {
-    return "";
-}
-
-function formatPromptStyle(style){
-    if (!style){
-        return "[Default]";
-    }
-    else{
-        return style;
-    }
-}
-
-function formatPromptTitle(title){
-    if (!title){
-        return "";
-    }
-    else{
-        return title;
-    }
-}
-
-function formatPromptBody(promptBody) {
-    /*formatting 
-      1. gets rid of <& and &> from the beginnings
-      2. gets rid of " from the beginning and ending
-      3. replaces \n with <br>
-    */
-    if (promptBody.startsWith(dialogStartChars) && promptBody.endsWith(dialogEndChars)) {
-        promptBody = promptBody.substring(2, promptBody.length - 2);
-    }
-    else if (promptBody.startsWith('"') && promptBody.endsWith('"')) {
-        promptBody = promptBody.substring(1, promptBody.length - 1);
-    }
-
-    promptBody = promptBody.replace(/\\n/g, "<br>");
-
-    return promptBody;
-}

@@ -39,8 +39,11 @@ namespace StarbaseUGC.Foundry.Engine.Models
         public string WaypointMode { get { return GetFieldValue(Constants.Mission.Objective.WaypointMode); } }
         public string ComponentMapName { get { return GetFieldValue(Constants.Mission.Objective.ComponentMapName); } }
         public string ComponentId { get { return GetFieldValue(Constants.Mission.Objective.ComponentId); } }
+        [System.ComponentModel.DefaultValue("")]
         public string InteractText { get { return GetFieldValue(Constants.Mission.Objective.InteractText); } }
+        [System.ComponentModel.DefaultValue("")]
         public string InteractAnim { get { return GetFieldValue(Constants.Mission.Objective.InteractAnim); } }
+        [System.ComponentModel.DefaultValue("")]
         public string InteractDuration { get { return GetFieldValue(Constants.Mission.Objective.InteractDuration); } }
     }
 

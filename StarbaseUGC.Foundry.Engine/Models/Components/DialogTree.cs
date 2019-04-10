@@ -11,9 +11,13 @@ namespace StarbaseUGC.Foundry.Engine.Models.Components
     {
         //these are copied directly from dialog type :(
         public string PromptBody { get { return GetFieldValue(Constants.Dialog.PromptBody); } }
+        [System.ComponentModel.DefaultValue("")]
         public string PromptPetCostume { get { return GetFieldValue(Constants.Dialog.PromptPetCostume); } }
+        [System.ComponentModel.DefaultValue("")]
         public string PromptStyle { get { return GetFieldValue(Constants.Dialog.PromptStyle); } }
+        [System.ComponentModel.DefaultValue("")]
         public string PromptTitle { get { return GetFieldValue(Constants.Dialog.PromptTitle); } }
+        [System.ComponentModel.DefaultValue("")]
         public string PromptCostume { get { return GetFieldValue(Constants.Dialog.PromptCostume); } }
         public List<DialogAction> Action { get { return GetFoundryObjectsByTitle(Constants.Dialog.Action.Title).Cast<DialogAction>().ToList(); } }
 

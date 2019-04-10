@@ -9,6 +9,7 @@ namespace StarbaseUGC.Foundry.Engine.Models.Components
 {
     class Actor : Component
     {
+        [System.ComponentModel.DefaultValue("")]
         public string CostumeName { get { return GetFieldValue(Constants.Component.Actor.CostumeName); } }
 
         public Actor(int number) : base (number)

@@ -32,13 +32,18 @@ namespace FoundryMissionsCom
           "~/Content/bootstrap.css",
           "~/Content/site.css"));
 
-            //view css
+            //view data css
             bundles.Add(new StyleBundle("~/Content/viewdata").Include(
           "~/Content/bootstrap.css",
           "~/Content/viewdata.css",
           "~/Content/verticaltabs.css"));
 
+            //view data js
             bundles.Add(new ScriptBundle("~/bundles/viewdata").Include(
+          "~/Scripts/ViewData/dialog.js",
+          "~/Scripts/ViewData/objective.js",
+          "~/Scripts/ViewData/project.js",
+          "~/Scripts/ViewData/map.js",
           "~/Scripts/viewdata.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/editmission").Include(
