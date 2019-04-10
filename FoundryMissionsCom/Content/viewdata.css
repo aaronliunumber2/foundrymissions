@@ -1,3 +1,16 @@
 ﻿.nav > .dialog-list-item{
     display:none;
 }
+
+#tabColumn{
+
+}
+
+.prompt {
+    border : 1px solid;
+    margin-top : 15px;
+    padding : 5px;
+    height : 300px;
+    width : 300px;
+    overflow-y : auto;
+}
