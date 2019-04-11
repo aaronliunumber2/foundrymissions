@@ -323,7 +323,7 @@ namespace FoundryMissionsCom.Controllers
                     }
 
                     //now check author
-                    if (mission.AuthorUserId.Equals(samemission.Author.CrypticTag))
+                    if (mission.AuthorUserId.ToUpper().Equals(samemission.Author.CrypticTag.ToUpper()))
                     {
                         missionlink = samemission.MissionLink;
                         //if it is the same this is the exact same mission now make sure that the person uploading it is the author, or an admit
