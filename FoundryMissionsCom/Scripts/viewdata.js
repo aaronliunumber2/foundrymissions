@@ -23,7 +23,7 @@ $(document).ready(function () {
         contentType: false,
         processData: false,
         success: function (response) {
-            var json = JSON.parse(response.json);
+            var json =  response;
             var project = json.Project;
             //get the stuff
             var mission = json.Mission;
@@ -31,6 +31,7 @@ $(document).ready(function () {
             var components = json.Components;
             var dialogs = getDialogs(components);
             var maps = json.Maps;
+            var costumes = json.Costumes;
 
             //project
             var projectDiv = getProjectsDivHtml(project);

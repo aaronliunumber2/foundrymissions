@@ -148,18 +148,11 @@ function formatPromptTitle(title) {
 
 function formatPromptBody(promptBody) {
     /*formatting 
-      1. gets rid of <& and &> from the beginnings
-      2. gets rid of " from the beginning and ending
-      3. replaces \n with <br>
+      1. replaces \r\n with <br>
     */
-    if (promptBody.startsWith(dialogStartChars) && promptBody.endsWith(dialogEndChars)) {
-        promptBody = promptBody.substring(2, promptBody.length - 2);
-    }
-    else if (promptBody.startsWith('"') && promptBody.endsWith('"')) {
-        promptBody = promptBody.substring(1, promptBody.length - 1);
-    }
 
-    promptBody = promptBody.replace(/\\n/g, "<br>");
+
+    promptBody = promptBody.replace(/\r\n|\n|\r/g, '<br />');
 
     return promptBody;
 }

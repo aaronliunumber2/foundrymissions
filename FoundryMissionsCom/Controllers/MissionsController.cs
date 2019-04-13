@@ -924,7 +924,7 @@ namespace FoundryMissionsCom.Controllers
             var text = StarbaseUGC.Foundry.Engine.Serializers.FoundryMissionSerializer.ExportMissionToJson(fMission, Newtonsoft.Json.Formatting.None);
 
             //ok lets get the json
-            return Json(new { json = text }, JsonRequestBehavior.AllowGet);
+            return Content(text);
         }
 
         #region  Auto generated

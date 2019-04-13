@@ -19,7 +19,12 @@ namespace StarbaseUGC.Foundry.Engine.Models
         {
             if (Fields.ContainsKey(fieldValue))
             {
-                return Fields[fieldValue] as string;
+                var value = Fields[fieldValue] as string;
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    value = FoundryObjectFormatter.FormatRegularText(value);
+                }
+                return value;
             }
             else
             {

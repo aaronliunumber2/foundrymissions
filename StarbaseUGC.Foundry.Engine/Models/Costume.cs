@@ -10,6 +10,14 @@ namespace StarbaseUGC.Foundry.Engine.Models
     public class Costume : FoundryObject
     {
         public string Description { get { return GetFieldValue(Constants.Costume.Description); } }
-        public string DisplayName { get { return GetFieldValue(Constants.Costume.DisplayName); } }
+        public string DisplayName
+        {
+            get
+            {
+                return GetFieldValue(Constants.Costume.DisplayName);
+            }
+        }
+        public string Name { get { return GetFieldValue(Constants.Costume.Name); } }
+
     }
 }

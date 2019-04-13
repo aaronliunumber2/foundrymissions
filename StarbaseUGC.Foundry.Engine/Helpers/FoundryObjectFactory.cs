@@ -55,6 +55,10 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
                 case Constants.Trigger.DialogLink.Title:
                     return new DialogPromptTriggerLink();
                 #endregion
+                #region Costume
+                case Constants.Costume.Title:
+                    return new Costume();
+                #endregion
                 default:
                     //special case stuff
                     #region Objective

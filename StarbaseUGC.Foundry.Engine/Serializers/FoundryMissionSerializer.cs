@@ -43,9 +43,16 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
             mission.Mission = GetMission(importLines);
             mission.Maps = GetMaps(importLines);
             mission.Components = GetComponents(importLines);
-            //costumes
+            mission.Costumes = GetCostumes(importLines);
 
             return mission;
+        }
+
+        private static List<Costume> GetCostumes(List<string> importLines)
+        {
+            var objects = GetFoundryObjectsByName(importLines, "Costume");
+            var costumes = objects.Cast<Costume>().ToList();
+            return costumes;
         }
 
         private static Project GetProject(List<string> importLines)

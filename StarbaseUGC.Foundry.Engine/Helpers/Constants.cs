@@ -240,6 +240,7 @@ namespace StarbaseUGC.Foundry.Engine.Helpers
             public const string Title = "Costume";
             public const string Description = "Description";
             public const string DisplayName = "DisplayName";
+            public const string Name = "Name";
 
             public class CachedPlayerCostume
             {

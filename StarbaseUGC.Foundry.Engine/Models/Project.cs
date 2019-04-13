@@ -11,37 +11,37 @@ namespace StarbaseUGC.Foundry.Engine.Models
     {
         public string Name
         {
-            get { return Fields[Constants.FoundryObject.Name] as string; }
+            get { return GetFieldValue(Constants.FoundryObject.Name); }
         }
 
         public string AccountName
         {
-            get { return Fields[Constants.Project.AccountName] as string; }
+            get { return GetFieldValue(Constants.Project.AccountName); }
         }
 
         public string CreationTime
         {
-            get { return Fields[Constants.Project.CreationTime] as string; }
+            get { return GetFieldValue(Constants.Project.CreationTime); }
         }
 
         public string FromContainer
         {
-            get { return Fields[Constants.Project.FromContainer] as string; }
+            get { return GetFieldValue(Constants.Project.FromContainer); }
         }
 
         public string PublicName
         {
-            get { return Fields[Constants.Project.PublicName] as string; }
+            get { return GetFieldValue(Constants.Project.PublicName); }
         }
 
         public string Description
         {
-            get { return Fields[Constants.Project.Description] as string; }
+            get { return GetFieldValue(Constants.Project.Description); }
         }
 
         public string Language
         {
-            get { return Fields[Constants.Project.Language] as string; }
+            get { return GetFieldValue(Constants.Project.Language); }
         }
 
         public string LifetimeTipsReceived
@@ -50,7 +50,7 @@ namespace StarbaseUGC.Foundry.Engine.Models
             {
                 if (Fields.ContainsKey(Constants.Project.LifetimeTipsReceived))
                 {
-                    return Fields[Constants.Project.LifetimeTipsReceived] as string;
+                    return GetFieldValue(Constants.Project.LifetimeTipsReceived);
                 }
                 else
                 {
@@ -61,7 +61,7 @@ namespace StarbaseUGC.Foundry.Engine.Models
 
         public string AverageRating
         {
-            get { return Fields[Constants.Project.AverageRating] as string; }
+            get { return GetFieldValue(Constants.Project.AverageRating); }
         }
 
         public RestrictionProperties RestrictionProperties
@@ -74,7 +74,7 @@ namespace StarbaseUGC.Foundry.Engine.Models
     {
         public string Faction
         {
-            get { return Fields[Constants.Project.RestrictionProperties.Faction] as string; }
+            get { return GetFieldValue(Constants.Project.RestrictionProperties.Faction); }
         }
 
         public string MinLevel

@@ -3,7 +3,7 @@
 
     for (i = 0; i < objectives.length; i++) {
         var objective = objectives[i];
-        var objectiveName = objective.UIString.substring(1, objective.UIString.length - 1);
+        var objectiveName = objective.UIString;
         div += "<div class='objectiveName '>" + objectiveName + "</div>";
     }
 

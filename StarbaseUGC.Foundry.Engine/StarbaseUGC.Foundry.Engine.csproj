@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\FoundryObjectFactory.cs" />
+    <Compile Include="Helpers\FoundryObjectFormatter.cs" />
     <Compile Include="Models\Components\Actor.cs" />
     <Compile Include="Models\Components\Component.cs" />
     <Compile Include="Models\Components\ComponentObject.cs" />
