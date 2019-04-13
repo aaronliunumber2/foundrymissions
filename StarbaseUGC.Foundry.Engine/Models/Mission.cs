@@ -16,7 +16,7 @@ namespace StarbaseUGC.Foundry.Engine.Models
 
         public GrantBlock GrantBlock { get { return (GrantBlock)FoundryObjects.Find(f => f.Title.Equals(Constants.Mission.GrantBlock.Title)); } }
 
-        public List<Objective> Objectives { get { return GetFoundryObjectsByTitle(Constants.Mission.Objective.Title).Cast<Objective>().OrderBy(o => o.Number).ToList(); } }        
+        public List<Objective> Objectives { get { return GetFoundryObjectsByTitle(Constants.Mission.Objective.Title).Cast<Objective>().ToList(); } }        
 
         public List<MapLink> MapLinks { get { return GetFoundryObjectsByTitle(Constants.Mission.MapLink.Title).Cast<MapLink>().ToList();  } }
     }
