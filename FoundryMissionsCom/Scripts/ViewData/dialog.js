@@ -1,4 +1,5 @@
 ﻿var defaultDialogName = "Dialog Tree";
+var holocostumePrefix = "Holodeck_Ugc_";
 var dialogStartChars = "<&";
 var dialogEndChars = "&>"
 
@@ -8,7 +9,9 @@ function getDialogs(components) {
     });
 }
 
-function doDialogs(dialogs) {
+function doDialogs(components, costumes) {
+
+    var dialogs = getDialogs(components);
 
     for (i = 0; i < dialogs.length; i++) {
         var dialog = dialogs[i];
@@ -20,7 +23,7 @@ function doDialogs(dialogs) {
         $("#" + costumeMenuId).before(html);
 
         //create the tab and data and add it to the tab panes
-        html = getDialogTabPageHtml(dialog);
+        html = getDialogTabPageHtml(dialog, costumes, components);
         $("#" + costumeId).before(html);
     }
 }
@@ -32,26 +35,12 @@ function getDialogDisplayName(dialog) {
     //if its the default name or empty grab the first 10 characters from the prompt body
     if (dialogName.includes(defaultDialogName) || !dialogName) {
         var promptBody = dialog.PromptBody;
-        if (promptBody.startsWith(dialogStartChars)) {
-            //get rid of the first <& 
-            promptBody = promptBody.substring(2);
-        }
+
         //replace new lines with space
-        promptBody = promptBody.replace(/\\n/g, " ");
+        promptBody = promptBody.replace(/\r\n|\n|\r/g, " ");
 
         //show the first 20 characters
         dialogName = promptBody.substring(0, displayNameLength);
-
-        //if it ends with &> remove it
-        if (dialogName.endsWith(dialogEndChars)) {
-            dialogName = dialogName.substring(0, dialogName.length - 2);
-        }
-    }
-    else {
-        //get rid of the quotation marks
-        if (dialogName.startsWith('"') && dialogName.endsWith('"')) {
-            dialogName = dialogName.substring(1, dialogName.length - 1);
-        }
     }
     return dialogName;
 }
@@ -60,11 +49,11 @@ function getDialogId(dialog) {
     return "dialog" + dialog.Number;
 }
 
-function getDialogTabPageHtml(dialog) {
+function getDialogTabPageHtml(dialog, costumes, components) {
     var id = getDialogId(dialog);
     var html = "<div id='" + id + "' class='tab-pane'>";
     //do its own dialog
-    html += getDialogPromptDiv(dialog);
+    html += getDialogPromptDiv(dialog,costumes, components);
 
     //now add all the next prompts (if there are any)
     var prompts = dialog.DialogPrompts;
@@ -72,7 +61,7 @@ function getDialogTabPageHtml(dialog) {
     for (j = 0; j < prompts.length; j++) {
 
         var prompt = prompts[j];
-        html += getDialogPromptDiv(prompt, dialog);
+        html += getDialogPromptDiv(prompt, costumes, components, dialog);
     }
 
 
@@ -80,7 +69,7 @@ function getDialogTabPageHtml(dialog) {
     return html;
 }
 
-function getDialogPromptDiv(prompt, parent) {
+function getDialogPromptDiv(prompt, costumes, components, parent) {
     /*prompt contains these things
       1. Costume
       2. Animation
@@ -89,7 +78,7 @@ function getDialogPromptDiv(prompt, parent) {
       5. Actions (buttons)
     */
 
-    var costume = getCostume(prompt, parent);
+    var costume = getCostumeName(prompt, costumes, components, parent);
     var animation = formatPromptStyle(prompt.PromptStyle);
     var title = formatPromptTitle(prompt.PromptTitle);
     var text = formatPromptBody(prompt.PromptBody);
@@ -109,15 +98,31 @@ function getDialogPromptDiv(prompt, parent) {
     return promptHtml;
 }
 
-function getCostume(prompt, parent) {
+function getCostumeName(prompt, costumes, components, parent) {
     //get the costume, or pet costume or parent costume
     var costume = prompt.PromptCostume;
+
+    //first check if it has a holoID.  If it does go to the costumes and get the costume name
+    if (costume && costume.includes(holocostumePrefix)) {
+        var costumeObj = getCostumeByName(costumes, costume);
+        costume = costumeObj.DisplayName;
+    }
+
     if (costume == "") {
         costume = prompt.PromptPetCostume;
     }
 
-    if (costume == "" && parent) {
-        costume = getCostume(parent);
+    if (costume == "" && parent) { //if there is a parent check it for the costume
+        costume = getCostumeName(parent, costumes, components);
+
+    }
+    else if (costume == "" && !parent) { //if there is no parent check if there is a actor ID
+        if (prompt.ActorID) {
+            var actorID = prompt.ActorID;
+            //get the componentID that matches the Actor ID
+            var component = getComponentById(components, actorID);
+            costume = component.VisibleName;
+        }
     }
 
     return costume;

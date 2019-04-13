@@ -39,11 +39,13 @@ namespace FoundryMissionsCom
           "~/Content/verticaltabs.css"));
 
             //view data js
-            bundles.Add(new ScriptBundle("~/bundles/viewdata").Include(
-          "~/Scripts/ViewData/dialog.js",
+            bundles.Add(new ScriptBundle("~/bundles/viewdata").Include(          
           "~/Scripts/ViewData/objective.js",
           "~/Scripts/ViewData/project.js",
           "~/Scripts/ViewData/map.js",
+          "~/Scripts/ViewData/costume.js",
+          "~/Scripts/ViewData/component.js",
+          "~/Scripts/ViewData/dialog.js",
           "~/Scripts/viewdata.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/editmission").Include(

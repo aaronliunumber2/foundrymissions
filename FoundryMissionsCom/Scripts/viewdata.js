@@ -41,14 +41,17 @@ $(document).ready(function () {
             var objectivesDiv = getObjectivesDivHtml(objectives);
             $("#" + objectivesId).append(objectivesDiv);
 
-            //dialog
-            doDialogs(dialogs);
-            //var dialogsDiv = getDialogsDivHtml(dialogs);
-            //$("#" + missionDataId).append(dialogsDiv);
+            //dialog is complicated
+            doDialogs(components, costumes);
 
             //maps
             var mapsDiv = getMapsDivHtml(maps);
             $("#" + mapsId).append(mapsDiv);
+            
+            //costumes
+            var costumesDiv = getCostumesDivHtml(costumes);
+            $("#" + costumeId).append(costumesDiv);
+            
         },
         error: function (error) {
             //var errorMessage = "Error loading mission data.";

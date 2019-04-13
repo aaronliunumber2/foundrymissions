@@ -10,7 +10,7 @@
 
 function formatPublicName(name) {
     //just get rid of the first and last character
-    return name.substring(0, name.length - 1).substring(1);
+    return name;
 }
 
 function formatFaction(faction) {
