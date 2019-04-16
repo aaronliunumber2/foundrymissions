@@ -2,6 +2,9 @@
 var holocostumePrefix = "Holodeck_Ugc_";
 var dialogStartChars = "<&";
 var dialogEndChars = "&>"
+var promptWidth = 300;
+
+var addedPrompts = [];
 
 function getDialogs(components) {
     return components.filter(function (component) {
@@ -14,16 +17,18 @@ function doDialogs(components, costumes) {
     var dialogs = getDialogs(components);
 
     for (i = 0; i < dialogs.length; i++) {
+        addedPrompts = []; //reset the added prompts
         var dialog = dialogs[i];
         var name = getDialogDisplayName(dialog);
         var id = getDialogId(dialog);
+        var dialogPrompts = dialog.DialogPrompts;
         //create the listitem (li) html and add it to the menu
         var html = '<li class="dialog-list-item"><a data-toggle="tab" href="#' + id + '">' + name + '</a></li>';
         //add it before the costumes button
         $("#" + costumeMenuId).before(html);
 
         //create the tab and data and add it to the tab panes
-        html = getDialogTabPageHtml(dialog, costumes, components);
+        html = getDialogTabPageHtml(dialog, costumes, components, dialogPrompts);
         $("#" + costumeId).before(html);
     }
 }
@@ -49,27 +54,17 @@ function getDialogId(dialog) {
     return "dialog" + dialog.Number;
 }
 
-function getDialogTabPageHtml(dialog, costumes, components) {
+function getDialogTabPageHtml(dialog, costumes, components, dialogPrompts) {
     var id = getDialogId(dialog);
     var html = "<div id='" + id + "' class='tab-pane'>";
-    //do its own dialog
-    html += getDialogPromptDiv(dialog,costumes, components);
-
-    //now add all the next prompts (if there are any)
-    var prompts = dialog.DialogPrompts;
-
-    for (j = 0; j < prompts.length; j++) {
-
-        var prompt = prompts[j];
-        html += getDialogPromptDiv(prompt, costumes, components, dialog);
-    }
-
+    //start with the starting dialog call the recursive getDialogPromptDiv function
+    html += getDialogPromptDiv(dialog, costumes, components, dialogPrompts, dialog);
 
     html += "</div>";
     return html;
 }
 
-function getDialogPromptDiv(prompt, costumes, components, parent) {
+function getDialogPromptDiv(prompt, costumes, components, dialogPrompts, parent) {
     /*prompt contains these things
       1. Costume
       2. Animation
@@ -83,9 +78,11 @@ function getDialogPromptDiv(prompt, costumes, components, parent) {
     var title = formatPromptTitle(prompt.PromptTitle);
     var text = formatPromptBody(prompt.PromptBody);
     var actions = prompt.Action;
+    var promptNumber = getPromptNumber(prompt);
+    var width = actions.length * promptWidth;
 
-    var promptHtml = "<div class='prompt'>";
-    promptHtml += "<div class='promptBody'>";
+    var promptHtml = "<div class='prompt' style='width: "+ width +"px'>";
+    promptHtml += "<div class='prompt-body' id='prompt-body-" + promptNumber + "'>";
     promptHtml += "<div>Costume: " + costume + "</div>";
     promptHtml += "<div>Title: " + title + "</div>";
     promptHtml += "<div>Text</div>";
@@ -95,7 +92,53 @@ function getDialogPromptDiv(prompt, costumes, components, parent) {
     promptHtml += "</div>"; //prompt
 
 
+    //now add all the next prompts doing its actions first (recursively)
+    for (var nextAction = 0; nextAction < actions.length; nextAction++) {
+        var action = actions[nextAction];
+        var nextPromptId = action.NextPromptID;
+        if (nextPromptId == -1) { //-1 brings it back to the top level
+            nextPromptId = 0;
+        }
+
+        //first if next promptId is "" that means its an end dialog action
+        if (nextPromptId != "") {
+            if (!addedPrompts.includes(nextPromptId)) {
+                //only do it if we didn't add this prompt yet
+                addedPrompts.push(nextPromptId);
+                var nextPrompt = getNextPromptById(dialogPrompts, nextPromptId);
+                promptHtml += getDialogPromptDiv(nextPrompt, costumes, components, dialogPrompts, parent);
+            }
+        }
+
+    }
+
+
     return promptHtml;
+}
+
+function getActionHtml(actions) {
+    var actionHtml = "<div class='action-body'>";
+    for (iAction = 0; iAction < actions.length; iAction++) {       
+        action = actions[iAction];
+        actionHtml += "<div class='action'>";
+        actionHtml += action.ActionName;
+        actionHtml += "</div>";
+    }
+
+
+    actionHtml += "</div>";
+    return actionHtml;
+}
+
+function getNextPromptById(dialogPrompts, nextPromptId) {
+    for (var i = 0; i < dialogPrompts.length; i++) {
+        // look for the entry with a matching value
+        var prompt = dialogPrompts[i];
+        if (prompt.Number == nextPromptId) {
+            // we found it
+            return prompt;
+        }
+    }
 }
 
 function getCostumeName(prompt, costumes, components, parent) {
@@ -129,8 +172,14 @@ function getCostumeName(prompt, costumes, components, parent) {
 
 }
 
-function getActionHtml(actions) {
-    return "";
+function getPromptNumber(prompt) {
+    var number = 0;
+
+    if (prompt.Number) {
+        number = prompt.Number;
+    }
+
+    return number;
 }
 
 function formatPromptStyle(style) {

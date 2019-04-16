@@ -7,10 +7,28 @@
 }
 
 .prompt {
-    border : 1px solid;
+
     margin-top : 15px;
-    padding : 5px;
+    padding : 0px;
+
+}
+
+.prompt-body {
+    border : 1px solid;
     height : 300px;
-    width : 300px;
+    width : 100%;
+    margin : 0 auto;
+    max-width: 300px;
     overflow-y : auto;
+}
+
+.action-body {
+    height: 25px;
+}
+
+.action{
+    width: 300px;   
+    display: inline-block;    
+    text-align: center;
+    border : 1px solid;
 }
