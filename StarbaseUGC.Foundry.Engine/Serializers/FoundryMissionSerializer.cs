@@ -222,6 +222,8 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
                 #region Add new Field
                 else //it is neither the end or a new foundry object that means we have a new field!
                 {
+                    if (text.Equals("ObjectiveID  -1")) { 
+                    }
                     //trim the text, the first word is the field name, everything after that is the data
                     text = text.Trim();
                     split = text.Split(' ');
@@ -237,6 +239,26 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
                     }
                 }
                 #endregion
+            }
+
+            //now there is a weird thing that if the dialog tree appears in the objectivelist the objective complete ID is -1, lets change it to the foundry object's ObjectiveId
+            if (foundryObject.GetType() == typeof(DialogTree))
+            {
+                var dialogTree = (DialogTree)foundryObject;
+                foreach(var when in dialogTree.When)
+                {
+                    if (when.TriggerType == Constants.Trigger.ObjectiveComplete.Title)
+                    {
+                        if (when.Fields[Constants.Trigger.ObjectiveComplete.ObjectiveID].ToString().Trim() == "-1")
+                        {
+                            if (foundryObject.Fields.ContainsKey(Constants.Trigger.ObjectiveComplete.ObjectiveID))
+                            {
+                                when.Fields[Constants.Trigger.ObjectiveComplete.ObjectiveID] = foundryObject.Fields[Constants.Trigger.ObjectiveComplete.ObjectiveID];
+                            }
+                        }
+                    }
+                }
+
             }
 
             return foundryObject;
@@ -298,6 +320,12 @@ namespace StarbaseUGC.Foundry.Engine.Serializers
                         foreach (var id in ids)
                         {
                             var trig = new ObjectiveCompleteTrigger();
+
+                            if (id == "-1") //sometimes it can be -1 so we need to drop back to the parent and get the OBjectiveId from that
+                            {
+
+                            }
+
                             trig.Fields[Constants.Trigger.ObjectiveComplete.ObjectiveID] = id;
                             whenObjects.Add(trig);
                         }
