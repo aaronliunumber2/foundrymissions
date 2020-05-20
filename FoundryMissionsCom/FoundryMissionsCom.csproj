@@ -291,10 +291,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-FoundryMissionsCom-20160415094559.mdf" />
-    <Content Include="App_Data\aspnet-FoundryMissionsCom-20160415094559_log.ldf">
-      <DependentUpon>aspnet-FoundryMissionsCom-20160415094559.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\Images\banner.png" />
     <Content Include="Content\blueimp-gallery.min.css" />
     <Content Include="Content\bootstrap-image-gallery.min.css" />
@@ -512,6 +508,9 @@
     <EmbeddedResource Include="Migrations\FoundryMissionsMigrations\201904050414396_Remove Mission Export Text.resx">
       <DependentUpon>201904050414396_Remove Mission Export Text.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

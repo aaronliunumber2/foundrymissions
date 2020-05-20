@@ -75,8 +75,8 @@
                                 @if (Model.HasExport)
                                 {
                                     @Html.ActionLink("Download Export", "export", new { link = Model.MissionLink }, new { @class = "btn btn-default details-edit-mission" })
-                                    @Html.ActionLink("View Mission Details", "ViewMissionData", new { link = Model.MissionLink }, new { @class = "btn btn-default details-edit-mission" })
-                                    @*@Html.ActionLink("View Data", "viewdata", new { link = Model.MissionLink }, new { @class = "btn btn-default details-edit-mission" })*@
+                                    @*Html.ActionLink("View Mission Details", "ViewMissionData", new { link = Model.MissionLink }, new { @class = "btn btn-default details-edit-mission" })*@
+                                    @Html.ActionLink("View Json", "json", new { link = Model.MissionLink }, new { @class = "btn btn-default details-edit-mission" })
                                 }
                             </div>
                         }
