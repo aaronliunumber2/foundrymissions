@@ -387,6 +387,7 @@
     <None Include="Properties\PublishProfiles\foundrymissions - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\foundrymissions - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\foundrymissions - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\LocalFoundryMissions.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\controlpanel.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
